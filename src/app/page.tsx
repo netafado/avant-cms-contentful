@@ -1,14 +1,8 @@
 import Image from "next/image";
-import Banner from "./components/Banner";
-import {
-  HomeIcon,
-  ImageIcon,
-  BackpackIcon,
-  GitHubLogoIcon,
-  LinkedInLogoIcon,
-  InstagramLogoIcon,
-} from "@radix-ui/react-icons";
-import SectionAbout from "./components/SectionAbout";
+import Banner from "@/components/Banner";
+import Navigator from "@/components/Navigation";
+import SectionAbout from "@/components/SectionAbout";
+import Section from "@/components/Section";
 
 const experience = [
   {
@@ -23,7 +17,7 @@ const experience = [
     company: "Everest Erp",
     role: "Frontend Developer",
     duration: "2017 - 2019",
-    tools: ["React", "Tailwind CSS", "TypeScript"],
+    tools: ["React", "Tailwind", "TypeScript"],
     description:
       "Focused on building responsive user interfaces and improving user experience.",
   },
@@ -36,15 +30,33 @@ const experience = [
     description:
       "Focused on building responsive user interfaces and improving user experience.",
   },
+  {
+    company: "Object Edge",
+    role: "Frontend Developer",
+    duration: "2017 - 2019",
+    tools: ["React", "Tailwind CSS", "TypeScript"],
+    description:
+      "Focused on building responsive user interfaces and improving user experience.",
+  },
+  {
+    company: "Happy BIZ",
+    role: "Frontend Developer",
+    duration: "2017 - 2019",
+    tools: ["React", "Tailwind CSS", "TypeScript"],
+    description:
+      "Focused on building responsive user interfaces and improving user experience.",
+  },
+  {
+    company: "Fontoura Hot",
+    role: "Frontend Developer",
+    duration: "2017 - 2019",
+    tools: ["React", "Tailwind CSS", "TypeScript"],
+    description:
+      "Focused on building responsive user interfaces and improving user experience.",
+  },
 ];
 
-const frontendTools = [
-  "Next.js",
-  "React",
-  "Tailwind CSS",
-  "TypeScript",
-  "Node.js",
-];
+const frontendTools = ["Next.js", "React", "Tailwind", "TypeScript", "Node.js"];
 
 const integrationTools = [
   "Contentful",
@@ -52,6 +64,8 @@ const integrationTools = [
   "doordash",
   "stripe",
   "braintree",
+  "copilotKit",
+  "ChatGPT",
 ];
 
 const backendTools = ["Node.js", "Express", "MongoDB", "PostgreSQL", "GraphQL"];
@@ -60,25 +74,7 @@ export default function Home() {
   return (
     <div className="font-sans w-full">
       <main>
-        <div className="fixed top-10 right-10 z-50 bg-gray-800 rounded-full p-2 flex flex-col items-center justify-center gap-2">
-          <div className="flex py-2 items-center flex-col justify-center h-full w-full z-50 gap-2">
-            <button className="bg-gray-800 text-white rounded">
-              <HomeIcon />
-            </button>
-            <button className="bg-gray-800 px-1 text-white rounded">
-              <BackpackIcon />
-            </button>
-            <button className="bg-gray-800 text-white rounded">
-              <InstagramLogoIcon />
-            </button>
-            <button className="bg-gray-800 text-white rounded">
-              <LinkedInLogoIcon />
-            </button>
-            <button className="bg-gray-800 text-white rounded">
-              <GitHubLogoIcon />
-            </button>
-          </div>
-        </div>
+        <Navigator />
         <div className="mx-auto my-auto px-4">
           <div className="items-center py-10 md:p-10 lg:p-20">
             <Banner
@@ -100,20 +96,17 @@ export default function Home() {
         </div>
 
         <SectionAbout
+          title="Full-Stack Developer"
+          description="Senior Full Stack Developer with over 10 years of experience designing and building scalable microservices and modern web applications. Some technologies I work with:"
           frontendTools={frontendTools}
           backendTools={backendTools}
           integrationTools={integrationTools}
         />
 
-        <section className="text-center mt-10">
-          <h2 className="text-3xl bg-clip-text text-transparent font-bold bg-gradient-to-b from-brand-400 to-brand-600 mb-2">
-            Experience
-          </h2>
-
-          <p className="mt-2 text-gray-500">
-            Interested in collaborating or have any questions? Feel free to
-            reach out!
-          </p>
+        <Section
+          title="Experience"
+          description="Interested in collaborating or have any questions? Feel free to reach out!"
+        >
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-5xl mx-auto px-4">
             {experience.map((exp, index) => (
               <div
@@ -137,9 +130,9 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </section>
+        </Section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center p-4 text-sm text-gray-500">
+      <footer className="row-start-3 mt-4 flex gap-[24px] flex-wrap items-center justify-center p-5 text-sm text-gray-500">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
           href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
@@ -168,7 +161,7 @@ export default function Home() {
             width={16}
             height={16}
           />
-          Examples
+          Medium Articles
         </a>
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
@@ -183,7 +176,7 @@ export default function Home() {
             width={16}
             height={16}
           />
-          Go to nextjs.org →
+          Developed with Next.js, Contentful and AWS
         </a>
       </footer>
     </div>
