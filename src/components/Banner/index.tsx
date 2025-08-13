@@ -39,8 +39,7 @@ const Banner: FC<BannerProps> = ({ name, image, achievements }) => {
         />
       </div>
 
-      <div className="max-w-2xl mt-2 flex flex-wrap justify-center gap-4 bg-gray-800 pb-3 mx-auto rounded-sm shadow-lg">
-        <div className="h-px w-full bg-gradient-to-r from-brand-400 via-beta to-alpha hidden md:block" />
+      <div className="md:transition-all border-t border-lime-800 bg-gray-800 md:duration-1000 relative z-10 mx-auto max-w-4xl p-10 text-center md:p-3 ld:grid-cols-4 prose prose-invert grid grid-cols-2 lg:grid-cols-4 bg-gradient-omega-900 shadow-lg divide-gray-600/30 lg:divide-x">
         {achievements?.map((achievement, index) => (
           <Reveal
             key={index}

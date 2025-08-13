@@ -2,6 +2,7 @@ import { useInView } from "react-intersection-observer";
 import classNames from "clsx";
 import { RevealProps } from "./types";
 import { FC } from "react";
+
 const Reveal: FC<RevealProps> = (props) => {
   const {
     className,
