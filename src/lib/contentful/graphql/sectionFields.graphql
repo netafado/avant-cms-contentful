@@ -1,0 +1,25 @@
+fragment SectionFields on Section {
+  __typename
+  sys {
+    id
+  }
+  title
+  description
+  componentsCollection(limit: 10) {
+    items {
+      __typename
+      ... on ComponentBanner {
+        ...ComponentFieldsBanner
+      }
+      ... on ComponentCard {
+        ...ComponentFieldsCard
+      }
+      ... on ComponentTagList {
+        ...ComponentFieldsTagList
+      }
+      ... on ComponentsCards {
+        ...ComponentFieldsCards
+      }
+    }
+  }
+}

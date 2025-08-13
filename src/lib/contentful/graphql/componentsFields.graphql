@@ -1,0 +1,58 @@
+fragment ComponentFieldsAchievement on SingleAchievement {
+  __typename
+  sys {
+    id
+  }
+  _id
+  number
+  text
+}
+
+fragment ComponentFieldsBanner on ComponentBanner {
+  __typename
+  sys {
+    id
+  }
+  title
+  mainImage {
+    ...ImageFields
+  }
+  achievementsCollection(limit: 5) {
+    items {
+      ...ComponentFieldsAchievement
+    }
+  }
+}
+
+fragment ComponentFieldsCard on ComponentCard {
+  __typename
+  sys {
+    id
+  }
+  _id
+  company
+  subtitle
+  title
+  description
+}
+
+fragment ComponentFieldsTagList on ComponentTagList {
+  __typename
+  sys {
+    id
+  }
+  color
+  tags
+}
+
+fragment ComponentFieldsCards on ComponentsCards {
+  __typename
+  sys {
+    id
+  }
+  cardsCollection(limit: 10) {
+    items {
+      ...ComponentFieldsCard
+    }
+  }
+}

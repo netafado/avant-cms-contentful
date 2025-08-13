@@ -39,7 +39,7 @@ const SectionAbout: FC<SectionAboutProps> = ({
           {integrationTools.map((tool, index) => (
             <span
               key={index}
-              className="inline-block text-xs  bg-violet-800/20 text-violet-500 px-3 py-1 rounded-full text-sm font-semibold mr-1 mb-1"
+              className="inline-block text-xs bg-violet-800/20 text-violet-500 px-3 py-1 rounded-full text-sm font-semibold mr-1 mb-1"
             >
               {tool}
             </span>

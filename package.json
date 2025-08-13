@@ -6,12 +6,17 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "graphql-codegen:generate": "graphql-codegen -r dotenv/config --config codegen.ts",
+    "graphql-codegen:watch": "graphql-codegen --watch -r dotenv/config --config codegen.ts"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.2",
     "@tailwindcss/nesting": "^0.0.0-insiders.565cd3e",
     "clsx": "^2.1.1",
+    "graphql": "^16.11.0",
+    "graphql-request": "^7.2.0",
+    "graphql-tag": "^2.12.6",
     "next": "15.4.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
@@ -20,6 +25,10 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@graphql-codegen/cli": "5.0.7",
+    "@graphql-codegen/client-preset": "4.8.3",
+    "@graphql-codegen/introspection": "4.0.3",
+    "@graphql-codegen/typescript-graphql-request": "6.3.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/postcss": "^4.1.11",
     "@tailwindcss/typography": "^0.5.16",
@@ -29,6 +38,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.4.6",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "typescript-graphql-request": "^4.4.6"
   }
 }

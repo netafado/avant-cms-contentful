@@ -1,0 +1,24 @@
+fragment PageLandingFields on PageLanding {
+  __typename
+  sys {
+    id
+    spaceId
+  }
+  internalName
+  seoFields {
+    ...SeoFields
+  }
+  sectionsCollection(limit: 3) {
+    items {
+      ...SectionFields
+    }
+  }
+}
+
+query pageLanding($locale: String, $preview: Boolean) {
+  pageLandingCollection(limit: 1, locale: $locale, preview: $preview) {
+    items {
+      ...PageLandingFields
+    }
+  }
+}
