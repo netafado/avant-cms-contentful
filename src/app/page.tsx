@@ -1,57 +1,145 @@
 import Image from "next/image";
+import Banner from "./components/Banner";
+import {
+  HomeIcon,
+  ImageIcon,
+  BackpackIcon,
+  GitHubLogoIcon,
+  LinkedInLogoIcon,
+  InstagramLogoIcon,
+} from "@radix-ui/react-icons";
+import SectionAbout from "./components/SectionAbout";
+
+const experience = [
+  {
+    company: "Bold Commerce",
+    role: "Full Stack Developer",
+    duration: "2019 - Present",
+    tools: ["Next.js", "Contentful", "AWS", "TypeScript", "Node.js"],
+    description:
+      "Developed and maintained web applications using Next.js and Contentful.",
+  },
+  {
+    company: "Everest Erp",
+    role: "Frontend Developer",
+    duration: "2017 - 2019",
+    tools: ["React", "Tailwind CSS", "TypeScript"],
+    description:
+      "Focused on building responsive user interfaces and improving user experience.",
+  },
+
+  {
+    company: "Valtech",
+    role: "Frontend Developer",
+    duration: "2017 - 2019",
+    tools: ["React", "Tailwind CSS", "TypeScript"],
+    description:
+      "Focused on building responsive user interfaces and improving user experience.",
+  },
+];
+
+const frontendTools = [
+  "Next.js",
+  "React",
+  "Tailwind CSS",
+  "TypeScript",
+  "Node.js",
+];
+
+const integrationTools = [
+  "Contentful",
+  "commercetools",
+  "doordash",
+  "stripe",
+  "braintree",
+];
+
+const backendTools = ["Node.js", "Express", "MongoDB", "PostgreSQL", "GraphQL"];
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="font-sans w-full">
+      <main>
+        <div className="fixed top-10 right-10 z-50 bg-gray-800 rounded-full p-2 flex flex-col items-center justify-center gap-2">
+          <div className="flex py-2 items-center flex-col justify-center h-full w-full z-50 gap-2">
+            <button className="bg-gray-800 text-white rounded">
+              <HomeIcon />
+            </button>
+            <button className="bg-gray-800 px-1 text-white rounded">
+              <BackpackIcon />
+            </button>
+            <button className="bg-gray-800 text-white rounded">
+              <InstagramLogoIcon />
+            </button>
+            <button className="bg-gray-800 text-white rounded">
+              <LinkedInLogoIcon />
+            </button>
+            <button className="bg-gray-800 text-white rounded">
+              <GitHubLogoIcon />
+            </button>
+          </div>
         </div>
+        <div className="mx-auto my-auto px-4">
+          <div className="items-center py-10 md:p-10 lg:p-20">
+            <Banner
+              name="Isaias Santos"
+              image={{
+                src: "/isaias-c.png",
+                width: 400,
+                height: 400,
+                alt: "",
+              }}
+              achievements={[
+                { number: "60%", text: "Frontend" },
+                { number: "40%", text: "Backend" },
+                { number: "10+", text: "Years of Experience" },
+                { number: "20+", text: "Projects" },
+              ]}
+            />
+          </div>
+        </div>
+
+        <SectionAbout
+          frontendTools={frontendTools}
+          backendTools={backendTools}
+          integrationTools={integrationTools}
+        />
+
+        <section className="text-center mt-10">
+          <h2 className="text-3xl bg-clip-text text-transparent font-bold bg-gradient-to-b from-brand-400 to-brand-600 mb-2">
+            Experience
+          </h2>
+
+          <p className="mt-2 text-gray-500">
+            Interested in collaborating or have any questions? Feel free to
+            reach out!
+          </p>
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-5xl mx-auto px-4">
+            {experience.map((exp, index) => (
+              <div
+                key={index}
+                className="p-4 border border-gray-300 dark:border-gray-800 rounded-sm"
+              >
+                <h3 className="text-white  font-semibold">{exp.company}</h3>
+                <p className="text-sm">{exp.role}</p>
+                <p className="text-sm text-gray-500 text-xs">{exp.duration}</p>
+                <ul className="mt-2 list-none flex flex-wrap gap-2 text-sm text-gray-700">
+                  {exp.tools.map((tool, idx) => (
+                    <li
+                      className="bg-success-500/30 text-xs text-success-500 px-2 rounded-sm"
+                      key={idx}
+                    >
+                      {tool}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-2 text-gray-400">{exp.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
+      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center p-4 text-sm text-gray-500">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
           href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
