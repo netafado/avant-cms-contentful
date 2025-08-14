@@ -5,8 +5,11 @@ import {
   ComponentCard,
 } from "@/lib/contentful/__generated/sdk";
 import Banner from "@/components/Banner";
+import Tag from "@/components/Tag";
 import { BannerProps } from "../Banner/types";
 import { FC } from "react";
+import Card from "@/components/Card";
+import type { CardProps } from "@/components/Card/types";
 
 import {
   isComponentBanner,
@@ -16,53 +19,18 @@ import {
   isSingleAchievement,
 } from "@/utils/componentsGuard";
 
-type CardProps = {
-  company: string;
-  role: string;
-  roles: string;
-  description: string;
-  duration: string;
-  tools: string[];
-};
-
-const Card = (props: CardProps) => {
-  const { company, role, duration, tools, description } = props;
-  return (
-    <div className="p-4 border border-gray-300 dark:border-gray-800 rounded-sm">
-      <h3 className="text-white  font-semibold">{company}</h3>
-      <p className="text-sm">{role}</p>
-      <p className="text-sm text-gray-500 text-xs">{duration}</p>
-      <ul className="mt-2 list-none flex flex-wrap gap-2 text-sm text-gray-700">
-        {tools?.map((tool, idx) => (
-          <li
-            className="bg-success-500/30 text-xs text-success-500 px-2 rounded-sm"
-            key={idx}
-          >
-            {tool}
-          </li>
-        ))}
-      </ul>
-      <p className="mt-2 text-gray-400">{description}</p>
-    </div>
-  );
-};
-
 type ComponentTagListProps = {
+  color?: string;
   list: string[];
   title: string;
 };
 
-const ComponentTags: FC<ComponentTagListProps> = ({ list, title }) => {
+const ComponentTags: FC<ComponentTagListProps> = ({ list, title, color }) => {
   return (
     <div className="border py-2 px-4 border-gray-700 pr-4">
-      <h3 className="mt-4 pb-2 font-semibold">{title}:</h3>
+      <h3 className="mt-4 pb-2 font-semibold">{title}</h3>
       {list.map((tool, index) => (
-        <span
-          key={index}
-          className="inline-block text-xs bg-violet-800/20 text-violet-500 px-3 py-1 rounded-full text-sm font-semibold mr-1 mb-1"
-        >
-          {tool}
-        </span>
+        <Tag key={index} text={tool} color={color} size="small" />
       ))}
     </div>
   );
@@ -134,6 +102,7 @@ const ComponentsHandler = {
         description: "description",
         duration: "subtitle",
         tools: "categories",
+        color: "company",
       }
     );
     return <Card {...props} />;
@@ -151,6 +120,7 @@ const ComponentsHandler = {
     >(component, {
       list: "tags",
       title: "title",
+      color: "color",
     });
 
     return <ComponentTags {...componentProps} />;

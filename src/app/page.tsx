@@ -4,12 +4,8 @@ import Section from "@/components/Section";
 import { client } from "@/lib/contentful";
 import { Section as SectionType } from "@/lib/contentful/__generated/sdk";
 import transFormToSections from "@/utils/transformToSectionComponents";
-import { unstable_noStore as noStore } from "next/cache";
 
 const getLandingPageData = async () => {
-  // Opt out of caching for this function
-  noStore();
-
   try {
     const data = await client.pageLanding();
     return data;
@@ -52,22 +48,7 @@ export default function Home() {
       <footer className="row-start-3 mt-4 flex gap-[24px] flex-wrap items-center justify-center p-5 text-sm text-gray-500">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          href="https://medium.com/@isaias.fran"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -78,11 +59,11 @@ export default function Home() {
             width={16}
             height={16}
           />
-          Medium Articles
+          medium Articles
         </a>
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          href="https://github.com/netafado/avant-cms-contentful"
           target="_blank"
           rel="noopener noreferrer"
         >
