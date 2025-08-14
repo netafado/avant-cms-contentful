@@ -6,7 +6,7 @@ import {
 } from "@/lib/contentful/__generated/sdk";
 import Banner from "../Banner";
 import { BannerProps } from "../Banner/types";
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 
 const isComponentBanner = (
   component: SectionComponentsItem
@@ -154,7 +154,6 @@ const ComponentsHandler = {
     return <ComponentTags {...componentProps} />;
   },
   ComponentsCards: (component: SectionComponentsItem) => {
-    // Placeholder for ComponentsCards handling
     const cards = isComponentCards(component)
       ? component.cardsCollection?.items || []
       : [];
