@@ -1,4 +1,4 @@
-import { Maybe, SectionComponentsItem } from "@/lib/contentful/__generated/sdk";
+import { SectionComponentsItem } from "@/lib/contentful/__generated/sdk";
 
 export type SectionComponents = SectionComponentsItem & {
   title: string;
@@ -12,4 +12,5 @@ export type SectionProps = {
   children?: React.ReactNode;
   components?: SectionComponents[];
   grid?: string;
+  layoutType?: "default" | "no-title";
 };

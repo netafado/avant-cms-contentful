@@ -11,12 +11,26 @@ const endpoint = process.env.CONTENTFUL_GRAPHQL_ENDPOINT;
 const graphQlClient = new GraphQLClient(endpoint, {
   headers: {
     Authorization: `Bearer ${process.env.CONTENTFUL_ACCESS_TOKEN}`,
+    "Cache-Control": "no-cache",
+  },
+  fetch: (url, options) => {
+    return fetch(url, {
+      ...options,
+      cache: "no-store",
+    });
   },
 });
 
 const previewGraphQlClient = new GraphQLClient(endpoint, {
   headers: {
     Authorization: `Bearer ${process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN}`,
+    "Cache-Control": "no-cache",
+  },
+  fetch: (url, options) => {
+    return fetch(url, {
+      ...options,
+      cache: "no-store",
+    });
   },
 });
 

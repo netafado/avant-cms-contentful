@@ -1,34 +1,15 @@
 import Image from "next/image";
-import Banner from "@/components/Banner";
 import Navigation from "@/components/Navigation";
 import Section from "@/components/Section";
-import { SectionProps } from "@/components/Section/types";
 import { client } from "@/lib/contentful";
 import { Section as SectionType } from "@/lib/contentful/__generated/sdk";
-
-const transFormToSections = (sections: SectionType[]): SectionProps[] => {
-  return sections.map((section) => {
-    const components = (section.componentsCollection?.items || [])
-      .filter(
-        (component): component is NonNullable<typeof component> =>
-          component !== null
-      )
-      .map((component) => ({
-        ...component,
-        title: (component as any).title || "Component Title",
-        description: (component as any).description || "Component Description",
-      }));
-    return {
-      ...section,
-      grid: section.grid || "1",
-      title: section.title || "Section Title",
-      description: section.description || "Section Description",
-      components,
-    };
-  });
-};
+import transFormToSections from "@/utils/transformToSectionComponents";
+import { unstable_noStore as noStore } from "next/cache";
 
 const getLandingPageData = async () => {
+  // Opt out of caching for this function
+  noStore();
+
   try {
     const data = await client.pageLanding();
     return data;
@@ -37,6 +18,11 @@ const getLandingPageData = async () => {
     throw error;
   }
 };
+
+// Force dynamic rendering and disable caching
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const homePageData = await getLandingPageData();
 
 export default function Home() {
@@ -50,31 +36,11 @@ export default function Home() {
     <div className="font-sans w-full">
       <main>
         <Navigation />
-        <div className="mx-auto my-auto px-4">
-          <div className="items-center py-10 md:p-10 lg:p-20">
-            <Banner
-              name="Isaias Santos"
-              image={{
-                src: "/isaias-c.png",
-                width: 400,
-                height: 400,
-                alt: "",
-              }}
-              achievements={[
-                { number: "60%", text: "Frontend" },
-                { number: "40%", text: "Backend" },
-                { number: "10+", text: "Years of Experience" },
-                { number: "20+", text: "Projects" },
-              ]}
-            />
-          </div>
-        </div>
-
         {sections.map((section, index) => {
           if (!section) return null;
           return (
             <Section
-              key={index}
+              key={`section-${index}_${section.title || "default"}`}
               {...section}
               title={section.title || "Section Title"}
               description={section.description}
