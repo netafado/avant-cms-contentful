@@ -11,7 +11,6 @@ const endpoint = process.env.CONTENTFUL_GRAPHQL_ENDPOINT;
 const graphQlClient = new GraphQLClient(endpoint, {
   headers: {
     Authorization: `Bearer ${process.env.CONTENTFUL_ACCESS_TOKEN}`,
-    cache: "no-cache",
   },
 });
 

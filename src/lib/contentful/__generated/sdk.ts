@@ -338,6 +338,8 @@ export type ComponentBannerLinkingCollectionsSectionCollectionArgs = {
 };
 
 export enum ComponentBannerLinkingCollectionsSectionCollectionOrder {
+  GridAsc = 'grid_ASC',
+  GridDesc = 'grid_DESC',
   SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
   SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
   SysIdAsc = 'sys_id_ASC',
@@ -505,6 +507,8 @@ export enum ComponentCardLinkingCollectionsComponentsCardsCollectionOrder {
 }
 
 export enum ComponentCardLinkingCollectionsSectionCollectionOrder {
+  GridAsc = 'grid_ASC',
+  GridDesc = 'grid_DESC',
   SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
   SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
   SysIdAsc = 'sys_id_ASC',
@@ -836,6 +840,8 @@ export type ComponentTagListLinkingCollectionsSectionCollectionArgs = {
 };
 
 export enum ComponentTagListLinkingCollectionsSectionCollectionOrder {
+  GridAsc = 'grid_ASC',
+  GridDesc = 'grid_DESC',
   SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
   SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
   SysIdAsc = 'sys_id_ASC',
@@ -956,6 +962,8 @@ export type ComponentsCardsLinkingCollectionsSectionCollectionArgs = {
 };
 
 export enum ComponentsCardsLinkingCollectionsSectionCollectionOrder {
+  GridAsc = 'grid_ASC',
+  GridDesc = 'grid_DESC',
   SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
   SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
   SysIdAsc = 'sys_id_ASC',
@@ -1687,6 +1695,7 @@ export type Section = Entry & _Node & {
   componentsCollection?: Maybe<SectionComponentsCollection>;
   contentfulMetadata: ContentfulMetadata;
   description?: Maybe<Scalars['String']['output']>;
+  grid?: Maybe<Scalars['String']['output']>;
   linkedFrom?: Maybe<SectionLinkingCollections>;
   sys: Sys;
   title?: Maybe<Scalars['String']['output']>;
@@ -1705,6 +1714,12 @@ export type SectionComponentsCollectionArgs = {
 
 /** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/section) */
 export type SectionDescriptionArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/section) */
+export type SectionGridArgs = {
   locale?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -1758,6 +1773,13 @@ export type SectionFilter = {
   description_not?: InputMaybe<Scalars['String']['input']>;
   description_not_contains?: InputMaybe<Scalars['String']['input']>;
   description_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  grid?: InputMaybe<Scalars['String']['input']>;
+  grid_contains?: InputMaybe<Scalars['String']['input']>;
+  grid_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  grid_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  grid_not?: InputMaybe<Scalars['String']['input']>;
+  grid_not_contains?: InputMaybe<Scalars['String']['input']>;
+  grid_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   sys?: InputMaybe<SysFilter>;
   title?: InputMaybe<Scalars['String']['input']>;
   title_contains?: InputMaybe<Scalars['String']['input']>;
@@ -1782,6 +1804,8 @@ export type SectionLinkingCollectionsEntryCollectionArgs = {
 };
 
 export enum SectionOrder {
+  GridAsc = 'grid_ASC',
+  GridDesc = 'grid_DESC',
   SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
   SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
   SysIdAsc = 'sys_id_ASC',
@@ -2040,9 +2064,9 @@ export type ComponentFieldsBannerFragment = { __typename: 'ComponentBanner', tit
       & ComponentFieldsAchievementFragment
     ) | null> } | null };
 
-export type ComponentFieldsCardFragment = { __typename: 'ComponentCard', _id: string, company?: string | null, subtitle?: string | null, title?: string | null, description?: string | null, sys: { __typename?: 'Sys', id: string } };
+export type ComponentFieldsCardFragment = { __typename: 'ComponentCard', _id: string, company?: string | null, subtitle?: string | null, title?: string | null, description?: string | null, categories?: Array<string | null> | null, sys: { __typename?: 'Sys', id: string } };
 
-export type ComponentFieldsTagListFragment = { __typename: 'ComponentTagList', color?: string | null, tags?: Array<string | null> | null, sys: { __typename?: 'Sys', id: string } };
+export type ComponentFieldsTagListFragment = { __typename: 'ComponentTagList', color?: string | null, tags?: Array<string | null> | null, title?: string | null, sys: { __typename?: 'Sys', id: string } };
 
 export type ComponentFieldsCardsFragment = { __typename: 'ComponentsCards', sys: { __typename?: 'Sys', id: string }, cardsCollection?: { __typename?: 'ComponentsCardsCardsCollection', items: Array<(
       { __typename?: 'ComponentCard' }
@@ -2070,7 +2094,7 @@ export type PageLandingQuery = { __typename?: 'Query', pageLandingCollection?: {
       & PageLandingFieldsFragment
     ) | null> } | null };
 
-export type SectionFieldsFragment = { __typename: 'Section', title?: string | null, description?: string | null, sys: { __typename?: 'Sys', id: string }, componentsCollection?: { __typename?: 'SectionComponentsCollection', items: Array<(
+export type SectionFieldsFragment = { __typename: 'Section', title?: string | null, description?: string | null, grid?: string | null, sys: { __typename?: 'Sys', id: string }, componentsCollection?: { __typename?: 'SectionComponentsCollection', items: Array<(
       { __typename: 'ComponentBanner' }
       & ComponentFieldsBannerFragment
     ) | (
@@ -2139,7 +2163,7 @@ export const ComponentFieldsBannerFragmentDoc = gql`
   mainImage {
     ...ImageFields
   }
-  achievementsCollection {
+  achievementsCollection(limit: 5) {
     items {
       ...ComponentFieldsAchievement
     }
@@ -2157,6 +2181,7 @@ export const ComponentFieldsCardFragmentDoc = gql`
   subtitle
   title
   description
+  categories
 }
     `;
 export const ComponentFieldsTagListFragmentDoc = gql`
@@ -2167,6 +2192,7 @@ export const ComponentFieldsTagListFragmentDoc = gql`
   }
   color
   tags
+  title
 }
     `;
 export const ComponentFieldsCardsFragmentDoc = gql`
@@ -2175,7 +2201,7 @@ export const ComponentFieldsCardsFragmentDoc = gql`
   sys {
     id
   }
-  cardsCollection {
+  cardsCollection(limit: 5) {
     items {
       ...ComponentFieldsCard
     }
@@ -2190,7 +2216,8 @@ export const SectionFieldsFragmentDoc = gql`
   }
   title
   description
-  componentsCollection {
+  grid
+  componentsCollection(limit: 5) {
     items {
       __typename
       ... on ComponentBanner {
@@ -2220,7 +2247,7 @@ export const PageLandingFieldsFragmentDoc = gql`
   seoFields {
     ...SeoFields
   }
-  sectionsCollection {
+  sectionsCollection(limit: 3) {
     items {
       ...SectionFields
     }

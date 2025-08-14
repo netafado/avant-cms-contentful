@@ -3,7 +3,9 @@ import Banner from "@/components/Banner";
 import Navigation from "@/components/Navigation";
 import SectionAbout from "@/components/SectionAbout";
 import Section from "@/components/Section";
+import { SectionProps } from "@/components/Section/types";
 import { client } from "@/lib/contentful";
+import { Section as SectionType } from "@/lib/contentful/__generated/sdk";
 const experience = [
   {
     company: "Bold Commerce",
@@ -69,6 +71,29 @@ const integrationTools = [
 ];
 
 const backendTools = ["Node.js", "Express", "MongoDB", "PostgreSQL", "GraphQL"];
+
+const transFormToSections = (sections: SectionType[]): SectionProps[] => {
+  return sections.map((section) => {
+    const components = (section.componentsCollection?.items || [])
+      .filter(
+        (component): component is NonNullable<typeof component> =>
+          component !== null
+      )
+      .map((component) => ({
+        ...component,
+        title: (component as any).title || "Component Title",
+        description: (component as any).description || "Component Description",
+      }));
+    return {
+      ...section,
+      grid: section.grid || "1",
+      title: section.title || "Section Title",
+      description: section.description || "Section Description",
+      components,
+    };
+  });
+};
+
 const getLandingPageData = async () => {
   try {
     const data = await client.pageLanding();
@@ -81,7 +106,12 @@ const getLandingPageData = async () => {
 const homePageData = await getLandingPageData();
 
 export default function Home() {
-  console.log("Home page data:", homePageData);
+  const { sectionsCollection } =
+    homePageData.pageLandingCollection?.items[0] || {};
+  const sections = transFormToSections(
+    (sectionsCollection?.items as unknown as SectionType[]) || []
+  );
+  console.log("Sections data:", sectionsCollection);
   return (
     <div className="font-sans w-full">
       <main>
@@ -113,7 +143,18 @@ export default function Home() {
           backendTools={backendTools}
           integrationTools={integrationTools}
         />
-
+        {sections.map((section, index) => {
+          if (!section) return null;
+          return (
+            <Section
+              key={index}
+              {...section}
+              title={section.title || "Section Title"}
+              description={section.description}
+              components={section.components || []}
+            />
+          );
+        })}
         <Section
           title="Experience"
           description="Check out my work experience and the technologies I've used"

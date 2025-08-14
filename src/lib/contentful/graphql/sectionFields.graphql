@@ -5,6 +5,7 @@ fragment SectionFields on Section {
   }
   title
   description
+  grid
   componentsCollection(limit: 5) {
     items {
       __typename
