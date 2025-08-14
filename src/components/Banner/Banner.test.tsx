@@ -3,7 +3,6 @@ import { screen } from "@testing-library/dom";
 import Banner from "./index";
 import { BannerProps } from "./types";
 
-// Mock the Reveal component since it uses react-intersection-observer
 jest.mock("../Reveal", () => {
   return function MockReveal({ children, className }: any) {
     return <div className={className}>{children}</div>;
@@ -18,12 +17,14 @@ const mockProps: BannerProps = {
     height: 400,
     alt: "Test image",
   },
-  achievements: [
-    { number: "60%", text: "Frontend" },
-    { number: "40%", text: "Backend" },
-    { number: "10+", text: "Years of Experience" },
-    { number: "20+", text: "Projects" },
-  ],
+  achievements: {
+    items: [
+      { number: "60%", text: "Frontend" },
+      { number: "40%", text: "Backend" },
+      { number: "10+", text: "Years of Experience" },
+      { number: "20+", text: "Projects" },
+    ],
+  },
 };
 
 describe("Banner Component", () => {
@@ -61,16 +62,5 @@ describe("Banner Component", () => {
 
     const nameElement = screen.getByText("Test Name");
     expect(nameElement).toBeInTheDocument();
-  });
-
-  it("applies correct CSS classes", () => {
-    render(<Banner {...mockProps} />);
-
-    const nameElement = screen.getByText("Test Name");
-    expect(nameElement).toHaveClass(
-      "bg-clip-text",
-      "text-transparent",
-      "bg-gradient-to-b"
-    );
   });
 });

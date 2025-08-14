@@ -1,38 +1,20 @@
 import {
-  ComponentBanner,
   SectionComponentsItem,
-  ComponentsCards,
   ComponentTagList,
+  SingleAchievement,
+  ComponentCard,
 } from "@/lib/contentful/__generated/sdk";
-import Banner from "../Banner";
+import Banner from "@/components/Banner";
 import { BannerProps } from "../Banner/types";
 import { FC } from "react";
 
-const isComponentBanner = (
-  component: SectionComponentsItem
-): component is ComponentBanner => {
-  return component.__typename === "ComponentBanner";
-};
-
-const isComponentCards = (
-  component: SectionComponentsItem
-): component is ComponentsCards => {
-  return component.__typename === "ComponentsCards";
-};
-
-import { ComponentCard } from "@/lib/contentful/__generated/sdk";
-
-const isComponentCard = (
-  component: SectionComponentsItem
-): component is ComponentCard => {
-  return component.__typename === "ComponentCard";
-};
-
-const isComponentTagList = (
-  component: SectionComponentsItem
-): component is ComponentTagList => {
-  return component.__typename === "ComponentTagList";
-};
+import {
+  isComponentBanner,
+  isComponentCards,
+  isComponentCard,
+  isComponentTagList,
+  isSingleAchievement,
+} from "@/utils/componentsGuard";
 
 type CardProps = {
   company: string;
@@ -102,22 +84,42 @@ const transformToComponentProps = <T extends object, S extends object>(
 
 const ComponentsHandler = {
   ComponentBanner: (component: SectionComponentsItem) => {
-    console.log("Rendering ComponentBanner with data:", component);
-
-    if (isComponentBanner(component)) {
-      return (
-        <Banner
-          {...transformToComponentProps<BannerProps, ComponentBanner>(
-            component,
-            {
-              achievements: "achievementsCollection",
-              name: "achievementsCollection",
-              image: "achievementsCollection",
-            }
-          )}
-        />
-      );
+    if (!isComponentBanner(component)) {
+      return null;
     }
+    const bannerProps: BannerProps = {
+      name: component.title || "Default Name",
+      image: component.mainImage
+        ? {
+            src: component.mainImage.url || "",
+            width: component.mainImage.width || 400,
+            height: component.mainImage.height || 400,
+            alt:
+              component.mainImage.title ||
+              component.mainImage.description ||
+              "",
+          }
+        : {
+            src: "/default-image.jpg",
+            width: 400,
+            height: 400,
+            alt: "Default image",
+          },
+      achievements: component.achievementsCollection?.items
+        ? {
+            items: component.achievementsCollection.items
+              .filter((achievement): achievement is SingleAchievement =>
+                isSingleAchievement(achievement)
+              )
+              .map((achievement) => ({
+                number: achievement.number || "0",
+                text: achievement.text || "Default text",
+              })),
+          }
+        : undefined,
+    };
+
+    return <Banner {...bannerProps} />;
   },
   ComponentCard: (component: SectionComponentsItem) => {
     if (!isComponentCard(component)) {

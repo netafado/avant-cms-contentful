@@ -1,3 +1,7 @@
+type Achievements = {
+  number: string;
+  text: string;
+};
 export type BannerProps = {
   name: string;
   image: {
@@ -7,7 +11,6 @@ export type BannerProps = {
     alt: string;
   };
   achievements?: {
-    number: string;
-    text: string;
-  }[];
+    items: Achievements[];
+  };
 };
