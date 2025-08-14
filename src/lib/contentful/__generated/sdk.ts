@@ -340,6 +340,8 @@ export type ComponentBannerLinkingCollectionsSectionCollectionArgs = {
 export enum ComponentBannerLinkingCollectionsSectionCollectionOrder {
   GridAsc = 'grid_ASC',
   GridDesc = 'grid_DESC',
+  LayoutTypeAsc = 'layoutType_ASC',
+  LayoutTypeDesc = 'layoutType_DESC',
   SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
   SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
   SysIdAsc = 'sys_id_ASC',
@@ -509,6 +511,8 @@ export enum ComponentCardLinkingCollectionsComponentsCardsCollectionOrder {
 export enum ComponentCardLinkingCollectionsSectionCollectionOrder {
   GridAsc = 'grid_ASC',
   GridDesc = 'grid_DESC',
+  LayoutTypeAsc = 'layoutType_ASC',
+  LayoutTypeDesc = 'layoutType_DESC',
   SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
   SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
   SysIdAsc = 'sys_id_ASC',
@@ -695,6 +699,8 @@ export enum ComponentSeoLinkingCollectionsPageLandingCollectionOrder {
   HeroBannerHeadlineDesc = 'heroBannerHeadline_DESC',
   InternalNameAsc = 'internalName_ASC',
   InternalNameDesc = 'internalName_DESC',
+  LayoutTypeAsc = 'layoutType_ASC',
+  LayoutTypeDesc = 'layoutType_DESC',
   SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
   SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
   SysIdAsc = 'sys_id_ASC',
@@ -842,6 +848,8 @@ export type ComponentTagListLinkingCollectionsSectionCollectionArgs = {
 export enum ComponentTagListLinkingCollectionsSectionCollectionOrder {
   GridAsc = 'grid_ASC',
   GridDesc = 'grid_DESC',
+  LayoutTypeAsc = 'layoutType_ASC',
+  LayoutTypeDesc = 'layoutType_DESC',
   SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
   SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
   SysIdAsc = 'sys_id_ASC',
@@ -964,6 +972,8 @@ export type ComponentsCardsLinkingCollectionsSectionCollectionArgs = {
 export enum ComponentsCardsLinkingCollectionsSectionCollectionOrder {
   GridAsc = 'grid_ASC',
   GridDesc = 'grid_DESC',
+  LayoutTypeAsc = 'layoutType_ASC',
+  LayoutTypeDesc = 'layoutType_DESC',
   SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
   SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
   SysIdAsc = 'sys_id_ASC',
@@ -1165,6 +1175,7 @@ export type PageLanding = Entry & _Node & {
   heroBannerHeadlineColor?: Maybe<Scalars['String']['output']>;
   heroBannerImage?: Maybe<Asset>;
   internalName?: Maybe<Scalars['String']['output']>;
+  layoutType?: Maybe<Scalars['String']['output']>;
   linkedFrom?: Maybe<PageLandingLinkingCollections>;
   sectionsCollection?: Maybe<PageLandingSectionsCollection>;
   seoFields?: Maybe<ComponentSeo>;
@@ -1199,6 +1210,12 @@ export type PageLandingInternalNameArgs = {
 
 
 /** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/pageLanding) */
+export type PageLandingLayoutTypeArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/pageLanding) */
 export type PageLandingLinkedFromArgs = {
   allowedLocales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
@@ -1208,8 +1225,10 @@ export type PageLandingLinkedFromArgs = {
 export type PageLandingSectionsCollectionArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   locale?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Array<InputMaybe<PageLandingSectionsCollectionOrder>>>;
   preview?: InputMaybe<Scalars['Boolean']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<SectionFilter>;
 };
 
 
@@ -1260,6 +1279,14 @@ export type PageLandingFilter = {
   internalName_not?: InputMaybe<Scalars['String']['input']>;
   internalName_not_contains?: InputMaybe<Scalars['String']['input']>;
   internalName_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  layoutType?: InputMaybe<Scalars['String']['input']>;
+  layoutType_contains?: InputMaybe<Scalars['String']['input']>;
+  layoutType_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  layoutType_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  layoutType_not?: InputMaybe<Scalars['String']['input']>;
+  layoutType_not_contains?: InputMaybe<Scalars['String']['input']>;
+  layoutType_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  sections?: InputMaybe<CfSectionNestedFilter>;
   sectionsCollection_exists?: InputMaybe<Scalars['Boolean']['input']>;
   seoFields?: InputMaybe<CfComponentSeoNestedFilter>;
   seoFields_exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1293,6 +1320,8 @@ export enum PageLandingOrder {
   HeroBannerHeadlineDesc = 'heroBannerHeadline_DESC',
   InternalNameAsc = 'internalName_ASC',
   InternalNameDesc = 'internalName_DESC',
+  LayoutTypeAsc = 'layoutType_ASC',
+  LayoutTypeDesc = 'layoutType_DESC',
   SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
   SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
   SysIdAsc = 'sys_id_ASC',
@@ -1307,11 +1336,28 @@ export enum PageLandingOrder {
 
 export type PageLandingSectionsCollection = {
   __typename?: 'PageLandingSectionsCollection';
-  items: Array<Maybe<Entry>>;
+  items: Array<Maybe<Section>>;
   limit: Scalars['Int']['output'];
   skip: Scalars['Int']['output'];
   total: Scalars['Int']['output'];
 };
+
+export enum PageLandingSectionsCollectionOrder {
+  GridAsc = 'grid_ASC',
+  GridDesc = 'grid_DESC',
+  LayoutTypeAsc = 'layoutType_ASC',
+  LayoutTypeDesc = 'layoutType_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC'
+}
 
 /** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/pageProduct) */
 export type PageProduct = Entry & _Node & {
@@ -1696,6 +1742,7 @@ export type Section = Entry & _Node & {
   contentfulMetadata: ContentfulMetadata;
   description?: Maybe<Scalars['String']['output']>;
   grid?: Maybe<Scalars['String']['output']>;
+  layoutType?: Maybe<Scalars['String']['output']>;
   linkedFrom?: Maybe<SectionLinkingCollections>;
   sys: Sys;
   title?: Maybe<Scalars['String']['output']>;
@@ -1720,6 +1767,12 @@ export type SectionDescriptionArgs = {
 
 /** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/section) */
 export type SectionGridArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/section) */
+export type SectionLayoutTypeArgs = {
   locale?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -1780,6 +1833,13 @@ export type SectionFilter = {
   grid_not?: InputMaybe<Scalars['String']['input']>;
   grid_not_contains?: InputMaybe<Scalars['String']['input']>;
   grid_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  layoutType?: InputMaybe<Scalars['String']['input']>;
+  layoutType_contains?: InputMaybe<Scalars['String']['input']>;
+  layoutType_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  layoutType_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  layoutType_not?: InputMaybe<Scalars['String']['input']>;
+  layoutType_not_contains?: InputMaybe<Scalars['String']['input']>;
+  layoutType_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   sys?: InputMaybe<SysFilter>;
   title?: InputMaybe<Scalars['String']['input']>;
   title_contains?: InputMaybe<Scalars['String']['input']>;
@@ -1793,6 +1853,7 @@ export type SectionFilter = {
 export type SectionLinkingCollections = {
   __typename?: 'SectionLinkingCollections';
   entryCollection?: Maybe<EntryCollection>;
+  pageLandingCollection?: Maybe<PageLandingCollection>;
 };
 
 
@@ -1803,9 +1864,41 @@ export type SectionLinkingCollectionsEntryCollectionArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
+
+export type SectionLinkingCollectionsPageLandingCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Array<InputMaybe<SectionLinkingCollectionsPageLandingCollectionOrder>>>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export enum SectionLinkingCollectionsPageLandingCollectionOrder {
+  HeroBannerHeadlineColorAsc = 'heroBannerHeadlineColor_ASC',
+  HeroBannerHeadlineColorDesc = 'heroBannerHeadlineColor_DESC',
+  HeroBannerHeadlineAsc = 'heroBannerHeadline_ASC',
+  HeroBannerHeadlineDesc = 'heroBannerHeadline_DESC',
+  InternalNameAsc = 'internalName_ASC',
+  InternalNameDesc = 'internalName_DESC',
+  LayoutTypeAsc = 'layoutType_ASC',
+  LayoutTypeDesc = 'layoutType_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
+  UrlAsc = 'url_ASC',
+  UrlDesc = 'url_DESC'
+}
+
 export enum SectionOrder {
   GridAsc = 'grid_ASC',
   GridDesc = 'grid_DESC',
+  LayoutTypeAsc = 'layoutType_ASC',
+  LayoutTypeDesc = 'layoutType_DESC',
   SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
   SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
   SysIdAsc = 'sys_id_ASC',
@@ -2047,6 +2140,42 @@ export type CfComponentSeoNestedFilter = {
   sys?: InputMaybe<SysFilter>;
 };
 
+export type CfSectionNestedFilter = {
+  AND?: InputMaybe<Array<InputMaybe<CfSectionNestedFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<CfSectionNestedFilter>>>;
+  componentsCollection_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  description_contains?: InputMaybe<Scalars['String']['input']>;
+  description_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  description_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  description_not?: InputMaybe<Scalars['String']['input']>;
+  description_not_contains?: InputMaybe<Scalars['String']['input']>;
+  description_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  grid?: InputMaybe<Scalars['String']['input']>;
+  grid_contains?: InputMaybe<Scalars['String']['input']>;
+  grid_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  grid_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  grid_not?: InputMaybe<Scalars['String']['input']>;
+  grid_not_contains?: InputMaybe<Scalars['String']['input']>;
+  grid_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  layoutType?: InputMaybe<Scalars['String']['input']>;
+  layoutType_contains?: InputMaybe<Scalars['String']['input']>;
+  layoutType_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  layoutType_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  layoutType_not?: InputMaybe<Scalars['String']['input']>;
+  layoutType_not_contains?: InputMaybe<Scalars['String']['input']>;
+  layoutType_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  sys?: InputMaybe<SysFilter>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_contains?: InputMaybe<Scalars['String']['input']>;
+  title_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  title_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  title_not?: InputMaybe<Scalars['String']['input']>;
+  title_not_contains?: InputMaybe<Scalars['String']['input']>;
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type CfcomponentsMultiTypeNestedFilter = {
   AND?: InputMaybe<Array<InputMaybe<CfcomponentsMultiTypeNestedFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<CfcomponentsMultiTypeNestedFilter>>>;
@@ -2078,10 +2207,10 @@ export type ImageFieldsFragment = { __typename: 'Asset', title?: string | null, 
 export type PageLandingFieldsFragment = { __typename: 'PageLanding', internalName?: string | null, sys: { __typename?: 'Sys', id: string, spaceId: string }, seoFields?: (
     { __typename?: 'ComponentSeo' }
     & SeoFieldsFragment
-  ) | null, sectionsCollection?: { __typename?: 'PageLandingSectionsCollection', items: Array<{ __typename?: 'ComponentBanner' } | { __typename?: 'ComponentCard' } | { __typename?: 'ComponentSeo' } | { __typename?: 'ComponentTagList' } | { __typename?: 'ComponentsCards' } | { __typename?: 'PageLanding' } | { __typename?: 'PageProduct' } | (
+  ) | null, sectionsCollection?: { __typename?: 'PageLandingSectionsCollection', items: Array<(
       { __typename?: 'Section' }
       & SectionFieldsFragment
-    ) | { __typename?: 'SingleAchievement' } | null> } | null };
+    ) | null> } | null };
 
 export type PageLandingQueryVariables = Exact<{
   locale?: InputMaybe<Scalars['String']['input']>;
@@ -2094,7 +2223,7 @@ export type PageLandingQuery = { __typename?: 'Query', pageLandingCollection?: {
       & PageLandingFieldsFragment
     ) | null> } | null };
 
-export type SectionFieldsFragment = { __typename: 'Section', title?: string | null, description?: string | null, grid?: string | null, sys: { __typename?: 'Sys', id: string }, componentsCollection?: { __typename?: 'SectionComponentsCollection', items: Array<(
+export type SectionFieldsFragment = { __typename: 'Section', title?: string | null, description?: string | null, grid?: string | null, layoutType?: string | null, sys: { __typename?: 'Sys', id: string }, componentsCollection?: { __typename?: 'SectionComponentsCollection', items: Array<(
       { __typename: 'ComponentBanner' }
       & ComponentFieldsBannerFragment
     ) | (
@@ -2217,6 +2346,7 @@ export const SectionFieldsFragmentDoc = gql`
   title
   description
   grid
+  layoutType
   componentsCollection(limit: 5) {
     items {
       __typename

@@ -183,6 +183,8 @@ type ComponentBannerLinkingCollections {
 enum ComponentBannerLinkingCollectionsSectionCollectionOrder {
   grid_ASC
   grid_DESC
+  layoutType_ASC
+  layoutType_DESC
   sys_firstPublishedAt_ASC
   sys_firstPublishedAt_DESC
   sys_id_ASC
@@ -289,6 +291,8 @@ enum ComponentCardLinkingCollectionsComponentsCardsCollectionOrder {
 enum ComponentCardLinkingCollectionsSectionCollectionOrder {
   grid_ASC
   grid_DESC
+  layoutType_ASC
+  layoutType_DESC
   sys_firstPublishedAt_ASC
   sys_firstPublishedAt_DESC
   sys_id_ASC
@@ -397,6 +401,8 @@ enum ComponentSeoLinkingCollectionsPageLandingCollectionOrder {
   heroBannerHeadline_DESC
   internalName_ASC
   internalName_DESC
+  layoutType_ASC
+  layoutType_DESC
   sys_firstPublishedAt_ASC
   sys_firstPublishedAt_DESC
   sys_id_ASC
@@ -502,6 +508,8 @@ type ComponentTagListLinkingCollections {
 enum ComponentTagListLinkingCollectionsSectionCollectionOrder {
   grid_ASC
   grid_DESC
+  layoutType_ASC
+  layoutType_DESC
   sys_firstPublishedAt_ASC
   sys_firstPublishedAt_DESC
   sys_id_ASC
@@ -588,6 +596,8 @@ type ComponentsCardsLinkingCollections {
 enum ComponentsCardsLinkingCollectionsSectionCollectionOrder {
   grid_ASC
   grid_DESC
+  layoutType_ASC
+  layoutType_DESC
   sys_firstPublishedAt_ASC
   sys_firstPublishedAt_DESC
   sys_id_ASC
@@ -841,8 +851,9 @@ type PageLanding implements Entry & _Node {
   heroBannerHeadlineColor(locale: String): String
   heroBannerImage(locale: String, preview: Boolean): Asset
   internalName(locale: String): String
+  layoutType(locale: String): String
   linkedFrom(allowedLocales: [String]): PageLandingLinkingCollections
-  sectionsCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): PageLandingSectionsCollection
+  sectionsCollection(limit: Int = 100, locale: String, order: [PageLandingSectionsCollectionOrder], preview: Boolean, skip: Int = 0, where: SectionFilter): PageLandingSectionsCollection
   seoFields(locale: String, preview: Boolean, where: ComponentSeoFilter): ComponentSeo
   sys: Sys!
   url(locale: String): String
@@ -881,6 +892,14 @@ input PageLandingFilter {
   internalName_not: String
   internalName_not_contains: String
   internalName_not_in: [String]
+  layoutType: String
+  layoutType_contains: String
+  layoutType_exists: Boolean
+  layoutType_in: [String]
+  layoutType_not: String
+  layoutType_not_contains: String
+  layoutType_not_in: [String]
+  sections: cfSectionNestedFilter
   sectionsCollection_exists: Boolean
   seoFields: cfComponentSeoNestedFilter
   seoFields_exists: Boolean
@@ -905,6 +924,8 @@ enum PageLandingOrder {
   heroBannerHeadline_DESC
   internalName_ASC
   internalName_DESC
+  layoutType_ASC
+  layoutType_DESC
   sys_firstPublishedAt_ASC
   sys_firstPublishedAt_DESC
   sys_id_ASC
@@ -918,10 +939,27 @@ enum PageLandingOrder {
 }
 
 type PageLandingSectionsCollection {
-  items: [Entry]!
+  items: [Section]!
   limit: Int!
   skip: Int!
   total: Int!
+}
+
+enum PageLandingSectionsCollectionOrder {
+  grid_ASC
+  grid_DESC
+  layoutType_ASC
+  layoutType_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  title_ASC
+  title_DESC
 }
 
 """
@@ -1058,6 +1096,7 @@ type Section implements Entry & _Node {
   contentfulMetadata: ContentfulMetadata!
   description(locale: String): String
   grid(locale: String): String
+  layoutType(locale: String): String
   linkedFrom(allowedLocales: [String]): SectionLinkingCollections
   sys: Sys!
   title(locale: String): String
@@ -1106,6 +1145,13 @@ input SectionFilter {
   grid_not: String
   grid_not_contains: String
   grid_not_in: [String]
+  layoutType: String
+  layoutType_contains: String
+  layoutType_exists: Boolean
+  layoutType_in: [String]
+  layoutType_not: String
+  layoutType_not_contains: String
+  layoutType_not_in: [String]
   sys: SysFilter
   title: String
   title_contains: String
@@ -1118,11 +1164,35 @@ input SectionFilter {
 
 type SectionLinkingCollections {
   entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): EntryCollection
+  pageLandingCollection(limit: Int = 100, locale: String, order: [SectionLinkingCollectionsPageLandingCollectionOrder], preview: Boolean, skip: Int = 0): PageLandingCollection
+}
+
+enum SectionLinkingCollectionsPageLandingCollectionOrder {
+  heroBannerHeadlineColor_ASC
+  heroBannerHeadlineColor_DESC
+  heroBannerHeadline_ASC
+  heroBannerHeadline_DESC
+  internalName_ASC
+  internalName_DESC
+  layoutType_ASC
+  layoutType_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  url_ASC
+  url_DESC
 }
 
 enum SectionOrder {
   grid_ASC
   grid_DESC
+  layoutType_ASC
+  layoutType_DESC
   sys_firstPublishedAt_ASC
   sys_firstPublishedAt_DESC
   sys_id_ASC
@@ -1334,6 +1404,42 @@ input cfComponentSeoNestedFilter {
   pageTitle_not_in: [String]
   shareImagesCollection_exists: Boolean
   sys: SysFilter
+}
+
+input cfSectionNestedFilter {
+  AND: [cfSectionNestedFilter]
+  OR: [cfSectionNestedFilter]
+  componentsCollection_exists: Boolean
+  contentfulMetadata: ContentfulMetadataFilter
+  description: String
+  description_contains: String
+  description_exists: Boolean
+  description_in: [String]
+  description_not: String
+  description_not_contains: String
+  description_not_in: [String]
+  grid: String
+  grid_contains: String
+  grid_exists: Boolean
+  grid_in: [String]
+  grid_not: String
+  grid_not_contains: String
+  grid_not_in: [String]
+  layoutType: String
+  layoutType_contains: String
+  layoutType_exists: Boolean
+  layoutType_in: [String]
+  layoutType_not: String
+  layoutType_not_contains: String
+  layoutType_not_in: [String]
+  sys: SysFilter
+  title: String
+  title_contains: String
+  title_exists: Boolean
+  title_in: [String]
+  title_not: String
+  title_not_contains: String
+  title_not_in: [String]
 }
 
 input cfcomponentsMultiTypeNestedFilter {
