@@ -4,7 +4,13 @@ import Banner from "./index";
 import { BannerProps } from "./types";
 
 jest.mock("../Reveal", () => {
-  return function MockReveal({ children, className }: any) {
+  return function MockReveal({
+    children,
+    className,
+  }: {
+    children: React.ReactNode;
+    className?: string;
+  }) {
     return <div className={className}>{children}</div>;
   };
 });

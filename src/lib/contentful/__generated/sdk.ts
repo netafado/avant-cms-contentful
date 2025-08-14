@@ -15,11 +15,11 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  DateTime: { input: any; output: any; }
-  Dimension: { input: any; output: any; }
-  HexColor: { input: any; output: any; }
-  JSON: { input: any; output: any; }
-  Quality: { input: any; output: any; }
+  DateTime: { input: string | Date; output: string | Date; }
+  Dimension: { input: number; output: number; }
+  HexColor: { input: string; output: string; }
+  JSON: { input: Record<string, unknown>; output: Record<string, unknown>; }
+  Quality: { input: number; output: number; }
 };
 
 /** Represents a binary file in a space. An asset can be any file type. */
