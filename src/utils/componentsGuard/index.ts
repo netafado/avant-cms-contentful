@@ -32,7 +32,11 @@ export const isComponentTagList = (
 };
 
 export const isSingleAchievement = (
-  achievement: any
+  achievement: unknown
 ): achievement is SingleAchievement => {
-  return achievement && achievement.__typename === "SingleAchievement";
+  return (
+    typeof achievement === "object" &&
+    achievement !== null &&
+    (achievement as SingleAchievement).__typename === "SingleAchievement"
+  );
 };

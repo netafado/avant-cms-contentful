@@ -159,7 +159,7 @@ const ComponentsHandler = {
     const cards = isComponentCards(component)
       ? component.cardsCollection?.items || []
       : [];
-
+    console.log("ComponentsCards", cards);
     return <div>ComponentsCards Placeholder</div>;
   },
 };
