@@ -181,6 +181,8 @@ type ComponentBannerLinkingCollections {
 }
 
 enum ComponentBannerLinkingCollectionsSectionCollectionOrder {
+  grid_ASC
+  grid_DESC
   sys_firstPublishedAt_ASC
   sys_firstPublishedAt_DESC
   sys_id_ASC
@@ -285,6 +287,8 @@ enum ComponentCardLinkingCollectionsComponentsCardsCollectionOrder {
 }
 
 enum ComponentCardLinkingCollectionsSectionCollectionOrder {
+  grid_ASC
+  grid_DESC
   sys_firstPublishedAt_ASC
   sys_firstPublishedAt_DESC
   sys_id_ASC
@@ -496,6 +500,8 @@ type ComponentTagListLinkingCollections {
 }
 
 enum ComponentTagListLinkingCollectionsSectionCollectionOrder {
+  grid_ASC
+  grid_DESC
   sys_firstPublishedAt_ASC
   sys_firstPublishedAt_DESC
   sys_id_ASC
@@ -580,6 +586,8 @@ type ComponentsCardsLinkingCollections {
 }
 
 enum ComponentsCardsLinkingCollectionsSectionCollectionOrder {
+  grid_ASC
+  grid_DESC
   sys_firstPublishedAt_ASC
   sys_firstPublishedAt_DESC
   sys_id_ASC
@@ -1049,6 +1057,7 @@ type Section implements Entry & _Node {
   componentsCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, where: SectionComponentsFilter): SectionComponentsCollection
   contentfulMetadata: ContentfulMetadata!
   description(locale: String): String
+  grid(locale: String): String
   linkedFrom(allowedLocales: [String]): SectionLinkingCollections
   sys: Sys!
   title(locale: String): String
@@ -1090,6 +1099,13 @@ input SectionFilter {
   description_not: String
   description_not_contains: String
   description_not_in: [String]
+  grid: String
+  grid_contains: String
+  grid_exists: Boolean
+  grid_in: [String]
+  grid_not: String
+  grid_not_contains: String
+  grid_not_in: [String]
   sys: SysFilter
   title: String
   title_contains: String
@@ -1105,6 +1121,8 @@ type SectionLinkingCollections {
 }
 
 enum SectionOrder {
+  grid_ASC
+  grid_DESC
   sys_firstPublishedAt_ASC
   sys_firstPublishedAt_DESC
   sys_id_ASC

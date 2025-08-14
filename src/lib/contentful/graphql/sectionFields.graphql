@@ -5,7 +5,7 @@ fragment SectionFields on Section {
   }
   title
   description
-  componentsCollection(limit: 10) {
+  componentsCollection(limit: 5) {
     items {
       __typename
       ... on ComponentBanner {

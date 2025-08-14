@@ -34,6 +34,7 @@ fragment ComponentFieldsCard on ComponentCard {
   subtitle
   title
   description
+  categories
 }
 
 fragment ComponentFieldsTagList on ComponentTagList {
@@ -43,6 +44,7 @@ fragment ComponentFieldsTagList on ComponentTagList {
   }
   color
   tags
+  title
 }
 
 fragment ComponentFieldsCards on ComponentsCards {
@@ -50,7 +52,7 @@ fragment ComponentFieldsCards on ComponentsCards {
   sys {
     id
   }
-  cardsCollection(limit: 10) {
+  cardsCollection(limit: 5) {
     items {
       ...ComponentFieldsCard
     }
