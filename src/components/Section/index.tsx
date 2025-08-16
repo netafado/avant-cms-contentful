@@ -18,7 +18,6 @@ const Section: FC<SectionProps> = ({
   layoutType = "default",
 }) => {
   const LayoutComponent = SectionOptions[layoutType] || SectionBase;
-  console.log("Rendering Section with layoutType:", layoutType);
   return (
     <LayoutComponent {...{ title, description, children, components, grid }} />
   );

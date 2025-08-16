@@ -1,19 +1,7 @@
 import { TagProps } from "./types";
 import classNames from "clsx";
-const SIZE = {
-  small: "text-xs",
-  medium: "text-sm",
-  large: "text-base",
-};
+import { SIZE, COLOR_CLASSES as colorClasses } from "./constants";
 
-const colorClasses = {
-  red: "bg-red-500/30 text-red-500",
-  green: "bg-green-500/30 text-green-500",
-  blue: "bg-blue-500/30 text-blue-500",
-  yellow: "bg-yellow-500/30 text-yellow-500",
-  purple: "bg-purple-500/30 text-purple-500",
-  gray: "bg-gray-500/30 text-gray-300",
-};
 const Tag = ({ text, color, size = "small", className }: TagProps) => {
   const isValid = isValidColor(color);
 
