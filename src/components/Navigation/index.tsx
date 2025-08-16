@@ -1,11 +1,10 @@
 import {
   GitHubLogoIcon,
-  PersonIcon,
   LinkedInLogoIcon,
   BookmarkIcon,
-  MobileIcon,
   HomeIcon,
-  BackpackIcon,
+  PieChartIcon,
+  FileTextIcon,
 } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import Link from "next/link";
@@ -27,12 +26,12 @@ const links = [
 
 const siteLinks = [
   { href: "/", label: "Home", icon: <HomeIcon /> },
-  { href: "/resume", label: "Resume", icon: <MobileIcon /> },
+  { href: "/resume", label: "Resume", icon: <FileTextIcon /> },
 ];
 
 const Navigation = ({ currentPath }: { currentPath: string }) => {
   return (
-    <div className="border-r border-gray-700 fixed top-0 right-0 z-50 flex flex-col items-center justify-between pb-0 rounded-lg h-full">
+    <div className="bg-gradient-to-tr from-black/50 to-transparent fixed border-r border-gray-700 top-0 right-0 z-50 flex flex-col items-center justify-between pb-0 rounded-lg h-full">
       <div className="flex py-0 pb-0 flex-col justify-between w-full h-full z-50 gap-1">
         <div className="bg-gray-800 ">
           {siteLinks.map((link, index) => (

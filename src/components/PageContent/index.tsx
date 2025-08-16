@@ -7,13 +7,12 @@ import transFormToSections from "@/utils/transformToSectionComponents";
 
 const getLandingPageData = async (url: string) => {
   try {
-    console.log("Fetching landing page data for URL:", url);
     const data = await client.pageLanding({
       where: {
         url,
       },
     });
-    console.log("Landing page data fetched:", data);
+
     return data;
   } catch (error) {
     console.error("Error fetching landing page data:", error);
@@ -34,7 +33,7 @@ export default async function PageContent({ url = "/" }: PageContentProps) {
   );
 
   return (
-    <div className="font-sans w-full">
+    <div className="font-sans w-full pr-10">
       <main>
         <Navigation currentPath={url} />
 
