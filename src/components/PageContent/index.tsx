@@ -36,7 +36,7 @@ export default async function PageContent({ url = "/" }: PageContentProps) {
   return (
     <div className="font-sans w-full">
       <main>
-        <Navigation />
+        <Navigation currentPath={url} />
 
         {sections.map((section, index) => {
           if (!section) return null;
