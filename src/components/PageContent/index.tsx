@@ -34,7 +34,7 @@ export default async function PageContent({ url = "/" }: PageContentProps) {
   );
 
   return (
-    <div className="font-sans w-full">
+    <div className="font-sans w-full pr-10">
       <main>
         <Navigation currentPath={url} />
 
