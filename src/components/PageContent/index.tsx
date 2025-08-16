@@ -37,18 +37,7 @@ export default async function PageContent({ url = "/" }: PageContentProps) {
     <div className="font-sans w-full">
       <main>
         <Navigation />
-        <nav
-          className="fixed top-0 right-10 right-0 h-16 bg-gray-900"
-          aria-hidden
-        >
-          {/* Spacer for fixed navigation */}
-          <ul className="relative flex gap-4 p-4 flex-col">
-            <li>Home</li>
-            <li>About</li>
-            <li>Projects</li>
-            <li>Contact</li>
-          </ul>
-        </nav>
+
         {sections.map((section, index) => {
           if (!section) return null;
           return (
