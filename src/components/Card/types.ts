@@ -6,4 +6,5 @@ export type CardProps = {
   duration: string;
   tools: string[];
   color: string;
+  limitSize?: boolean;
 };

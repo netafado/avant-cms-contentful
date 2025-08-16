@@ -193,6 +193,8 @@ enum ComponentBannerLinkingCollectionsSectionCollectionOrder {
   sys_publishedAt_DESC
   sys_publishedVersion_ASC
   sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
   title_ASC
   title_DESC
 }
@@ -309,6 +311,8 @@ enum ComponentCardLinkingCollectionsSectionCollectionOrder {
   sys_publishedAt_DESC
   sys_publishedVersion_ASC
   sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
   title_ASC
   title_DESC
 }
@@ -419,6 +423,8 @@ enum ComponentSeoLinkingCollectionsPageLandingCollectionOrder {
   sys_publishedAt_DESC
   sys_publishedVersion_ASC
   sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
   url_ASC
   url_DESC
 }
@@ -526,6 +532,8 @@ enum ComponentTagListLinkingCollectionsSectionCollectionOrder {
   sys_publishedAt_DESC
   sys_publishedVersion_ASC
   sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
   title_ASC
   title_DESC
 }
@@ -616,6 +624,8 @@ enum ComponentsCardsLinkingCollectionsSectionCollectionOrder {
   sys_publishedAt_DESC
   sys_publishedVersion_ASC
   sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
   title_ASC
   title_DESC
 }
@@ -865,6 +875,7 @@ type PageLanding implements Entry & _Node {
   sectionsCollection(limit: Int = 100, locale: String, order: [PageLandingSectionsCollectionOrder], preview: Boolean, skip: Int = 0, where: SectionFilter): PageLandingSectionsCollection
   seoFields(locale: String, preview: Boolean, where: ComponentSeoFilter): ComponentSeo
   sys: Sys!
+  textAlign(locale: String): String
   url(locale: String): String
 }
 
@@ -906,6 +917,13 @@ input PageLandingFilter {
   seoFields: cfComponentSeoNestedFilter
   seoFields_exists: Boolean
   sys: SysFilter
+  textAlign: String
+  textAlign_contains: String
+  textAlign_exists: Boolean
+  textAlign_in: [String]
+  textAlign_not: String
+  textAlign_not_contains: String
+  textAlign_not_in: [String]
   url: String
   url_contains: String
   url_exists: Boolean
@@ -934,6 +952,8 @@ enum PageLandingOrder {
   sys_publishedAt_DESC
   sys_publishedVersion_ASC
   sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
   url_ASC
   url_DESC
 }
@@ -958,6 +978,8 @@ enum PageLandingSectionsCollectionOrder {
   sys_publishedAt_DESC
   sys_publishedVersion_ASC
   sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
   title_ASC
   title_DESC
 }
@@ -1099,6 +1121,7 @@ type Section implements Entry & _Node {
   layoutType(locale: String): String
   linkedFrom(allowedLocales: [String]): SectionLinkingCollections
   sys: Sys!
+  textAlign(locale: String): String
   title(locale: String): String
 }
 
@@ -1153,6 +1176,13 @@ input SectionFilter {
   layoutType_not_contains: String
   layoutType_not_in: [String]
   sys: SysFilter
+  textAlign: String
+  textAlign_contains: String
+  textAlign_exists: Boolean
+  textAlign_in: [String]
+  textAlign_not: String
+  textAlign_not_contains: String
+  textAlign_not_in: [String]
   title: String
   title_contains: String
   title_exists: Boolean
@@ -1182,6 +1212,8 @@ enum SectionLinkingCollectionsPageLandingCollectionOrder {
   sys_publishedAt_DESC
   sys_publishedVersion_ASC
   sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
   url_ASC
   url_DESC
 }
@@ -1199,6 +1231,8 @@ enum SectionOrder {
   sys_publishedAt_DESC
   sys_publishedVersion_ASC
   sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
   title_ASC
   title_DESC
 }
@@ -1438,6 +1472,13 @@ input cfSectionNestedFilter {
   layoutType_not_contains: String
   layoutType_not_in: [String]
   sys: SysFilter
+  textAlign: String
+  textAlign_contains: String
+  textAlign_exists: Boolean
+  textAlign_in: [String]
+  textAlign_not: String
+  textAlign_not_contains: String
+  textAlign_not_in: [String]
   title: String
   title_contains: String
   title_exists: Boolean

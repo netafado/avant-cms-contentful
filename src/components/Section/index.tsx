@@ -16,10 +16,14 @@ const Section: FC<SectionProps> = ({
   components,
   grid,
   layoutType = "default",
+  ...rest
 }) => {
   const LayoutComponent = SectionOptions[layoutType] || SectionBase;
+
   return (
-    <LayoutComponent {...{ title, description, children, components, grid }} />
+    <LayoutComponent
+      {...{ title, description, children, components, grid, ...rest }}
+    />
   );
 };
 

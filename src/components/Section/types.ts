@@ -13,4 +13,5 @@ export type SectionProps = {
   components?: SectionComponents[];
   grid?: string;
   layoutType?: "default" | "no-title";
+  textAlign?: "left" | "center" | "right";
 };
