@@ -5,11 +5,12 @@ import {
   ComponentCard,
 } from "@/lib/contentful/__generated/sdk";
 import Banner from "@/components/Banner";
-import Tag from "@/components/Tag";
 import { BannerProps } from "../Banner/types";
-import { FC } from "react";
+
 import Card from "@/components/Card";
 import type { CardProps } from "@/components/Card/types";
+import transformToComponentProps from "@/utils/transformToComponentProps";
+import ComponentTags from "@/components/CardWithTagList";
 
 import {
   isComponentBanner,
@@ -23,31 +24,6 @@ type ComponentTagListProps = {
   color?: string;
   list: string[];
   title: string;
-};
-
-const ComponentTags: FC<ComponentTagListProps> = ({ list, title, color }) => {
-  return (
-    <div className="border py-2 px-4 border-gray-700 pr-4">
-      <h3 className="mt-4 pb-2 font-semibold">{title}</h3>
-      {list.map((tool, index) => (
-        <Tag key={index} text={tool} color={color} size="small" />
-      ))}
-    </div>
-  );
-};
-
-const transformToComponentProps = <T extends object, S extends object>(
-  component: S,
-  propMap: { [K in keyof T]: keyof S }
-): T => {
-  const result = {} as T;
-  (Object.keys(propMap) as Array<keyof T>).forEach((key) => {
-    const sourceKey = propMap[key];
-    if (component && component[sourceKey] !== undefined) {
-      result[key] = component[sourceKey] as T[typeof key];
-    }
-  });
-  return result;
 };
 
 const ComponentsHandler = {
