@@ -7,6 +7,7 @@ fragment SectionFields on Section {
   description
   grid
   layoutType
+  textAlign
   componentsCollection(limit: 5) {
     items {
       __typename

@@ -50,6 +50,12 @@ const transFormToSections = (sections: SectionType[]): SectionProps[] => {
         ? section.layoutType
         : "default",
       components,
+      textAlign:
+        section.textAlign === null || section.textAlign === undefined
+          ? undefined
+          : ["left", "center", "right"].includes(section.textAlign as string)
+          ? (section.textAlign as "left" | "center" | "right")
+          : undefined,
     };
   });
 };
