@@ -216,6 +216,7 @@ enum ComponentBannerOrder {
 type ComponentCard implements Entry & _Node {
   _id: ID!
   categories(locale: String): [String]
+  color(locale: String): String
   company(locale: String): String
   contentfulMetadata: ContentfulMetadata!
   description(locale: String): String
@@ -239,6 +240,13 @@ input ComponentCardFilter {
   categories_contains_none: [String]
   categories_contains_some: [String]
   categories_exists: Boolean
+  color: String
+  color_contains: String
+  color_exists: Boolean
+  color_in: [String]
+  color_not: String
+  color_not_contains: String
+  color_not_in: [String]
   company: String
   company_contains: String
   company_exists: Boolean
@@ -306,6 +314,8 @@ enum ComponentCardLinkingCollectionsSectionCollectionOrder {
 }
 
 enum ComponentCardOrder {
+  color_ASC
+  color_DESC
   company_ASC
   company_DESC
   subtitle_ASC
@@ -397,8 +407,6 @@ type ComponentSeoLinkingCollections {
 enum ComponentSeoLinkingCollectionsPageLandingCollectionOrder {
   heroBannerHeadlineColor_ASC
   heroBannerHeadlineColor_DESC
-  heroBannerHeadline_ASC
-  heroBannerHeadline_DESC
   internalName_ASC
   internalName_DESC
   layoutType_ASC
@@ -556,6 +564,8 @@ type ComponentsCardsCardsCollection {
 }
 
 enum ComponentsCardsCardsCollectionOrder {
+  color_ASC
+  color_DESC
   company_ASC
   company_DESC
   subtitle_ASC
@@ -847,7 +857,6 @@ scalar JSON
 type PageLanding implements Entry & _Node {
   _id: ID!
   contentfulMetadata: ContentfulMetadata!
-  heroBannerHeadline(locale: String): String
   heroBannerHeadlineColor(locale: String): String
   heroBannerImage(locale: String, preview: Boolean): Asset
   internalName(locale: String): String
@@ -870,7 +879,6 @@ input PageLandingFilter {
   AND: [PageLandingFilter]
   OR: [PageLandingFilter]
   contentfulMetadata: ContentfulMetadataFilter
-  heroBannerHeadline: String
   heroBannerHeadlineColor: String
   heroBannerHeadlineColor_contains: String
   heroBannerHeadlineColor_exists: Boolean
@@ -878,12 +886,6 @@ input PageLandingFilter {
   heroBannerHeadlineColor_not: String
   heroBannerHeadlineColor_not_contains: String
   heroBannerHeadlineColor_not_in: [String]
-  heroBannerHeadline_contains: String
-  heroBannerHeadline_exists: Boolean
-  heroBannerHeadline_in: [String]
-  heroBannerHeadline_not: String
-  heroBannerHeadline_not_contains: String
-  heroBannerHeadline_not_in: [String]
   heroBannerImage_exists: Boolean
   internalName: String
   internalName_contains: String
@@ -920,8 +922,6 @@ type PageLandingLinkingCollections {
 enum PageLandingOrder {
   heroBannerHeadlineColor_ASC
   heroBannerHeadlineColor_DESC
-  heroBannerHeadline_ASC
-  heroBannerHeadline_DESC
   internalName_ASC
   internalName_DESC
   layoutType_ASC
@@ -1170,8 +1170,6 @@ type SectionLinkingCollections {
 enum SectionLinkingCollectionsPageLandingCollectionOrder {
   heroBannerHeadlineColor_ASC
   heroBannerHeadlineColor_DESC
-  heroBannerHeadline_ASC
-  heroBannerHeadline_DESC
   internalName_ASC
   internalName_DESC
   layoutType_ASC
@@ -1332,6 +1330,13 @@ input cfComponentCardNestedFilter {
   categories_contains_none: [String]
   categories_contains_some: [String]
   categories_exists: Boolean
+  color: String
+  color_contains: String
+  color_exists: Boolean
+  color_in: [String]
+  color_not: String
+  color_not_contains: String
+  color_not_in: [String]
   company: String
   company_contains: String
   company_exists: Boolean

@@ -15,8 +15,17 @@ fragment PageLandingFields on PageLanding {
   }
 }
 
-query pageLanding($locale: String, $preview: Boolean) {
-  pageLandingCollection(limit: 1, locale: $locale, preview: $preview) {
+query pageLanding(
+  $locale: String
+  $preview: Boolean
+  $where: PageLandingFilter
+) {
+  pageLandingCollection(
+    limit: 1
+    locale: $locale
+    preview: $preview
+    where: $where
+  ) {
     items {
       ...PageLandingFields
     }
