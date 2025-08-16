@@ -86,7 +86,6 @@ const ComponentsHandler = {
   ComponentTagList: (component: SectionComponentsItem) => {
     const isTagList = isComponentTagList(component);
     if (!isTagList) {
-      console.warn("ComponentTagList expected, but got:", component);
       return null;
     }
 
