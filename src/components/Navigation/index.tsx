@@ -27,8 +27,6 @@ const links = [
 
 const siteLinks = [
   { href: "/", label: "Home", icon: <HomeIcon /> },
-  { href: "/about", label: "About", icon: <PersonIcon /> },
-  { href: "/projects", label: "Projects", icon: <BackpackIcon /> },
   { href: "/resume", label: "Resume", icon: <MobileIcon /> },
 ];
 
