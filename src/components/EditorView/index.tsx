@@ -6,7 +6,6 @@ export const EditorView = ({ markdown }: { markdown: string }) => {
       <MDEditor.Markdown
         className="bg-clip-text bg-white/5 rounded-sm wmde-markdown wmde-markdown-color"
         source={markdown}
-        style={{ whiteSpace: "pre-wrap" }}
       />
     </div>
   );

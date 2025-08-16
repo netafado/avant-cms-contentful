@@ -372,6 +372,7 @@ export type ComponentCard = Entry & _Node & {
   __typename?: 'ComponentCard';
   _id: Scalars['ID']['output'];
   categories?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  color?: Maybe<Scalars['String']['output']>;
   company?: Maybe<Scalars['String']['output']>;
   contentfulMetadata: ContentfulMetadata;
   description?: Maybe<Scalars['String']['output']>;
@@ -384,6 +385,12 @@ export type ComponentCard = Entry & _Node & {
 
 /** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/componentCard) */
 export type ComponentCardCategoriesArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/componentCard) */
+export type ComponentCardColorArgs = {
   locale?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -432,6 +439,13 @@ export type ComponentCardFilter = {
   categories_contains_none?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   categories_contains_some?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   categories_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  color?: InputMaybe<Scalars['String']['input']>;
+  color_contains?: InputMaybe<Scalars['String']['input']>;
+  color_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  color_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  color_not?: InputMaybe<Scalars['String']['input']>;
+  color_not_contains?: InputMaybe<Scalars['String']['input']>;
+  color_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   company?: InputMaybe<Scalars['String']['input']>;
   company_contains?: InputMaybe<Scalars['String']['input']>;
   company_exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -526,6 +540,8 @@ export enum ComponentCardLinkingCollectionsSectionCollectionOrder {
 }
 
 export enum ComponentCardOrder {
+  ColorAsc = 'color_ASC',
+  ColorDesc = 'color_DESC',
   CompanyAsc = 'company_ASC',
   CompanyDesc = 'company_DESC',
   SubtitleAsc = 'subtitle_ASC',
@@ -695,8 +711,6 @@ export type ComponentSeoLinkingCollectionsPageProductCollectionArgs = {
 export enum ComponentSeoLinkingCollectionsPageLandingCollectionOrder {
   HeroBannerHeadlineColorAsc = 'heroBannerHeadlineColor_ASC',
   HeroBannerHeadlineColorDesc = 'heroBannerHeadlineColor_DESC',
-  HeroBannerHeadlineAsc = 'heroBannerHeadline_ASC',
-  HeroBannerHeadlineDesc = 'heroBannerHeadline_DESC',
   InternalNameAsc = 'internalName_ASC',
   InternalNameDesc = 'internalName_DESC',
   LayoutTypeAsc = 'layoutType_ASC',
@@ -913,6 +927,8 @@ export type ComponentsCardsCardsCollection = {
 };
 
 export enum ComponentsCardsCardsCollectionOrder {
+  ColorAsc = 'color_ASC',
+  ColorDesc = 'color_DESC',
   CompanyAsc = 'company_ASC',
   CompanyDesc = 'company_DESC',
   SubtitleAsc = 'subtitle_ASC',
@@ -1171,7 +1187,6 @@ export type PageLanding = Entry & _Node & {
   __typename?: 'PageLanding';
   _id: Scalars['ID']['output'];
   contentfulMetadata: ContentfulMetadata;
-  heroBannerHeadline?: Maybe<Scalars['String']['output']>;
   heroBannerHeadlineColor?: Maybe<Scalars['String']['output']>;
   heroBannerImage?: Maybe<Asset>;
   internalName?: Maybe<Scalars['String']['output']>;
@@ -1181,12 +1196,6 @@ export type PageLanding = Entry & _Node & {
   seoFields?: Maybe<ComponentSeo>;
   sys: Sys;
   url?: Maybe<Scalars['String']['output']>;
-};
-
-
-/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/pageLanding) */
-export type PageLandingHeroBannerHeadlineArgs = {
-  locale?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -1257,7 +1266,6 @@ export type PageLandingFilter = {
   AND?: InputMaybe<Array<InputMaybe<PageLandingFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<PageLandingFilter>>>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
-  heroBannerHeadline?: InputMaybe<Scalars['String']['input']>;
   heroBannerHeadlineColor?: InputMaybe<Scalars['String']['input']>;
   heroBannerHeadlineColor_contains?: InputMaybe<Scalars['String']['input']>;
   heroBannerHeadlineColor_exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1265,12 +1273,6 @@ export type PageLandingFilter = {
   heroBannerHeadlineColor_not?: InputMaybe<Scalars['String']['input']>;
   heroBannerHeadlineColor_not_contains?: InputMaybe<Scalars['String']['input']>;
   heroBannerHeadlineColor_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  heroBannerHeadline_contains?: InputMaybe<Scalars['String']['input']>;
-  heroBannerHeadline_exists?: InputMaybe<Scalars['Boolean']['input']>;
-  heroBannerHeadline_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  heroBannerHeadline_not?: InputMaybe<Scalars['String']['input']>;
-  heroBannerHeadline_not_contains?: InputMaybe<Scalars['String']['input']>;
-  heroBannerHeadline_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   heroBannerImage_exists?: InputMaybe<Scalars['Boolean']['input']>;
   internalName?: InputMaybe<Scalars['String']['input']>;
   internalName_contains?: InputMaybe<Scalars['String']['input']>;
@@ -1316,8 +1318,6 @@ export type PageLandingLinkingCollectionsEntryCollectionArgs = {
 export enum PageLandingOrder {
   HeroBannerHeadlineColorAsc = 'heroBannerHeadlineColor_ASC',
   HeroBannerHeadlineColorDesc = 'heroBannerHeadlineColor_DESC',
-  HeroBannerHeadlineAsc = 'heroBannerHeadline_ASC',
-  HeroBannerHeadlineDesc = 'heroBannerHeadline_DESC',
   InternalNameAsc = 'internalName_ASC',
   InternalNameDesc = 'internalName_DESC',
   LayoutTypeAsc = 'layoutType_ASC',
@@ -1876,8 +1876,6 @@ export type SectionLinkingCollectionsPageLandingCollectionArgs = {
 export enum SectionLinkingCollectionsPageLandingCollectionOrder {
   HeroBannerHeadlineColorAsc = 'heroBannerHeadlineColor_ASC',
   HeroBannerHeadlineColorDesc = 'heroBannerHeadlineColor_DESC',
-  HeroBannerHeadlineAsc = 'heroBannerHeadline_ASC',
-  HeroBannerHeadlineDesc = 'heroBannerHeadline_DESC',
   InternalNameAsc = 'internalName_ASC',
   InternalNameDesc = 'internalName_DESC',
   LayoutTypeAsc = 'layoutType_ASC',
@@ -2066,6 +2064,13 @@ export type CfComponentCardNestedFilter = {
   categories_contains_none?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   categories_contains_some?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   categories_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  color?: InputMaybe<Scalars['String']['input']>;
+  color_contains?: InputMaybe<Scalars['String']['input']>;
+  color_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  color_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  color_not?: InputMaybe<Scalars['String']['input']>;
+  color_not_contains?: InputMaybe<Scalars['String']['input']>;
+  color_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   company?: InputMaybe<Scalars['String']['input']>;
   company_contains?: InputMaybe<Scalars['String']['input']>;
   company_exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -2215,6 +2220,7 @@ export type PageLandingFieldsFragment = { __typename: 'PageLanding', internalNam
 export type PageLandingQueryVariables = Exact<{
   locale?: InputMaybe<Scalars['String']['input']>;
   preview?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<PageLandingFilter>;
 }>;
 
 
@@ -2385,8 +2391,13 @@ export const PageLandingFieldsFragmentDoc = gql`
 }
     `;
 export const PageLandingDocument = gql`
-    query pageLanding($locale: String, $preview: Boolean) {
-  pageLandingCollection(limit: 1, locale: $locale, preview: $preview) {
+    query pageLanding($locale: String, $preview: Boolean, $where: PageLandingFilter) {
+  pageLandingCollection(
+    limit: 1
+    locale: $locale
+    preview: $preview
+    where: $where
+  ) {
     items {
       ...PageLandingFields
     }
