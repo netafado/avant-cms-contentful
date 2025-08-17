@@ -4,19 +4,20 @@ import classNames from "clsx";
 import Reveal from "../Reveal";
 import { BannerProps } from "./types";
 import { FC } from "react";
+import { ThickArrowDownIcon } from "@radix-ui/react-icons";
 
 const Banner: FC<BannerProps> = ({ name, image, achievements }) => {
   return (
     <>
       <div className="mx-auto my-auto px-4 w-full">
-        <div className="items-center py-10 md:p-10 lg:p-20">
+        <div className="items-center md:py-10 md:p-10 lg:p-20">
           <div className="relative mx-auto w-full text-center h-full">
             <Reveal
               delay={1000}
               animation="fade-in slide-in-top"
               className="prose absolute -bottom-4 left-1/2 z-20 w-full -translate-x-1/2"
             >
-              <h1 className="bg-clip-text text-transparent bg-gradient-to-b from-brand-400 to-brand-600 m-0 text-7xl drop-shadow-md md:text-8xl font-bold">
+              <h1 className="bg-clip-text text-transparent bg-gradient-to-b from-brand-400 to-brand-600 m-0 text-6xl drop-shadow-md md:text-8xl font-bold">
                 {name}
               </h1>
             </Reveal>
@@ -57,6 +58,10 @@ const Banner: FC<BannerProps> = ({ name, image, achievements }) => {
               </Reveal>
             ))}
           </div>
+          <button className="mt-2 border-b border-lime-500 mx-auto px-4 py-2 text-gray-400 hover:text-brand-400 transition-colors duration-300 flex items-center justify-center gap-2">
+            <ThickArrowDownIcon />
+            Download CV
+          </button>
         </div>
       </div>
     </>

@@ -8,20 +8,22 @@ const Card = (props: CardProps) => {
   return (
     <div
       className={clsx(
-        "relative p-6 border border-gray-300 dark:border-gray-800 rounded-sm ",
+        "relative p-6 border py-4 px-4 border-gray-700 rounded-sm ",
         {
           "max-h-80 overflow-hidden": !!limitSize,
         }
       )}
     >
-      <h3 className="text-white  font-semibold">{company}</h3>
-      <p className="text-sm">{role}</p>
+      <h3 className="text-gray-900 dark:text-gray-100 font-semibold">
+        {company}
+      </h3>
+      <p className="text-sm text-gray-500 dark:text-gray-400">{role}</p>
       <p className="text-sm text-gray-500 text-xs">{duration}</p>
       <ul className="mt-2 list-none flex flex-wrap gap-2 text-sm text-gray-700">
         {tools?.map((tool, idx) => (
           <li
             className="bg-success-500/30 text-xs text-success-500 px-2 rounded-sm"
-            key={idx}
+            key={`tool_${idx}_${tool}`}
           >
             {tool}
           </li>
