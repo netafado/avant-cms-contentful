@@ -22,13 +22,14 @@ const SectionBase: FC<SectionProps> = ({
         <h2 className="text-3xl bg-clip-text text-transparent font-bold bg-gradient-to-b from-brand-400 to-brand-600 mb-2">
           {title}
         </h2>
-        <EditorView markdown={description} />
+        {description && <EditorView markdown={description} />}
+
         {children}
       </div>
-      <div className="mt-10">
+      <div className="mt-5">
         <div
           className={clsx(
-            "mt-6 grid grid-cols-1 gap-6 text-left max-w-5xl mx-auto px-4",
+            "mt-6 grid gap-6 text-left max-w-5xl mx-auto px-4",
             GRID[(grid as keyof typeof GRID) || "1"]
           )}
         >
