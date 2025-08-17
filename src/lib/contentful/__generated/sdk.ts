@@ -248,6 +248,7 @@ export type ComponentBanner = Entry & _Node & {
   _id: Scalars['ID']['output'];
   achievementsCollection?: Maybe<ComponentBannerAchievementsCollection>;
   contentfulMetadata: ContentfulMetadata;
+  cv?: Maybe<Asset>;
   linkedFrom?: Maybe<ComponentBannerLinkingCollections>;
   mainImage?: Maybe<Asset>;
   sys: Sys;
@@ -261,6 +262,13 @@ export type ComponentBannerAchievementsCollectionArgs = {
   locale?: InputMaybe<Scalars['String']['input']>;
   preview?: InputMaybe<Scalars['Boolean']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/componentBanner) */
+export type ComponentBannerCvArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -303,6 +311,7 @@ export type ComponentBannerFilter = {
   OR?: InputMaybe<Array<InputMaybe<ComponentBannerFilter>>>;
   achievementsCollection_exists?: InputMaybe<Scalars['Boolean']['input']>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  cv_exists?: InputMaybe<Scalars['Boolean']['input']>;
   mainImage_exists?: InputMaybe<Scalars['Boolean']['input']>;
   sys?: InputMaybe<SysFilter>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -2243,7 +2252,10 @@ export type CfcomponentsMultiTypeNestedFilter = {
 
 export type ComponentFieldsAchievementFragment = { __typename: 'SingleAchievement', _id: string, number?: string | null, text?: string | null, sys: { __typename?: 'Sys', id: string } };
 
-export type ComponentFieldsBannerFragment = { __typename: 'ComponentBanner', title?: string | null, sys: { __typename?: 'Sys', id: string }, mainImage?: (
+export type ComponentFieldsBannerFragment = { __typename: 'ComponentBanner', title?: string | null, sys: { __typename?: 'Sys', id: string }, cv?: (
+    { __typename?: 'Asset' }
+    & ImageFieldsFragment
+  ) | null, mainImage?: (
     { __typename?: 'Asset' }
     & ImageFieldsFragment
   ) | null, achievementsCollection?: { __typename?: 'ComponentBannerAchievementsCollection', items: Array<{ __typename?: 'ComponentBanner' } | { __typename?: 'ComponentCard' } | { __typename?: 'ComponentSeo' } | { __typename?: 'ComponentTagList' } | { __typename?: 'ComponentsCards' } | { __typename?: 'PageLanding' } | { __typename?: 'PageProduct' } | { __typename?: 'Section' } | (
@@ -2348,6 +2360,9 @@ export const ComponentFieldsBannerFragmentDoc = gql`
     id
   }
   title
+  cv {
+    ...ImageFields
+  }
   mainImage {
     ...ImageFields
   }

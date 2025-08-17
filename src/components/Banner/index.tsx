@@ -5,8 +5,9 @@ import Reveal from "../Reveal";
 import { BannerProps } from "./types";
 import { FC } from "react";
 import { ThickArrowDownIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 
-const Banner: FC<BannerProps> = ({ name, image, achievements }) => {
+const Banner: FC<BannerProps> = ({ name, image, achievements, cv }) => {
   return (
     <>
       <div className="mx-auto my-auto px-4 w-full">
@@ -58,10 +59,18 @@ const Banner: FC<BannerProps> = ({ name, image, achievements }) => {
               </Reveal>
             ))}
           </div>
-          <button className="mt-2 border-b border-lime-500 mx-auto px-4 py-2 text-gray-400 hover:text-brand-400 transition-colors duration-300 flex items-center justify-center gap-2">
-            <ThickArrowDownIcon />
-            Download CV
-          </button>
+          {cv && (
+            <Link
+              href={cv?.src || "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button className="mt-2 border-b border-lime-500 mx-auto px-4 py-2 text-gray-400 hover:text-brand-400 transition-colors duration-300 flex items-center justify-center gap-2">
+                <ThickArrowDownIcon />
+                Download CV
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </>
