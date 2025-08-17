@@ -10,5 +10,5 @@ export const COLOR_CLASSES = {
   blue: "bg-blue-500/30 text-blue-500",
   yellow: "bg-yellow-500/30 text-yellow-500",
   purple: "bg-purple-500/30 text-purple-500",
-  gray: "bg-gray-500/30 text-gray-300",
+  gray: "bg-gray-500/30 text-gray-500 dark:text-gray-300",
 };

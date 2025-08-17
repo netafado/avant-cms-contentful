@@ -45,7 +45,7 @@ const transFormToSections = (sections: SectionType[]): SectionProps[] => {
       ...section,
       grid: section.grid || "1",
       title: section.title || "Section Title",
-      description: section.description || "Section Description",
+      description: section.description || undefined,
       layoutType: isLayoutTypeValid(section.layoutType)
         ? section.layoutType
         : "default",
