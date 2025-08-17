@@ -139,6 +139,7 @@ type ComponentBanner implements Entry & _Node {
   _id: ID!
   achievementsCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): ComponentBannerAchievementsCollection
   contentfulMetadata: ContentfulMetadata!
+  cv(locale: String, preview: Boolean): Asset
   linkedFrom(allowedLocales: [String]): ComponentBannerLinkingCollections
   mainImage(locale: String, preview: Boolean): Asset
   sys: Sys!
@@ -164,6 +165,7 @@ input ComponentBannerFilter {
   OR: [ComponentBannerFilter]
   achievementsCollection_exists: Boolean
   contentfulMetadata: ContentfulMetadataFilter
+  cv_exists: Boolean
   mainImage_exists: Boolean
   sys: SysFilter
   title: String

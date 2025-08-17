@@ -31,8 +31,16 @@ const ComponentsHandler = {
     if (!isComponentBanner(component)) {
       return null;
     }
+
     const bannerProps: BannerProps = {
       name: component.title || "Default Name",
+      cv: component.cv
+        ? {
+            src: component.cv.url || "",
+            fileName: component.cv.fileName || "default-cv.pdf",
+            contentType: component.cv.contentType || "application/pdf",
+          }
+        : undefined,
       image: component.mainImage
         ? {
             src: component.mainImage.url || "",

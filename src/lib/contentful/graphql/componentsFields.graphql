@@ -14,6 +14,9 @@ fragment ComponentFieldsBanner on ComponentBanner {
     id
   }
   title
+  cv {
+    ...ImageFields
+  }
   mainImage {
     ...ImageFields
   }

@@ -10,6 +10,11 @@ export type BannerProps = {
     height: number;
     alt: string;
   };
+  cv?: {
+    src: string;
+    fileName: string;
+    contentType: string;
+  };
   achievements?: {
     items: Achievements[];
   };

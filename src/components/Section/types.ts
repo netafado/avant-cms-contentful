@@ -8,7 +8,7 @@ export type SectionComponents = SectionComponentsItem & {
 
 export type SectionProps = {
   title: string;
-  description: string;
+  description?: string;
   children?: React.ReactNode;
   components?: SectionComponents[];
   grid?: string;
