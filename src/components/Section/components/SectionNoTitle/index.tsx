@@ -4,7 +4,6 @@ import { SectionProps } from "@/components/Section/types";
 import ComponentsHandler from "@/components/componentsHandler";
 
 const SectionNoTitle: FC<SectionProps> = ({ components }) => {
-  console.log("SectionNoTitle render:", components);
   return (
     <section className="text-center mt-10 px-4">
       <div className={`mt-6 grid gap-6 text-left max-w-5xl mx-auto px-4`}>

@@ -1,10 +1,12 @@
 "use client";
+
+import "./styles.css";
 import MDEditor from "@uiw/react-md-editor";
 export const EditorView = ({ markdown }: { markdown: string }) => {
   return (
     <div className="mt-2">
       <MDEditor.Markdown
-        className="bg-clip-text bg-white/5 rounded-sm wmde-markdown wmde-markdown-color"
+        className="bg-white rounded-sm wmde-markdown-custom"
         source={markdown}
       />
     </div>

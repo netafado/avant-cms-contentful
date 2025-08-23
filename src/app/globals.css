@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
-
+@plugin "@tailwindcss/typography";
 
 @theme inline {
   --font-sans: var(--font-geist-sans);
@@ -105,5 +105,4 @@
   --color-omega-900: #18181b;
   --color-omega-950: #09090b;
 }
-
 

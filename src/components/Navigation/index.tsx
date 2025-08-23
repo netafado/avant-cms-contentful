@@ -63,7 +63,7 @@ const Navigation = ({ currentPath }: { currentPath: string }) => {
         <div className="flex flex-col items-center justify-center gap-2">
           <button
             onClick={toggleTheme}
-            className="text-gray-900 dark:hover:bg-gray-600 px-2 py-3 hover:bg-gray-300 dark:border-gray-700 md:hover:border-gray-600 transition-colors duration-200 w-full rounded-full flex items-center justify-center"
+            className="text-gray-900 dark:hover:bg-gray-600 border border-gray-300 px-2 py-3 hover:bg-gray-300 dark:border-gray-700 md:hover:border-gray-600 transition-colors duration-200 w-full rounded-full flex items-center justify-center"
           >
             {theme === "dark" ? (
               <SunIcon className="text-yellow-400" />
