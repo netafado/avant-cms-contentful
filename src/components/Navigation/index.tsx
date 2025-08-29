@@ -15,36 +15,50 @@ import Link from "next/link";
 const links = [
   {
     href: "https://medium.com/@isaias.fran",
-    icon: <BookmarkIcon />,
+    icon: <BookmarkIcon className="h-5 w-5" />,
   },
   {
     href: "https://www.linkedin.com/in/isaias-francisco-21097437",
-    icon: <LinkedInLogoIcon />,
+    icon: <LinkedInLogoIcon className="h-5 w-5" />,
   },
   {
     href: "https://github.com/netafado",
-    icon: <GitHubLogoIcon />,
+    icon: <GitHubLogoIcon className="h-5 w-5" />,
   },
 ];
 
 const siteLinks = [
-  { href: "/", label: "Home", icon: <HomeIcon /> },
-  { href: "/resume", label: "Resume", icon: <FileTextIcon /> },
+  { href: "/", label: "Home", icon: <HomeIcon className="h-5 w-5" /> },
+  {
+    href: "/resume",
+    label: "Resume",
+    icon: <FileTextIcon className="h-5 w-5" />,
+  },
 ];
+
+const CLASSES = {
+  mobile: "fixed bottom-10 right-1/2 translate-x-1/2 z-50 overflow-hidden",
+  desktop: "hidden md:flex",
+};
 
 const Navigation = ({ currentPath }: { currentPath: string }) => {
   const { toggleTheme, theme } = useTheme();
   return (
-    <div className="p-1 bg-gradient-to-tr from-gray-100 dark:bg-gradient-to-tr dark:from-zinc-800 dark:to-zinc-900 fixed dark:border-r border-gray-700 top-0 right-0 z-50 flex flex-col items-center justify-between pb-0 h-full">
-      <div className="flex py-0 pb-0 flex-col justify-between w-full h-full z-50 gap-1">
-        <div className="bg-gray-800 ">
-          {siteLinks.map((link, index) => (
+    <div className={clsx(CLASSES.mobile, CLASSES.mobile)}>
+      <div className="relative flex border-gray-300 dark:border-gray-700 items-center justify-center gap-2 bg-gray-300/40 rounded-full px-1 h-12 border border-gray-200">
+        <ul
+          role="menubar"
+          className="relative flex border-gray-700 items-center justify-center gap-2"
+        >
+          {siteLinks.map((link) => (
             <Link
-              key={index}
+              key={link.href}
               href={link.href}
+              aria-label={link.label}
+              role="menuitem"
               className={clsx(
                 "text-gray-900 bg-gray-300 hover:bg-gray-400 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700",
-                "px-2 py-3 px-3 flex items-center dark:border-b border-gray-700 hover:border-gray-600 transition-colors duration-200 w-full justify-center text-gray-400",
+                "p-2 flex items-center dark:border-b border-gray-700 hover:border-gray-600 duration-200 justify-center text-gray-400 rounded-full",
                 {
                   "bg-lime-500 dark:bg-lime-500 text-white hover:bg-lime-700 dark:hover:bg-lime-700":
                     currentPath === link.href ||
@@ -52,18 +66,21 @@ const Navigation = ({ currentPath }: { currentPath: string }) => {
                 }
               )}
             >
-              <span className="flex items-center gap-2 hidden">
+              <span className="flex items-center gap-2 hidden ">
                 {link.label}
               </span>
               {link.icon}
             </Link>
           ))}
-        </div>
+        </ul>
 
-        <div className="flex flex-col items-center justify-center gap-2">
+        <div className="relative  flex border-gray-300 dark:border-gray-700 dark:border-gray-700 py-2 items-center justify-center gap-2 border-l pl-2">
           <button
             onClick={toggleTheme}
-            className="text-gray-900 dark:hover:bg-gray-600 border border-gray-300 px-2 py-3 hover:bg-gray-300 dark:border-gray-700 md:hover:border-gray-600 transition-colors duration-200 w-full rounded-full flex items-center justify-center"
+            className={clsx(
+              "text-gray-900 bg-gray-300  dark:bg-gray-800 dark:text-gray-300",
+              "p-3 flex items-center dark:border-b border-gray-700 hover:border-gray-600 duration-200 justify-center text-gray-400 rounded-full"
+            )}
           >
             {theme === "dark" ? (
               <SunIcon className="text-yellow-400" />
@@ -73,16 +90,20 @@ const Navigation = ({ currentPath }: { currentPath: string }) => {
           </button>
         </div>
 
-        <div className="relative dark:border-t border-gray-700 bg-gray-300 dark:bg-gray-600 flex py-2 items-center flex-col justify-center  w-full z-50 gap-2">
+        <div className="relative flex border-gray-700 py-2 items-center justify-center gap-2">
           {links.map((link, index) => (
-            <button
+            <Link
               key={index}
-              className="text-gray-900 px-2 py-1 hover:bg-gray-600"
+              href={link.href}
+              target="_blank"
+              className={clsx(
+                "text-gray-900 bg-gray-300 hover:bg-gray-400 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700",
+                "p-2 flex items-center dark:border-b border-gray-700 hover:border-gray-600 duration-200 justify-center text-gray-400 rounded-full"
+              )}
+              rel="noopener noreferrer"
             >
-              <Link href={link.href} target="_blank" rel="noopener noreferrer">
-                {link.icon}
-              </Link>
-            </button>
+              {link.icon}
+            </Link>
           ))}
         </div>
       </div>

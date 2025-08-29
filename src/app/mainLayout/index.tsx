@@ -12,7 +12,7 @@ type MainLayoutProps = {
 
 const MainLayout: FC<MainLayoutProps> = ({ sections, url }) => {
   return (
-    <div className="font-sans w-full pr-12">
+    <div className="font-sans w-full">
       <main>
         <Navigation currentPath={url} />
         {sections.map((section, index) => {
