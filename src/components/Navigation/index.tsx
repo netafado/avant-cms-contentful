@@ -7,10 +7,14 @@ import {
   SunIcon,
   MoonIcon,
   FileTextIcon,
+  GlobeIcon,
 } from "@radix-ui/react-icons";
 import { useTheme } from "@/providers/theme";
 import clsx from "clsx";
-import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
+import { Link, usePathname, useRouter } from "@/i18n/routing";
+import { routing } from "@/i18n/routing";
+import { useTransition } from "react";
 
 const links = [
   {
@@ -27,24 +31,34 @@ const links = [
   },
 ];
 
-const siteLinks = [
-  { href: "/", label: "Home", icon: <HomeIcon className="h-5 w-5" /> },
-  {
-    href: "/resume",
-    label: "Resume",
-    icon: <FileTextIcon className="h-5 w-5" />,
-  },
-];
-
-const CLASSES = {
-  mobile: "fixed bottom-10 right-1/2 translate-x-1/2 z-50 overflow-hidden",
-  desktop: "hidden md:flex",
-};
-
 const Navigation = ({ currentPath }: { currentPath: string }) => {
   const { toggleTheme, theme } = useTheme();
+  const t = useTranslations("Navigation");
+  const tLanguage = useTranslations("Language");
+  const locale = useLocale();
+  const pathname = usePathname();
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
+  const siteLinks = [
+    { href: "/", label: t("home"), icon: <HomeIcon className="h-5 w-5" /> },
+    {
+      href: "/resume",
+      label: t("resume"),
+      icon: <FileTextIcon className="h-5 w-5" />,
+    },
+  ];
+
+  const switchTo = routing.locales.find((l) => l !== locale) ?? routing.defaultLocale;
+
+  const handleLanguageSwitch = () => {
+    startTransition(() => {
+      router.replace(pathname, { locale: switchTo });
+    });
+  };
+
   return (
-    <div className={clsx(CLASSES.mobile, CLASSES.mobile)}>
+    <div className="fixed bottom-10 right-1/2 translate-x-1/2 z-50 overflow-hidden">
       <div className="relative flex border-gray-300 dark:border-gray-700 items-center justify-center gap-2 bg-gray-300/40 rounded-full px-1 h-12 border border-gray-200">
         <ul
           role="menubar"
@@ -76,7 +90,23 @@ const Navigation = ({ currentPath }: { currentPath: string }) => {
 
         <div className="relative  flex border-gray-300 dark:border-gray-700 dark:border-gray-700 py-2 items-center justify-center gap-2 border-l pl-2">
           <button
+            onClick={handleLanguageSwitch}
+            disabled={isPending}
+            aria-label={t("switchLanguage")}
+            className={clsx(
+              "text-gray-900 bg-gray-300  dark:bg-gray-800 dark:text-gray-300",
+              "p-3 flex items-center dark:border-b border-gray-700 hover:border-gray-600 duration-200 justify-center text-gray-400 rounded-full",
+              isPending && "opacity-50 cursor-wait"
+            )}
+          >
+            <span className="flex items-center gap-1 text-xs font-semibold">
+              <GlobeIcon className="h-4 w-4" />
+              {tLanguage(switchTo)}
+            </span>
+          </button>
+          <button
             onClick={toggleTheme}
+            aria-label="Toggle theme"
             className={clsx(
               "text-gray-900 bg-gray-300  dark:bg-gray-800 dark:text-gray-300",
               "p-3 flex items-center dark:border-b border-gray-700 hover:border-gray-600 duration-200 justify-center text-gray-400 rounded-full"
@@ -92,7 +122,7 @@ const Navigation = ({ currentPath }: { currentPath: string }) => {
 
         <div className="relative flex border-gray-700 py-2 items-center justify-center gap-2">
           {links.map((link, index) => (
-            <Link
+            <a
               key={index}
               href={link.href}
               target="_blank"
@@ -103,7 +133,7 @@ const Navigation = ({ currentPath }: { currentPath: string }) => {
               rel="noopener noreferrer"
             >
               {link.icon}
-            </Link>
+            </a>
           ))}
         </div>
       </div>

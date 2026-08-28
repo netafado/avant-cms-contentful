@@ -1,0 +1,30 @@
+{
+  "Metadata": {
+    "title": "Isaias Santos - Desenvolvedor Full Stack",
+    "description": "Portfólio de Isaias Santos, Desenvolvedor Full Stack especializado em Next.js e Contentful."
+  },
+  "Navigation": {
+    "home": "Início",
+    "resume": "Currículo",
+    "switchLanguage": "Alterar idioma"
+  },
+  "Layout": {
+    "sectionTitleFallback": "Título da Seção",
+    "footerMedium": "Artigos no Medium",
+    "footerTech": "Desenvolvido com Next.js, Contentful e AWS"
+  },
+  "Banner": {
+    "downloadCv": "Baixar CV"
+  },
+  "Components": {
+    "defaultName": "Nome padrão",
+    "defaultText": "Texto padrão",
+    "defaultImageAlt": "Imagem padrão",
+    "defaultCvFileName": "cv-padrao.pdf",
+    "cardsPlaceholder": "Placeholder de Cards"
+  },
+  "Language": {
+    "en": "English",
+    "pt-BR": "Português"
+  }
+}
