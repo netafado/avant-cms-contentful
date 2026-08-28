@@ -16,14 +16,17 @@ const links = [
   {
     href: "https://medium.com/@isaias.fran",
     icon: <BookmarkIcon className="h-5 w-5" />,
+    label: "Medium articles",
   },
   {
     href: "https://www.linkedin.com/in/isaias-francisco-21097437",
     icon: <LinkedInLogoIcon className="h-5 w-5" />,
+    label: "LinkedIn profile",
   },
   {
     href: "https://github.com/netafado",
     icon: <GitHubLogoIcon className="h-5 w-5" />,
+    label: "GitHub profile",
   },
 ];
 
@@ -37,77 +40,90 @@ const siteLinks = [
 ];
 
 const CLASSES = {
-  mobile: "fixed bottom-10 right-1/2 translate-x-1/2 z-50 overflow-hidden",
-  desktop: "hidden md:flex",
+  wrapper:
+    "fixed bottom-6 left-1/2 z-50 -translate-x-1/2 overflow-hidden rounded-full border border-zinc-800 bg-zinc-900/70 backdrop-blur supports-[backdrop-filter]:bg-zinc-900/50 motion-reduce:transition-none",
 };
 
 const Navigation = ({ currentPath }: { currentPath: string }) => {
   const { toggleTheme, theme } = useTheme();
   return (
-    <div className={clsx(CLASSES.mobile, CLASSES.mobile)}>
-      <div className="relative flex border-gray-300 dark:border-gray-700 items-center justify-center gap-2 bg-gray-300/40 rounded-full px-1 h-12 border border-gray-200">
-        <ul
-          role="menubar"
-          className="relative flex border-gray-700 items-center justify-center gap-2"
-        >
-          {siteLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              aria-label={link.label}
-              role="menuitem"
-              className={clsx(
-                "text-gray-900 bg-gray-300 hover:bg-gray-400 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700",
-                "p-2 flex items-center dark:border-b border-gray-700 hover:border-gray-600 duration-200 justify-center text-gray-400 rounded-full",
-                {
-                  "bg-lime-500 dark:bg-lime-500 text-white hover:bg-lime-700 dark:hover:bg-lime-700":
-                    currentPath === link.href ||
-                    link.href.endsWith(currentPath),
-                }
-              )}
-            >
-              <span className="flex items-center gap-2 hidden ">
-                {link.label}
-              </span>
-              {link.icon}
-            </Link>
-          ))}
-        </ul>
+    <nav
+      aria-label="Primary"
+      className={clsx(CLASSES.wrapper)}
+    >
+      <ul
+        role="menubar"
+        className="relative flex items-center justify-center gap-1 px-1 py-1"
+      >
+        {siteLinks.map((link) => {
+          const isActive =
+            currentPath === link.href ||
+            (link.href !== "/" && currentPath.startsWith(link.href));
+          return (
+            <li key={link.href} role="none">
+              <Link
+                href={link.href}
+                aria-label={link.label}
+                aria-current={isActive ? "page" : undefined}
+                role="menuitem"
+                className={clsx(
+                  "p-2 flex items-center justify-center rounded-full text-zinc-300 transition-colors duration-200 hover:bg-zinc-800 hover:text-amber-300",
+                  "focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400",
+                  {
+                    "bg-amber-500 text-black hover:bg-amber-400 hover:text-black":
+                      isActive,
+                  }
+                )}
+              >
+                <span className="sr-only">{link.label}</span>
+                {link.icon}
+              </Link>
+            </li>
+          );
+        })}
 
-        <div className="relative  flex border-gray-300 dark:border-gray-700 dark:border-gray-700 py-2 items-center justify-center gap-2 border-l pl-2">
+        <li role="none" aria-hidden="true" className="mx-1 h-6 w-px bg-zinc-800" />
+
+        <li role="none">
           <button
+            type="button"
             onClick={toggleTheme}
+            aria-label={
+              theme === "dark" ? "Switch to light theme" : "Switch to dark theme"
+            }
             className={clsx(
-              "text-gray-900 bg-gray-300  dark:bg-gray-800 dark:text-gray-300",
-              "p-3 flex items-center dark:border-b border-gray-700 hover:border-gray-600 duration-200 justify-center text-gray-400 rounded-full"
+              "p-2 flex items-center justify-center rounded-full text-zinc-300 transition-colors duration-200 hover:bg-zinc-800 hover:text-amber-300",
+              "focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
             )}
           >
             {theme === "dark" ? (
-              <SunIcon className="text-yellow-400" />
+              <SunIcon className="text-amber-400" />
             ) : (
-              <MoonIcon className="text-gray-400" />
+              <MoonIcon className="text-zinc-400" />
             )}
           </button>
-        </div>
+        </li>
 
-        <div className="relative flex border-gray-700 py-2 items-center justify-center gap-2">
-          {links.map((link, index) => (
+        <li role="none" aria-hidden="true" className="mx-1 h-6 w-px bg-zinc-800" />
+
+        {links.map((link) => (
+          <li key={link.href} role="none">
             <Link
-              key={index}
               href={link.href}
               target="_blank"
-              className={clsx(
-                "text-gray-900 bg-gray-300 hover:bg-gray-400 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700",
-                "p-2 flex items-center dark:border-b border-gray-700 hover:border-gray-600 duration-200 justify-center text-gray-400 rounded-full"
-              )}
               rel="noopener noreferrer"
+              aria-label={link.label}
+              className={clsx(
+                "p-2 flex items-center justify-center rounded-full text-zinc-300 transition-colors duration-200 hover:bg-zinc-800 hover:text-amber-300",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+              )}
             >
               {link.icon}
             </Link>
-          ))}
-        </div>
-      </div>
-    </div>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 };
 

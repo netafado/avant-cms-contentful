@@ -3,9 +3,14 @@ import '@testing-library/jest-dom'
 // Mock Next.js Image component
 jest.mock('next/image', () => ({
     __esModule: true,
-    default: (props) => {
+    default: ({ priority, fill, ...props }) => {
+        // next/image translates `priority` into `fetchpriority="high"` on
+        // the rendered <img>. Mirror that here so tests can assert it.
+        const imgProps = priority
+            ? { ...props, fetchpriority: 'high' }
+            : props;
         // eslint-disable-next-line @next/next/no-img-element
-        return <img {...props} />
+        return <img {...imgProps} />
     },
 }))
 

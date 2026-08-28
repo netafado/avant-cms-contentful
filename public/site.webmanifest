@@ -1,19 +1,27 @@
 {
-  "name": "Isaias Santos",
-  "short_name": "Isaias",
+  "name": "Isaias F. Santos — Full-Stack Developer",
+  "short_name": "Isaias F. Santos",
+  "description": "Portfolio of Isaias F. Santos, a full-stack developer in São Paulo specializing in Next.js, Contentful, React, and Node.js.",
+  "lang": "en",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#000000",
+  "background_color": "#000000",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone"
+  "categories": ["portfolio", "developer", "productivity"]
 }

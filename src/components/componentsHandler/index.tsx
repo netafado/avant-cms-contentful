@@ -20,6 +20,15 @@ import {
   isSingleAchievement,
 } from "@/utils/componentsGuard";
 
+/**
+ * Sensible default alt for the hero portrait. Used when Contentful does
+ * not provide a `mainImage.title` or `mainImage.description`. The hero
+ * ships in initial HTML, so a meaningful alt is a hard SEO + a11y
+ * requirement.
+ */
+const DEFAULT_HERO_ALT =
+  "Portrait of Isaias F. Santos in front of a glowing spectral halo";
+
 type ComponentTagListProps = {
   color?: string;
   list: string[];
@@ -33,7 +42,8 @@ const ComponentsHandler = {
     }
 
     const bannerProps: BannerProps = {
-      name: component.title || "Default Name",
+      name: component.title || "Isaias F. Santos",
+      role: "Full-Stack Developer",
       cv: component.cv
         ? {
             src: component.cv.url || "",
@@ -49,13 +59,13 @@ const ComponentsHandler = {
             alt:
               component.mainImage.title ||
               component.mainImage.description ||
-              "",
+              DEFAULT_HERO_ALT,
           }
         : {
             src: "/default-image.jpg",
             width: 400,
             height: 400,
-            alt: "Default image",
+            alt: DEFAULT_HERO_ALT,
           },
       achievements: component.achievementsCollection?.items
         ? {
@@ -112,7 +122,6 @@ const ComponentsHandler = {
     const cards = isComponentCards(component)
       ? component.cardsCollection?.items || []
       : [];
-    console.log("ComponentsCards", cards);
     return <div>ComponentsCards Placeholder</div>;
   },
 };
