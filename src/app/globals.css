@@ -94,3 +94,30 @@ p {
     color: var(--color-gray-400);
   }
 }
+
+/* ------------------------------------------------------------------ */
+/*  Spectral hero: halo rotation + bounce scroll cue                  */
+/*  The keyframes are exposed here rather than via Tailwind's         */
+/*  `animate-*` utilities because the rotation needs the gradient     */
+/*  inside to spin (not the div) and the values are project-specific. */
+/* ------------------------------------------------------------------ */
+@keyframes halo-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes bounce-slow {
+  0%, 100% { transform: translate(-50%, 0);   opacity: 0.4; }
+  50%      { transform: translate(-50%, 6px); opacity: 1;   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Belt-and-braces guard. The `motion-safe:` Tailwind variants already
+     disable the animations, but this keeps them off in third-party
+     contexts that copy the class names. */
+  .animate-\[halo-spin_22s_linear_infinite\],
+  .animate-\[halo-spin_28s_linear_infinite_reverse\],
+  .animate-bounce-slow {
+    animation: none !important;
+  }
+}

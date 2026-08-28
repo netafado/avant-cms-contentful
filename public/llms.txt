@@ -1,0 +1,23 @@
+# Isaias F. Santos
+
+> Full-stack developer in São Paulo, Brazil, specialising in Next.js, Contentful, React, and Node.js. This file is a short, machine-readable index of the public pages on this site, intended for AI assistants and LLM-powered search engines (ChatGPT, Perplexity, Claude, Google AI Overviews, Gemini). For the full text of every page, see [/llms-full.txt](/llms-full.txt).
+
+## Home
+
+- [Home — Isaias F. Santos](https://isaias-santos-home-page.example.com/): Single-screen portfolio hero with a spectral halo, the developer name in a gradient display face, and a monospace role caption. Includes an achievements strip and links to projects, blog, and contact channels.
+
+## About (implicit)
+
+- [Home (about section)](https://isaias-santos-home-page.example.com/#about): Short professional summary, the role the developer plays, the stack they ship with, and a structured set of `sameAs` links to LinkedIn, GitHub, and Medium.
+
+## Contact
+
+- [Email](mailto:isaias.santos@ignitevisibility.com): Direct email for opportunities and enquiries.
+- [LinkedIn](https://www.linkedin.com/in/isaias-francisco-21097437): Professional profile, experience, and recommendations.
+- [GitHub](https://github.com/netafado): Open-source work, including this very site (avant-cms-contentful).
+- [Medium](https://medium.com/@isaias.fran): Long-form articles on Next.js, Contentful, and full-stack development.
+
+## Optional
+
+- [Sitemap](/sitemap.xml): Full machine-readable list of public URLs, with `lastmod` and `priority`.
+- [robots.txt](/robots.txt): Crawler policy, including explicit allow rules for major AI bots.

@@ -1,0 +1,70 @@
+# Isaias F. Santos — full text
+
+> Long-form companion to [/llms.txt](/llms.txt). The pages below are concatenated in retrieval order. Each section is prefixed with its canonical URL and H1 so an LLM retriever can split the document back into per-page citations.
+
+---
+
+## Home
+
+Canonical URL: https://isaias-santos-home-page.example.com/
+H1: Isaias F. Santos
+Role caption: Full-Stack Developer
+
+Isaias F. Santos is a full-stack developer based in São Paulo, Brazil. He builds production-grade web applications on Next.js and React, with a strong focus on headless CMS architectures (Contentful), TypeScript, and Node.js backends. His work is open-source friendly and ships via AWS Amplify.
+
+### Stack
+
+- Frontend: Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS v4
+- CMS: Contentful (Page → Layout → Section → Component model)
+- Backend: Node.js, GraphQL, AWS Lambda, DynamoDB
+- Tooling: pnpm, Nx, Turbopack, GraphQL Codegen, Jest, Playwright
+- Deployment: AWS Amplify (SSR/SSG)
+
+### Highlights
+
+- Open-source: avant-cms-contentful (Next.js + Contentful + AWS Amplify starter)
+- Stack: Content-driven landing pages with `Page → Layout → Section → Component`
+- Focus: Performance, SEO, accessibility, and machine-readable structured data for AI search
+
+### Contact
+
+- Email: isaias.santos@ignitevisibility.com
+- LinkedIn: https://www.linkedin.com/in/isaias-francisco-21097437
+- GitHub: https://github.com/netafado
+- Medium: https://medium.com/@isaias.fran
+
+---
+
+## About (homepage section)
+
+Canonical URL: https://isaias-santos-home-page.example.com/#about
+H1: About Isaias F. Santos
+
+Isaias Francisco Santos is a Brazilian full-stack developer who designs and ships content-driven web platforms. He prefers a single-page application architecture backed by a headless CMS so that marketing, design, and engineering teams can move independently. His work emphasises semantic HTML, accessible interaction patterns, and structured data that makes content discoverable by both traditional search engines and modern LLM-powered answer engines.
+
+### What he does
+
+- Designs and ships Next.js 15 applications with the App Router and React Server Components.
+- Models content in Contentful (or similar) so non-engineers can ship copy, layout, and SEO fields without a redeploy.
+- Builds Node.js/GraphQL backends on AWS Lambda + DynamoDB.
+- Wires up SEO foundations: Metadata API, JSON-LD (`Person`, `WebSite`, `ProfilePage`, `BreadcrumbList`), `sitemap.xml`, `robots.txt`, `llms.txt`.
+- Ships accessible, keyboard-navigable UI with semantic landmarks, skip links, and `prefers-reduced-motion` guards.
+
+### What he does not do
+
+- WebGL/Three.js hero scenes (the portfolio hero is intentionally CSS-driven so the first paint is text and stays crawler-friendly).
+- Paid advertorial content, link exchanges, or guest posts for SEO.
+
+---
+
+## Contact
+
+Canonical URL: https://isaias-santos-home-page.example.com/#contact
+H1: Contact Isaias F. Santos
+
+- Email: isaias.santos@ignitevisibility.com
+- LinkedIn: https://www.linkedin.com/in/isaias-francisco-21097437
+- GitHub: https://github.com/netafado
+- Medium: https://medium.com/@isaias.fran
+
+Typical response window: 1–2 business days. Prefer email for new project enquiries and LinkedIn for short follow-ups.

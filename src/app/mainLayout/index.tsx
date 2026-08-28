@@ -1,9 +1,9 @@
 import Navigation from "@/components/Navigation";
 import Section from "@/components/Section";
-import Image from "next/image";
 import { FC } from "react";
 
 import { SectionProps } from "@/components/Section/types";
+import { siteConfig } from "@/lib/seo/site-config";
 
 type MainLayoutProps = {
   url: string;
@@ -11,10 +11,23 @@ type MainLayoutProps = {
 };
 
 const MainLayout: FC<MainLayoutProps> = ({ sections, url }) => {
+  const year = new Date().getFullYear();
   return (
     <div className="font-sans w-full">
-      <main>
+      {/* Skip link must be the first focusable element on the page so
+          keyboard users can jump past the navigation to the main content. */}
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-amber-400 focus:text-black focus:px-3 focus:py-2 focus:rounded"
+      >
+        Skip to main content
+      </a>
+
+      <header className="contents">
         <Navigation currentPath={url} />
+      </header>
+
+      <main id="main" aria-label="Main content" className="font-sans w-full">
         {sections.map((section, index) => {
           if (!section) return null;
           return (
@@ -28,37 +41,60 @@ const MainLayout: FC<MainLayoutProps> = ({ sections, url }) => {
           );
         })}
       </main>
-      <footer className="row-start-3 mt-4 flex gap-[24px] flex-wrap items-center justify-center p-5 text-sm text-gray-500">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://medium.com/@isaias.fran"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          medium Articles
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://github.com/netafado/avant-cms-contentful"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Developed with Next.js, Contentful and AWS
-        </a>
+
+      <footer className="mt-16 border-t border-zinc-900 px-4 py-8 text-sm text-zinc-400">
+        <div className="mx-auto flex max-w-5xl flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {year} {siteConfig.siteName}. All rights reserved.
+          </p>
+          <ul className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <li>
+              <a
+                className="hover:text-amber-300"
+                href={siteConfig.socials.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn
+              </a>
+            </li>
+            <li>
+              <a
+                className="hover:text-amber-300"
+                href={siteConfig.socials.github}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub
+              </a>
+            </li>
+            <li>
+              <a
+                className="hover:text-amber-300"
+                href={siteConfig.socials.medium}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Medium
+              </a>
+            </li>
+            <li>
+              <a className="hover:text-amber-300" href={siteConfig.socials.email}>
+                Email
+              </a>
+            </li>
+            <li>
+              <a
+                className="hover:text-amber-300"
+                href="/llms.txt"
+                rel="alternate"
+                type="text/markdown"
+              >
+                llms.txt
+              </a>
+            </li>
+          </ul>
+        </div>
       </footer>
     </div>
   );
