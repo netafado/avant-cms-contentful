@@ -1,33 +1,31 @@
 "use client";
-import { ChevronDownIcon, ThickArrowDownIcon } from "@radix-ui/react-icons";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { FC } from "react";
+import Logo from "@/components/Logo";
 import SunHero from "../SunHero";
 import { BannerProps } from "./types";
 
 const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
   return (
     <SunHero
-      tagline="Software Engineer"
+      masthead={<Logo name={name} as="h1" />}
       poster={{
         src: "/images/sun-hero.jpg",
         alt: `The sun rendered as a burning sphere of plasma behind the name ${name}`,
       }}
     >
-      <h1 className="m-0 uppercase font-mono text-4xl font-extrabold text-white md:text-6xl">
-        {name}
-      </h1>
       {achievements?.items?.length ? (
-        <div className="mt-10 grid w-full max-w-3xl grid-cols-2 divide-x divide-white/10 border-y border-white/10 font-mono [text-shadow:0_1px_10px_rgba(0,0,0,0.9)] lg:grid-cols-4">
+        <div className="grid w-full max-w-3xl grid-cols-2 gap-y-8 border-y border-white/20 py-4 [text-shadow:0_1px_16px_rgba(0,0,0,0.75)] lg:grid-cols-4 lg:divide-x lg:divide-white/20">
           {achievements.items.map((achievement, index) => (
             <div
               key={`achievement-${index}`}
-              className="flex flex-1 flex-col items-center gap-1 px-4 py-4"
+              className="flex flex-col items-center gap-2 px-4"
             >
-              <span className="text-2xl font-bold text-solar-400 md:text-3xl">
+              <span className="font-display text-3xl leading-none text-white md:text-4xl">
                 {achievement.number}
               </span>
-              <span className="text-[11px] uppercase tracking-wider text-gray-400 md:text-xs">
+              <span className="text-[10px] tracking-[0.25em] text-white/70 uppercase md:text-[11px]">
                 {achievement.text}
               </span>
             </div>
@@ -39,16 +37,15 @@ const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
           href={cv.src}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-10 flex items-center gap-2 border border-solar-500/60 px-6 py-2 font-mono text-sm uppercase tracking-widest text-solar-300 transition-colors duration-300 hover:bg-solar-500/10 hover:text-solar-200"
+          className="mt-12 flex items-center border border-white/70 px-10 py-3.5 font-sans text-xs tracking-[0.3em] text-white uppercase transition-colors duration-300 hover:border-white hover:bg-white hover:text-black"
         >
-          <ThickArrowDownIcon />
-          Download CV
+          <span className="block indent-[0.3em]">Download CV</span>
         </Link>
       )}
       <a
         href="#content"
         aria-label="Scroll to content"
-        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 font-mono text-[10px] uppercase tracking-[0.35em] text-gray-500 transition-colors hover:text-solar-300"
+        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 font-mono text-[10px] tracking-[0.35em] text-white/60 uppercase transition-colors hover:text-white"
       >
         Scroll
         <ChevronDownIcon className="animate-scroll-cue h-4 w-4" />

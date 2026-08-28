@@ -91,7 +91,7 @@ const initGl = (canvas: HTMLCanvasElement): GlState | null => {
   };
 };
 
-const SunHero: FC<SunHeroProps> = ({ tagline, poster, children }) => {
+const SunHero: FC<SunHeroProps> = ({ masthead, poster, children }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const glRef = useRef<GlState | null>(null);
   const rafRef = useRef(0);
@@ -240,7 +240,7 @@ const SunHero: FC<SunHeroProps> = ({ tagline, poster, children }) => {
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
       aria-label="Animated sun hero"
-      className="relative flex h-svh min-h-[640px] w-full items-center justify-center overflow-hidden bg-black"
+      className="relative flex h-svh min-h-[640px] w-full items-center justify-center bg-black"
     >
       {poster && (
         <Image
@@ -255,13 +255,13 @@ const SunHero: FC<SunHeroProps> = ({ tagline, poster, children }) => {
           )}
         />
       )}
-      <div className="relative z-10 flex h-full w-full flex-col items-center justify-center px-6 text-center overlay">
-        {tagline && (
-          <p className="animate-flicker mb-4 font-mono text-xs uppercase tracking-[0.4em] text-solar-300/90 md:text-sm">
-            {`// ${tagline}`}
-          </p>
+      <div className="relative z-10 flex h-full w-full flex-col items-center px-6 text-center">
+        {masthead && (
+          <div className="w-full pt-[6vh] md:pt-[8vh]">{masthead}</div>
         )}
-        {children}
+        <div className="flex w-full flex-1 flex-col items-center justify-end pb-[11vh] md:pb-[13vh]">
+          {children}
+        </div>
       </div>
       <canvas
         ref={canvasRef}
@@ -270,6 +270,12 @@ const SunHero: FC<SunHeroProps> = ({ tagline, poster, children }) => {
           "absolute inset-0 h-full w-full transition-opacity duration-1000",
           glReady ? "opacity-100" : "opacity-0",
         )}
+      />
+      {/* Editorial scrim: darkens the top/bottom fields so the masthead and
+          stats stay legible while the sun itself burns unobstructed. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.65)_0%,rgba(0,0,0,0.35)_22%,transparent_42%,transparent_58%,rgba(0,0,0,0.5)_76%,rgba(0,0,0,0.88)_100%)]"
       />
     </section>
   );

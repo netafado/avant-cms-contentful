@@ -22,12 +22,14 @@ const mockProps: BannerProps = {
 };
 
 describe("Banner Component", () => {
-  it("renders the hero with correct name", () => {
+  it("renders the logo masthead with the name as the h1", () => {
     render(<Banner {...mockProps} />);
 
-    const nameElement = screen.getByText("Test Name");
-    expect(nameElement).toBeInTheDocument();
-    expect(nameElement.tagName).toBe("H1");
+    const heading = screen.getByRole("heading", { level: 1 });
+    expect(heading).toBeInTheDocument();
+    expect(heading.tagName).toBe("H1");
+    expect(heading).toHaveTextContent("Test");
+    expect(heading).toHaveTextContent("Name");
   });
 
   it("renders the sun poster fallback image", () => {
@@ -40,7 +42,7 @@ describe("Banner Component", () => {
   it("renders the role tagline", () => {
     render(<Banner {...mockProps} />);
 
-    expect(screen.getByText("// Full Stack Developer")).toBeInTheDocument();
+    expect(screen.getByText("Software Engineer")).toBeInTheDocument();
   });
 
   it("renders all achievements", () => {
@@ -77,8 +79,8 @@ describe("Banner Component", () => {
       <Banner {...mockProps} achievements={undefined} cv={undefined} />
     );
 
-    const nameElement = screen.getByText("Test Name");
-    expect(nameElement).toBeInTheDocument();
+    const heading = screen.getByRole("heading", { level: 1 });
+    expect(heading).toHaveTextContent("Test");
     expect(screen.queryByText("Download CV")).not.toBeInTheDocument();
   });
 });

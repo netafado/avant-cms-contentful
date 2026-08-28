@@ -17,16 +17,16 @@ const SectionBase: FC<SectionProps> = ({
   const textAlignmentClass = TEXT_ALIGN[textAlign || "center"];
 
   return (
-    <section className={`mt-10 px-4 ${textAlignmentClass}`}>
+    <section className={`mt-16 px-4 md:mt-24 ${textAlignmentClass}`}>
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-3xl bg-clip-text text-transparent font-bold bg-gradient-to-b from-brand-400 to-brand-600 mb-2">
+        <h2 className="mb-4 border-b border-black/10 pb-4 font-display text-3xl font-normal text-gray-900 dark:border-white/15 dark:text-white md:text-4xl">
           {title}
         </h2>
         {description && <EditorView markdown={description} />}
 
         {children}
       </div>
-      <div className="mt-5">
+      <div className="mt-8">
         <div
           className={clsx(
             "mt-6 grid gap-6 text-left  mx-auto px-4",

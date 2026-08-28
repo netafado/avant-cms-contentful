@@ -1,6 +1,5 @@
 import Navigation from "@/components/Navigation";
 import Section from "@/components/Section";
-import Image from "next/image";
 import { FC } from "react";
 
 import { SectionProps } from "@/components/Section/types";
@@ -30,35 +29,21 @@ const MainLayout: FC<MainLayoutProps> = ({ sections, url }) => {
           })}
         </div>
       </main>
-      <footer className="flex flex-wrap items-center justify-center gap-[24px] border-t border-white/10 bg-black p-6 font-mono text-xs uppercase tracking-widest text-gray-500">
+      <footer className="flex flex-wrap items-center justify-center gap-x-10 gap-y-2 border-t border-white/10 bg-black px-6 py-8 font-mono text-[10px] tracking-[0.3em] text-white/40 uppercase">
         <a
-          className="flex items-center gap-2 transition-colors hover:text-solar-300"
+          className="transition-colors duration-300 hover:text-white"
           href="https://medium.com/@isaias.fran"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          medium Articles
+          Medium Articles
         </a>
         <a
-          className="flex items-center gap-2 transition-colors hover:text-solar-300"
+          className="transition-colors duration-300 hover:text-white"
           href="https://github.com/netafado/avant-cms-contentful"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
           Developed with Next.js, Contentful and AWS
         </a>
       </footer>

@@ -16,55 +16,59 @@ const links = [
   {
     href: "https://medium.com/@isaias.fran",
     label: "Medium articles",
-    icon: <BookmarkIcon className="h-5 w-5" />,
+    icon: <BookmarkIcon className="h-4 w-4" />,
   },
   {
     href: "https://www.linkedin.com/in/isaias-francisco-21097437",
     label: "LinkedIn profile",
-    icon: <LinkedInLogoIcon className="h-5 w-5" />,
+    icon: <LinkedInLogoIcon className="h-4 w-4" />,
   },
   {
     href: "https://github.com/netafado",
     label: "GitHub profile",
-    icon: <GitHubLogoIcon className="h-5 w-5" />,
+    icon: <GitHubLogoIcon className="h-4 w-4" />,
   },
 ];
 
 const siteLinks = [
-  { href: "/", label: "Home", icon: <HomeIcon className="h-5 w-5" /> },
+  { href: "/", label: "Home", icon: <HomeIcon className="h-4 w-4" /> },
   {
     href: "/resume",
     label: "Resume",
-    icon: <FileTextIcon className="h-5 w-5" />,
+    icon: <FileTextIcon className="h-4 w-4" />,
   },
 ];
 
 const CLASSES = {
-  wrapper: "fixed bottom-10 right-1/2 translate-x-1/2 z-50",
-  pill: "relative flex items-center justify-center gap-2 rounded-full border border-white/10 bg-zinc-900/70 px-1 h-12 backdrop-blur-md",
-  item: "p-2 flex items-center justify-center gap-2 rounded-full duration-200 text-gray-300 hover:bg-white/10 hover:text-white",
-  active: "bg-solar-500 text-white hover:bg-solar-600 hover:text-white",
+  // difference blend keeps the white type legible over both the black hero
+  // and light sections without any bar background.
+  wrapper: "fixed inset-x-0 top-0 z-50 text-white mix-blend-difference",
+  bar: "mx-auto flex h-16 w-full items-center justify-between gap-4 px-6 md:h-20 md:px-10",
+  group: "flex items-center gap-0.5 md:gap-1",
+  siteLink:
+    "relative flex items-center gap-2 p-2 text-[11px] tracking-[0.22em] text-white/60 uppercase transition-colors duration-300 hover:text-white",
+  active:
+    "text-white after:absolute after:inset-x-2 after:bottom-0.5 after:h-px after:bg-white after:content-['']",
+  iconLink:
+    "flex items-center p-2 text-white/60 transition-colors duration-300 hover:text-white",
+  divider: "mx-2 h-4 w-px bg-white/25",
 };
 
 const Navigation = ({ currentPath }: { currentPath: string }) => {
   const { toggleTheme, theme } = useTheme();
   return (
     <nav className={CLASSES.wrapper} aria-label="Main navigation">
-      <div className={CLASSES.pill}>
-        <ul
-          role="menubar"
-          className="relative flex items-center justify-center gap-2"
-        >
+      <div className={CLASSES.bar}>
+        <ul role="menubar" className={CLASSES.group}>
           {siteLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               aria-label={link.label}
               role="menuitem"
-              className={clsx(CLASSES.item, {
+              className={clsx(CLASSES.siteLink, {
                 [CLASSES.active]:
-                  currentPath === link.href ||
-                  link.href.endsWith(currentPath),
+                  currentPath === link.href || link.href.endsWith(currentPath),
               })}
             >
               <span className="hidden md:inline">{link.label}</span>
@@ -73,35 +77,29 @@ const Navigation = ({ currentPath }: { currentPath: string }) => {
           ))}
         </ul>
 
-        <div className="relative flex items-center justify-center gap-2 border-l border-white/10 py-2 pl-2">
-          <button
-            onClick={toggleTheme}
-            aria-label={
-              theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
-            }
-            className={clsx(CLASSES.item, "p-3")}
-          >
-            {theme === "dark" ? (
-              <SunIcon className="text-solar-400" />
-            ) : (
-              <MoonIcon className="text-gray-400" />
-            )}
-          </button>
-        </div>
-
-        <div className="relative flex items-center justify-center gap-2">
+        <div className={CLASSES.group}>
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               target="_blank"
               aria-label={link.label}
-              className={clsx(CLASSES.item)}
+              className={clsx(CLASSES.iconLink)}
               rel="noopener noreferrer"
             >
               {link.icon}
             </Link>
           ))}
+          <div aria-hidden className={CLASSES.divider} />
+          <button
+            onClick={toggleTheme}
+            aria-label={
+              theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+            }
+            className={clsx(CLASSES.iconLink, "p-2")}
+          >
+            {theme === "dark" ? <SunIcon /> : <MoonIcon />}
+          </button>
         </div>
       </div>
     </nav>

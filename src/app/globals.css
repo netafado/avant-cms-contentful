@@ -7,6 +7,7 @@
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: "Didot", "Bodoni MT", "Playfair Display", Georgia, "Times New Roman", serif;
   --color-canvas-default: #ef4444;
   --color-error-50: #fef2f2;
   --color-error-100: #fee2e2;
@@ -94,19 +95,7 @@
   --color-solar-900: #4a1502;
   --color-solar-950: #2b0c01;
 
-  --animate-flicker: flicker 4s linear infinite;
   --animate-scroll-cue: scroll-cue 2s ease-in-out infinite;
-
-  @keyframes flicker {
-    0%, 100% { opacity: 1; }
-    3% { opacity: 0.6; }
-    6% { opacity: 1; }
-    52% { opacity: 1; }
-    54% { opacity: 0.5; }
-    56% { opacity: 1; }
-    81% { opacity: 0.8; }
-    83% { opacity: 1; }
-  }
 
   @keyframes scroll-cue {
     0%, 100% { transform: translateY(0); opacity: 0.6; }
@@ -125,7 +114,6 @@ p {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-flicker,
   .animate-scroll-cue {
     animation: none;
   }

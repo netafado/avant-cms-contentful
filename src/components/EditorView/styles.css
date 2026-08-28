@@ -1,11 +1,10 @@
-
-
 .wmde-markdown-custom {
   background-color: transparent !important;
-  --color-fg-default: var(--color-gray-300);
-    :where(.dark, .dark * ) {
-      color: var(--color-gray-400);
-    }
-
+  --color-fg-default: var(--color-gray-700);
+  color: var(--color-gray-700);
 }
 
+.dark .wmde-markdown-custom {
+  --color-fg-default: var(--color-gray-400);
+  color: var(--color-gray-400);
+}
