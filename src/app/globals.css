@@ -81,8 +81,37 @@
   --color-beta-800: #9f1239;
   --color-beta-900: #881337;
   --color-beta-950: #4c0519;
-  
 
+  --color-solar-50: #fff8ed;
+  --color-solar-100: #ffefd4;
+  --color-solar-200: #ffe8c2;
+  --color-solar-300: #ffc76b;
+  --color-solar-400: #ff9e3d;
+  --color-solar-500: #ff7a18;
+  --color-solar-600: #e35b0e;
+  --color-solar-700: #b23a05;
+  --color-solar-800: #7c2404;
+  --color-solar-900: #4a1502;
+  --color-solar-950: #2b0c01;
+
+  --animate-flicker: flicker 4s linear infinite;
+  --animate-scroll-cue: scroll-cue 2s ease-in-out infinite;
+
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    3% { opacity: 0.6; }
+    6% { opacity: 1; }
+    52% { opacity: 1; }
+    54% { opacity: 0.5; }
+    56% { opacity: 1; }
+    81% { opacity: 0.8; }
+    83% { opacity: 1; }
+  }
+
+  @keyframes scroll-cue {
+    0%, 100% { transform: translateY(0); opacity: 0.6; }
+    50% { transform: translateY(6px); opacity: 1; }
+  }
 }
 
 p {
@@ -92,5 +121,12 @@ p {
 .dark {
   p {
     color: var(--color-gray-400);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-flicker,
+  .animate-scroll-cue {
+    animation: none;
   }
 }

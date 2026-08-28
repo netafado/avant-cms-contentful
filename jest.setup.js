@@ -5,7 +5,7 @@ jest.mock('next/image', () => ({
     __esModule: true,
     default: (props) => {
         // eslint-disable-next-line @next/next/no-img-element
-        return <img {...props} />
+        return <img alt="" {...props} />
     },
 }))
 
@@ -36,3 +36,15 @@ global.IntersectionObserver = class IntersectionObserver {
     observe() { }
     unobserve() { }
 }
+
+// jsdom does not implement matchMedia (used by the SunHero canvas)
+global.matchMedia = jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+}))

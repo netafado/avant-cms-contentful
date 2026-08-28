@@ -71,7 +71,10 @@ Then, set up your environment variables. Create a `.env.local` file in the root 
 ```plaintext
 CONTENTFUL_SPACE_ID=your_space_id
 CONTENTFUL_ACCESS_TOKEN=your_access_token
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
+
+`NEXT_PUBLIC_SITE_URL` is the canonical public origin of the deployment. It is used for canonical URLs, the sitemap, robots.txt, and Open Graph metadata — set it to the production Amplify URL in the Amplify environment variables.
 
 Now, you can start the development server:
 
@@ -80,6 +83,20 @@ yarn dev
 ```
 
 Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to see the application in action.
+
+## SEO & AI discoverability
+
+The site ships with a search/LLM discovery layer:
+
+- Per-page metadata driven by Contentful's `ComponentSeo` fields (title, description, canonical, noindex/nofollow, share images).
+- Open Graph + Twitter cards with a default 1200×630 image.
+- JSON-LD structured data (`Person` and `WebSite` schemas) on the home page.
+- `app/sitemap.ts` and `app/robots.ts` (the latter explicitly allows AI crawlers such as GPTBot, ClaudeBot, and PerplexityBot).
+- `public/llms.txt` and `public/llms-full.txt` for LLM-oriented search.
+
+## Credits
+
+The hero fallback/poster image (`public/images/sun-hero.jpg`) and the Open Graph image (`public/images/og-image.png`) are derived from a NASA SDO solar observation image (public domain, NASA).
 
 ## Deploy it on AWS Amplify
 

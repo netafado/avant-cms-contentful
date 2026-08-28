@@ -109,11 +109,8 @@ const ComponentsHandler = {
     return <ComponentTags {...componentProps} />;
   },
   ComponentsCards: (component: SectionComponentsItem) => {
-    const cards = isComponentCards(component)
-      ? component.cardsCollection?.items || []
-      : [];
-    console.log("ComponentsCards", cards);
-    return <div>ComponentsCards Placeholder</div>;
+    const hasCards = isComponentCards(component);
+    return hasCards ? <div>ComponentsCards Placeholder</div> : null;
   },
 };
 

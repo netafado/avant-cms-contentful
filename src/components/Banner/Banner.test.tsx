@@ -3,18 +3,6 @@ import { screen } from "@testing-library/dom";
 import Banner from "./index";
 import { BannerProps } from "./types";
 
-jest.mock("../Reveal", () => {
-  return function MockReveal({
-    children,
-    className,
-  }: {
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return <div className={className}>{children}</div>;
-  };
-});
-
 const mockProps: BannerProps = {
   name: "Test Name",
   image: {
@@ -34,19 +22,25 @@ const mockProps: BannerProps = {
 };
 
 describe("Banner Component", () => {
-  it("renders the banner with correct name", () => {
+  it("renders the hero with correct name", () => {
     render(<Banner {...mockProps} />);
 
     const nameElement = screen.getByText("Test Name");
     expect(nameElement).toBeInTheDocument();
+    expect(nameElement.tagName).toBe("H1");
   });
 
-  it("renders the image with correct attributes", () => {
+  it("renders the sun poster fallback image", () => {
     render(<Banner {...mockProps} />);
 
     const imageElement = screen.getByRole("img");
-    expect(imageElement).toHaveAttribute("src", "/test-image.jpg");
-    expect(imageElement).toHaveAttribute("alt", "Test image");
+    expect(imageElement).toHaveAttribute("src", "/images/sun-hero.jpg");
+  });
+
+  it("renders the role tagline", () => {
+    render(<Banner {...mockProps} />);
+
+    expect(screen.getByText("// Full Stack Developer")).toBeInTheDocument();
   });
 
   it("renders all achievements", () => {
@@ -62,11 +56,29 @@ describe("Banner Component", () => {
     expect(screen.getByText("Projects")).toBeInTheDocument();
   });
 
-  it("renders without achievements when none provided", () => {
-    const propsWithoutAchievements = { ...mockProps, achievements: undefined };
-    render(<Banner {...propsWithoutAchievements} />);
+  it("renders the CV link when provided", () => {
+    render(
+      <Banner
+        {...mockProps}
+        cv={{
+          src: "https://example.com/cv.pdf",
+          fileName: "cv.pdf",
+          contentType: "application/pdf",
+        }}
+      />
+    );
+
+    const cvLink = screen.getByText("Download CV").closest("a");
+    expect(cvLink).toHaveAttribute("href", "https://example.com/cv.pdf");
+  });
+
+  it("renders without achievements and cv when none provided", () => {
+    render(
+      <Banner {...mockProps} achievements={undefined} cv={undefined} />
+    );
 
     const nameElement = screen.getByText("Test Name");
     expect(nameElement).toBeInTheDocument();
+    expect(screen.queryByText("Download CV")).not.toBeInTheDocument();
   });
 });

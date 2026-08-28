@@ -15,22 +15,24 @@ const MainLayout: FC<MainLayoutProps> = ({ sections, url }) => {
     <div className="font-sans w-full">
       <main>
         <Navigation currentPath={url} />
-        {sections.map((section, index) => {
-          if (!section) return null;
-          return (
-            <Section
-              key={`section-${index}_${section.title || "default"}`}
-              {...section}
-              title={section.title || "Section Title"}
-              description={section.description}
-              components={section.components || []}
-            />
-          );
-        })}
+        <div id="content" className="scroll-mt-4">
+          {sections.map((section, index) => {
+            if (!section) return null;
+            return (
+              <Section
+                key={`section-${index}_${section.title || "default"}`}
+                {...section}
+                title={section.title || "Section Title"}
+                description={section.description}
+                components={section.components || []}
+              />
+            );
+          })}
+        </div>
       </main>
-      <footer className="row-start-3 mt-4 flex gap-[24px] flex-wrap items-center justify-center p-5 text-sm text-gray-500">
+      <footer className="flex flex-wrap items-center justify-center gap-[24px] border-t border-white/10 bg-black p-6 font-mono text-xs uppercase tracking-widest text-gray-500">
         <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          className="flex items-center gap-2 transition-colors hover:text-solar-300"
           href="https://medium.com/@isaias.fran"
           target="_blank"
           rel="noopener noreferrer"
@@ -45,7 +47,7 @@ const MainLayout: FC<MainLayoutProps> = ({ sections, url }) => {
           medium Articles
         </a>
         <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          className="flex items-center gap-2 transition-colors hover:text-solar-300"
           href="https://github.com/netafado/avant-cms-contentful"
           target="_blank"
           rel="noopener noreferrer"

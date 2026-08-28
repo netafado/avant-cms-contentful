@@ -15,14 +15,17 @@ import Link from "next/link";
 const links = [
   {
     href: "https://medium.com/@isaias.fran",
+    label: "Medium articles",
     icon: <BookmarkIcon className="h-5 w-5" />,
   },
   {
     href: "https://www.linkedin.com/in/isaias-francisco-21097437",
+    label: "LinkedIn profile",
     icon: <LinkedInLogoIcon className="h-5 w-5" />,
   },
   {
     href: "https://github.com/netafado",
+    label: "GitHub profile",
     icon: <GitHubLogoIcon className="h-5 w-5" />,
   },
 ];
@@ -37,18 +40,20 @@ const siteLinks = [
 ];
 
 const CLASSES = {
-  mobile: "fixed bottom-10 right-1/2 translate-x-1/2 z-50 overflow-hidden",
-  desktop: "hidden md:flex",
+  wrapper: "fixed bottom-10 right-1/2 translate-x-1/2 z-50",
+  pill: "relative flex items-center justify-center gap-2 rounded-full border border-white/10 bg-zinc-900/70 px-1 h-12 backdrop-blur-md",
+  item: "p-2 flex items-center justify-center gap-2 rounded-full duration-200 text-gray-300 hover:bg-white/10 hover:text-white",
+  active: "bg-solar-500 text-white hover:bg-solar-600 hover:text-white",
 };
 
 const Navigation = ({ currentPath }: { currentPath: string }) => {
   const { toggleTheme, theme } = useTheme();
   return (
-    <div className={clsx(CLASSES.mobile, CLASSES.mobile)}>
-      <div className="relative flex border-gray-300 dark:border-gray-700 items-center justify-center gap-2 bg-gray-300/40 rounded-full px-1 h-12 border border-gray-200">
+    <nav className={CLASSES.wrapper} aria-label="Main navigation">
+      <div className={CLASSES.pill}>
         <ul
           role="menubar"
-          className="relative flex border-gray-700 items-center justify-center gap-2"
+          className="relative flex items-center justify-center gap-2"
         >
           {siteLinks.map((link) => (
             <Link
@@ -56,50 +61,42 @@ const Navigation = ({ currentPath }: { currentPath: string }) => {
               href={link.href}
               aria-label={link.label}
               role="menuitem"
-              className={clsx(
-                "text-gray-900 bg-gray-300 hover:bg-gray-400 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700",
-                "p-2 flex items-center dark:border-b border-gray-700 hover:border-gray-600 duration-200 justify-center text-gray-400 rounded-full",
-                {
-                  "bg-lime-500 dark:bg-lime-500 text-white hover:bg-lime-700 dark:hover:bg-lime-700":
-                    currentPath === link.href ||
-                    link.href.endsWith(currentPath),
-                }
-              )}
+              className={clsx(CLASSES.item, {
+                [CLASSES.active]:
+                  currentPath === link.href ||
+                  link.href.endsWith(currentPath),
+              })}
             >
-              <span className="flex items-center gap-2 hidden ">
-                {link.label}
-              </span>
+              <span className="hidden md:inline">{link.label}</span>
               {link.icon}
             </Link>
           ))}
         </ul>
 
-        <div className="relative  flex border-gray-300 dark:border-gray-700 dark:border-gray-700 py-2 items-center justify-center gap-2 border-l pl-2">
+        <div className="relative flex items-center justify-center gap-2 border-l border-white/10 py-2 pl-2">
           <button
             onClick={toggleTheme}
-            className={clsx(
-              "text-gray-900 bg-gray-300  dark:bg-gray-800 dark:text-gray-300",
-              "p-3 flex items-center dark:border-b border-gray-700 hover:border-gray-600 duration-200 justify-center text-gray-400 rounded-full"
-            )}
+            aria-label={
+              theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+            }
+            className={clsx(CLASSES.item, "p-3")}
           >
             {theme === "dark" ? (
-              <SunIcon className="text-yellow-400" />
+              <SunIcon className="text-solar-400" />
             ) : (
               <MoonIcon className="text-gray-400" />
             )}
           </button>
         </div>
 
-        <div className="relative flex border-gray-700 py-2 items-center justify-center gap-2">
-          {links.map((link, index) => (
+        <div className="relative flex items-center justify-center gap-2">
+          {links.map((link) => (
             <Link
-              key={index}
+              key={link.href}
               href={link.href}
               target="_blank"
-              className={clsx(
-                "text-gray-900 bg-gray-300 hover:bg-gray-400 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700",
-                "p-2 flex items-center dark:border-b border-gray-700 hover:border-gray-600 duration-200 justify-center text-gray-400 rounded-full"
-              )}
+              aria-label={link.label}
+              className={clsx(CLASSES.item)}
               rel="noopener noreferrer"
             >
               {link.icon}
@@ -107,7 +104,7 @@ const Navigation = ({ currentPath }: { currentPath: string }) => {
           ))}
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 

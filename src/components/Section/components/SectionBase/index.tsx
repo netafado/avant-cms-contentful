@@ -29,8 +29,8 @@ const SectionBase: FC<SectionProps> = ({
       <div className="mt-5">
         <div
           className={clsx(
-            "mt-6 grid gap-6 text-left max-w-5xl mx-auto px-4",
-            GRID[(grid as keyof typeof GRID) || "1"]
+            "mt-6 grid gap-6 text-left  mx-auto px-4",
+            GRID[(grid as keyof typeof GRID) || "1"],
           )}
         >
           {components?.map((component, index) => {

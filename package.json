@@ -10,7 +10,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "graphql-codegen:generate": "graphql-codegen -r dotenv/config --config codegen.ts",
+    "graphql-codegen:generate": "graphql-codegen -r dotenv/config --config codegen.ts && node scripts/dedupe-codegen.mjs",
     "graphql-codegen:watch": "graphql-codegen --watch -r dotenv/config --config codegen.ts"
   },
   "dependencies": {

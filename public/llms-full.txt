@@ -1,0 +1,49 @@
+# Isaias Santos
+
+> Full Stack Developer specializing in Next.js, TypeScript, and Contentful headless CMS.
+
+Isaias Santos is a full stack developer who designs and builds content-driven
+web applications. His work focuses on the JavaScript ecosystem: Next.js and
+React on the frontend, Node.js services on the backend, GraphQL APIs, and
+headless CMS architectures with Contentful, deployed to AWS. This site is his
+portfolio and a living example of that stack: a Next.js App Router application
+whose pages, sections, and components are fully managed in Contentful, so new
+landing pages can be created and updated without code changes.
+
+## About this site
+
+The site is deliberately built as a demonstration of the practices Isaias
+works with:
+
+- **Next.js (App Router)** for server rendering, per-page metadata, and
+  strong Core Web Vitals.
+- **Contentful** as the single source of content: pages are composed of
+  sections and components modeled in the CMS and fetched over GraphQL.
+- **AWS Amplify** for low-cost hosting and continuous deployment.
+- Semantic HTML, JSON-LD structured data, a sitemap, and a robots policy
+  that explicitly welcomes both traditional and AI search crawlers.
+
+## Pages
+
+- [Home](/): Portfolio home — profile, experience highlights, and projects.
+
+## Skills
+
+- Next.js / React / TypeScript
+- Contentful headless CMS and content modeling
+- GraphQL API design and integration
+- Tailwind CSS
+- AWS (Amplify hosting)
+
+## Selected work
+
+The home page highlights full stack projects delivered with the stack above,
+including e-commerce and content platforms built on Next.js and Contentful.
+
+## Links
+
+- [GitHub](https://github.com/netafado): Code and open-source work.
+- [LinkedIn](https://www.linkedin.com/in/isaias-francisco-21097437): Professional profile.
+- [Medium](https://medium.com/@isaias.fran): Technical articles about
+  Next.js, Contentful, and AWS.
+- [Site source code](https://github.com/netafado/avant-cms-contentful): This website's repository.
