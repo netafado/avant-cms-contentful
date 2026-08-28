@@ -6,8 +6,11 @@ import { BannerProps } from "./types";
 import { FC } from "react";
 import { ThickArrowDownIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 const Banner: FC<BannerProps> = ({ name, image, achievements, cv }) => {
+  const t = useTranslations("Banner");
+
   return (
     <>
       <div className="mx-auto my-auto px-4 w-full">
@@ -67,7 +70,7 @@ const Banner: FC<BannerProps> = ({ name, image, achievements, cv }) => {
             >
               <button className="mt-2 border-b border-lime-500 mx-auto px-4 py-2 text-gray-400 hover:text-brand-400 transition-colors duration-300 flex items-center justify-center gap-2">
                 <ThickArrowDownIcon />
-                Download CV
+                {t("downloadCv")}
               </button>
             </Link>
           )}

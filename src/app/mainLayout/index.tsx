@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import Section from "@/components/Section";
 import Image from "next/image";
 import { FC } from "react";
+import { getTranslations } from "next-intl/server";
 
 import { SectionProps } from "@/components/Section/types";
 
@@ -10,7 +11,9 @@ type MainLayoutProps = {
   sections: SectionProps[];
 };
 
-const MainLayout: FC<MainLayoutProps> = ({ sections, url }) => {
+const MainLayout: FC<MainLayoutProps> = async ({ sections, url }) => {
+  const t = await getTranslations("Layout");
+
   return (
     <div className="font-sans w-full">
       <main>
@@ -21,7 +24,7 @@ const MainLayout: FC<MainLayoutProps> = ({ sections, url }) => {
             <Section
               key={`section-${index}_${section.title || "default"}`}
               {...section}
-              title={section.title || "Section Title"}
+              title={section.title || t("sectionTitleFallback")}
               description={section.description}
               components={section.components || []}
             />
@@ -42,7 +45,7 @@ const MainLayout: FC<MainLayoutProps> = ({ sections, url }) => {
             width={16}
             height={16}
           />
-          medium Articles
+          {t("footerMedium")}
         </a>
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
@@ -57,7 +60,7 @@ const MainLayout: FC<MainLayoutProps> = ({ sections, url }) => {
             width={16}
             height={16}
           />
-          Developed with Next.js, Contentful and AWS
+          {t("footerTech")}
         </a>
       </footer>
     </div>

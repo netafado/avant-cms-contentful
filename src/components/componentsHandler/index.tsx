@@ -1,5 +1,6 @@
 import {
   SectionComponentsItem,
+  ComponentBanner,
   ComponentTagList,
   SingleAchievement,
   ComponentCard,
@@ -26,52 +27,61 @@ type ComponentTagListProps = {
   title: string;
 };
 
+type Translations = {
+  defaultName: string;
+  defaultText: string;
+  defaultImageAlt: string;
+  defaultCvFileName: string;
+};
+
+const buildBanner = (
+  component: ComponentBanner,
+  t: Translations
+): BannerProps => ({
+  name: component.title || t.defaultName,
+  cv: component.cv
+    ? {
+        src: component.cv.url || "",
+        fileName: component.cv.fileName || t.defaultCvFileName,
+        contentType: component.cv.contentType || "application/pdf",
+      }
+    : undefined,
+  image: component.mainImage
+    ? {
+        src: component.mainImage.url || "",
+        width: component.mainImage.width || 400,
+        height: component.mainImage.height || 400,
+        alt:
+          component.mainImage.title ||
+          component.mainImage.description ||
+          "",
+      }
+    : {
+        src: "/default-image.jpg",
+        width: 400,
+        height: 400,
+        alt: t.defaultImageAlt,
+      },
+  achievements: component.achievementsCollection?.items
+    ? {
+        items: component.achievementsCollection.items
+          .filter((achievement): achievement is SingleAchievement =>
+            isSingleAchievement(achievement)
+          )
+          .map((achievement) => ({
+            number: achievement.number || "0",
+            text: achievement.text || t.defaultText,
+          })),
+      }
+    : undefined,
+});
+
 const ComponentsHandler = {
-  ComponentBanner: (component: SectionComponentsItem) => {
+  ComponentBanner: (component: SectionComponentsItem, t: Translations) => {
     if (!isComponentBanner(component)) {
       return null;
     }
-
-    const bannerProps: BannerProps = {
-      name: component.title || "Default Name",
-      cv: component.cv
-        ? {
-            src: component.cv.url || "",
-            fileName: component.cv.fileName || "default-cv.pdf",
-            contentType: component.cv.contentType || "application/pdf",
-          }
-        : undefined,
-      image: component.mainImage
-        ? {
-            src: component.mainImage.url || "",
-            width: component.mainImage.width || 400,
-            height: component.mainImage.height || 400,
-            alt:
-              component.mainImage.title ||
-              component.mainImage.description ||
-              "",
-          }
-        : {
-            src: "/default-image.jpg",
-            width: 400,
-            height: 400,
-            alt: "Default image",
-          },
-      achievements: component.achievementsCollection?.items
-        ? {
-            items: component.achievementsCollection.items
-              .filter((achievement): achievement is SingleAchievement =>
-                isSingleAchievement(achievement)
-              )
-              .map((achievement) => ({
-                number: achievement.number || "0",
-                text: achievement.text || "Default text",
-              })),
-          }
-        : undefined,
-    };
-
-    return <Banner {...bannerProps} />;
+    return <Banner {...buildBanner(component, t)} />;
   },
   ComponentCard: (component: SectionComponentsItem) => {
     if (!isComponentCard(component)) {
@@ -118,3 +128,4 @@ const ComponentsHandler = {
 };
 
 export default ComponentsHandler;
+export type { Translations };
