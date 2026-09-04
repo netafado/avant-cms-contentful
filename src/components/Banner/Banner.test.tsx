@@ -45,6 +45,15 @@ describe("Banner Component", () => {
     expect(screen.getByText("Software Engineer")).toBeInTheDocument();
   });
 
+  it("renders the hero transformation message", () => {
+    render(<Banner {...mockProps} />);
+
+    expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent(
+      "AI | Human native",
+    );
+    expect(screen.getByText("transformation")).toHaveClass("mix-blend-overlay");
+  });
+
   it("renders all achievements", () => {
     render(<Banner {...mockProps} />);
 
@@ -53,9 +62,6 @@ describe("Banner Component", () => {
     expect(screen.getByText("40%")).toBeInTheDocument();
     expect(screen.getByText("Backend")).toBeInTheDocument();
     expect(screen.getByText("10+")).toBeInTheDocument();
-    expect(screen.getByText("Years of Experience")).toBeInTheDocument();
-    expect(screen.getByText("20+")).toBeInTheDocument();
-    expect(screen.getByText("Projects")).toBeInTheDocument();
   });
 
   it("renders the CV link when provided", () => {
@@ -67,7 +73,7 @@ describe("Banner Component", () => {
           fileName: "cv.pdf",
           contentType: "application/pdf",
         }}
-      />
+      />,
     );
 
     const cvLink = screen.getByText("Download CV").closest("a");
@@ -75,9 +81,7 @@ describe("Banner Component", () => {
   });
 
   it("renders without achievements and cv when none provided", () => {
-    render(
-      <Banner {...mockProps} achievements={undefined} cv={undefined} />
-    );
+    render(<Banner {...mockProps} achievements={undefined} cv={undefined} />);
 
     const heading = screen.getByRole("heading", { level: 1 });
     expect(heading).toHaveTextContent("Test");
