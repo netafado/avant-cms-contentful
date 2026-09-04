@@ -240,7 +240,7 @@ const SunHero: FC<SunHeroProps> = ({ masthead, poster, children }) => {
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
       aria-label="Animated sun hero"
-      className="relative flex h-svh min-h-[640px] w-full items-center justify-center bg-black"
+      className="relative flex h-svh min-h-[640px] w-full items-center justify-center bg-black isolation-auto"
     >
       {poster && (
         <Image
@@ -255,11 +255,9 @@ const SunHero: FC<SunHeroProps> = ({ masthead, poster, children }) => {
           )}
         />
       )}
-      <div className="relative z-10 flex h-full w-full flex-col items-center px-6 text-center">
-        {masthead && (
-          <div className="w-full pt-[6vh] md:pt-[8vh]">{masthead}</div>
-        )}
-        <div className="flex w-full flex-1 flex-col items-center justify-end pb-[11vh] md:pb-[13vh]">
+      <div className="mix-blend-overlay  flex h-full w-full flex-col items-center px-6 text-center relative z-10 flex h-full w-full flex-col items-center px-6 text-center ">
+        {masthead && <div className="w-full pt-0">{masthead}</div>}
+        <div className="flex w-full flex-1 flex-col items-center justify-end pb-[11vh] md:pb-[12vh]">
           {children}
         </div>
       </div>
