@@ -6,6 +6,7 @@ import {
   SITE_NAME,
   SITE_URL,
 } from "@/lib/seo";
+import WebMcpBridge from "@/components/WebMcpBridge";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -74,6 +75,7 @@ export default function RootLayout({
       <body
         className={`bg-white dark:bg-black ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <WebMcpBridge />
         {children}
       </body>
     </html>

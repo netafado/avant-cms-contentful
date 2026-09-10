@@ -27,3 +27,14 @@ whose pages, sections, and components are fully managed in Contentful.
 - [LinkedIn](https://www.linkedin.com/in/isaias-francisco-21097437): Professional profile.
 - [Medium](https://medium.com/@isaias.fran): Technical articles.
 - [Site source code](https://github.com/netafado/avant-cms-contentful): This website's repository.
+
+## WebMCP tools
+
+AI agents that support WebMCP (document.modelContext) can call these tools
+on any page of this site:
+
+- get_profile: profile JSON (name, role, summary, skills, social links).
+- list_pages: every page URL, read from /sitemap.xml.
+- get_page_content: the current page's title, URL, and visible text.
+- navigate_to_page: navigate the browser to a page of this site.
+- toggle_theme: switch the site between dark and light theme.

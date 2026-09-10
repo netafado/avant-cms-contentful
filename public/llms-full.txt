@@ -47,3 +47,23 @@ including e-commerce and content platforms built on Next.js and Contentful.
 - [Medium](https://medium.com/@isaias.fran): Technical articles about
   Next.js, Contentful, and AWS.
 - [Site source code](https://github.com/netafado/avant-cms-contentful): This website's repository.
+
+## WebMCP tools
+
+The site implements the WebMCP proposal (https://github.com/webmachinelearning/webmcp):
+a browser-side bridge registers structured tools on `document.modelContext`
+so AI agents can call site functionality directly instead of scraping the
+DOM. Tools available on every page:
+
+- `get_profile`: returns profile JSON — name, role (Full Stack Developer),
+  summary, skills (Next.js, React, TypeScript, Contentful, GraphQL,
+  Tailwind CSS, AWS), and social links (GitHub, LinkedIn, Medium).
+- `list_pages`: returns every page of this site with URLs and optional
+  lastmod dates, read live from `/sitemap.xml`.
+- `get_page_content`: returns the current page's title, URL, and visible
+  text content as JSON (capped at 10,000 characters).
+- `navigate_to_page`: navigates the browser to another page of this site;
+  accepts a site-relative path (e.g. `/about`) or an absolute URL on this
+  site and refuses to leave the site.
+- `toggle_theme`: switches the color theme between dark and light and
+  returns the newly applied theme.

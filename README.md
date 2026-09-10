@@ -93,6 +93,7 @@ The site ships with a search/LLM discovery layer:
 - JSON-LD structured data (`Person` and `WebSite` schemas) on the home page.
 - `app/sitemap.ts` and `app/robots.ts` (the latter explicitly allows AI crawlers such as GPTBot, ClaudeBot, and PerplexityBot).
 - `public/llms.txt` and `public/llms-full.txt` for LLM-oriented search.
+- **WebMCP** (`src/lib/webmcp/` + `src/components/WebMcpBridge/`): registers structured tools on `document.modelContext` so AI agents can call site functionality directly — `get_profile`, `list_pages`, `list_posts`, `get_post`, `get_page_content`, `navigate_to_page`, and `toggle_theme`. It feature-detects the browser API (a [proposed web standard](https://github.com/webmachinelearning/webmcp)) and no-ops where it is unsupported.
 
 ## Credits
 
