@@ -114,6 +114,11 @@ export function personJsonLd() {
       "GraphQL",
       "Tailwind CSS",
       "AWS",
+      "LLM APIs (OpenAI, Claude)",
+      "RAG",
+      "Prompt Engineering",
+      "AI Agents (MCP/WebMCP)",
+      "LLMO / AI-friendly SEO",
     ],
   };
 }

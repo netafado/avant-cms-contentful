@@ -20,6 +20,7 @@ whose pages, sections, and components are fully managed in Contentful.
 - GraphQL API design and integration
 - Tailwind CSS
 - AWS (Amplify hosting)
+- AI engineering: LLM APIs (OpenAI, Claude), RAG, prompt engineering, AI agents (MCP/WebMCP), LLMO / AI-friendly SEO
 
 ## Links
 

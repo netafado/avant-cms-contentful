@@ -34,6 +34,7 @@ works with:
 - GraphQL API design and integration
 - Tailwind CSS
 - AWS (Amplify hosting)
+- AI engineering: LLM APIs (OpenAI, Claude), RAG, prompt engineering, AI agents (MCP/WebMCP), LLMO / AI-friendly SEO
 
 ## Selected work
 
@@ -57,7 +58,9 @@ DOM. Tools available on every page:
 
 - `get_profile`: returns profile JSON — name, role (Full Stack Developer),
   summary, skills (Next.js, React, TypeScript, Contentful, GraphQL,
-  Tailwind CSS, AWS), and social links (GitHub, LinkedIn, Medium).
+  Tailwind CSS, AWS, LLM APIs (OpenAI, Claude), RAG, prompt engineering,
+  AI agents (MCP/WebMCP), LLMO / AI-friendly SEO), and social links
+  (GitHub, LinkedIn, Medium).
 - `list_pages`: returns every page of this site with URLs and optional
   lastmod dates, read live from `/sitemap.xml`.
 - `get_page_content`: returns the current page's title, URL, and visible
