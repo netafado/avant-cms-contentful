@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 
 import { SectionProps } from "./types";
 import SectionNoTitle from "./components/SectionNoTitle";

@@ -1,5 +1,7 @@
 directive @contentSourceMaps on QUERY
 
+directive @contentfulSchemaMetadata(contentTypePublishedCounters: JSON) on SCHEMA
+
 directive @delegatedResourceLink(contentTypeId: String, field: JSON) on FIELD_DEFINITION | OBJECT
 
 directive @enumMapper(value: JSON) on ENUM_VALUE
@@ -8,21 +10,24 @@ directive @featureFlag(featureName: String) on FIELD
 
 directive @fieldResolver(data: JSON, kind: String) on FIELD_DEFINITION
 
+directive @timeline(where: TimelineFilterInput!) on QUERY
+
 directive @typeIdentifier(contentTypeId: String) on OBJECT
 
 """Represents a binary file in a space. An asset can be any file type."""
-type Asset {
-  contentType(locale: String): String
+type Asset implements _Node {
+  _id: ID!
+  contentType(locale: String, useFallbackLocale: Boolean): String
   contentfulMetadata: ContentfulMetadata!
-  description(locale: String): String
-  fileName(locale: String): String
-  height(locale: String): Int
+  description(locale: String, useFallbackLocale: Boolean): String
+  fileName(locale: String, useFallbackLocale: Boolean): String
+  height(locale: String, useFallbackLocale: Boolean): Int
   linkedFrom(allowedLocales: [String]): AssetLinkingCollections
-  size(locale: String): Int
+  size(locale: String, useFallbackLocale: Boolean): Int
   sys: Sys!
-  title(locale: String): String
-  url(locale: String, transform: ImageTransformOptions): String
-  width(locale: String): Int
+  title(locale: String, useFallbackLocale: Boolean): String
+  url(locale: String, transform: ImageTransformOptions, useFallbackLocale: Boolean): String
+  width(locale: String, useFallbackLocale: Boolean): Int
 }
 
 type AssetCollection {
@@ -30,6 +35,12 @@ type AssetCollection {
   limit: Int!
   skip: Int!
   total: Int!
+}
+
+type AssetCursorCollection {
+  items: [Asset]!
+  limit: Int!
+  pages: CursorPages!
 }
 
 input AssetFilter {
@@ -102,11 +113,16 @@ input AssetFilter {
 }
 
 type AssetLinkingCollections {
-  componentBannerCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): ComponentBannerCollection
-  componentSeoCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): ComponentSeoCollection
-  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): EntryCollection
-  pageLandingCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): PageLandingCollection
-  pageProductCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): PageProductCollection
+  componentBannerCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): ComponentBannerCollection
+  componentBannerCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): ComponentBannerCursorCollection
+  componentSeoCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): ComponentSeoCollection
+  componentSeoCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): ComponentSeoCursorCollection
+  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): EntryCollection
+  entryCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): EntryCursorCollection
+  pageLandingCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): PageLandingCollection
+  pageLandingCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): PageLandingCursorCollection
+  pageProductCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): PageProductCollection
+  pageProductCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): PageProductCursorCollection
 }
 
 enum AssetOrder {
@@ -137,13 +153,14 @@ enum AssetOrder {
 """
 type ComponentBanner implements Entry & _Node {
   _id: ID!
-  achievementsCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): ComponentBannerAchievementsCollection
+  achievementsCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): ComponentBannerAchievementsCollection
+  achievementsCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): ComponentBannerAchievementsCursorCollection
   contentfulMetadata: ContentfulMetadata!
-  cv(locale: String, preview: Boolean): Asset
+  cv(locale: String, preview: Boolean, useFallbackLocale: Boolean): Asset
   linkedFrom(allowedLocales: [String]): ComponentBannerLinkingCollections
-  mainImage(locale: String, preview: Boolean): Asset
+  mainImage(locale: String, preview: Boolean, useFallbackLocale: Boolean): Asset
   sys: Sys!
-  title(locale: String): String
+  title(locale: String, useFallbackLocale: Boolean): String
 }
 
 type ComponentBannerAchievementsCollection {
@@ -153,11 +170,23 @@ type ComponentBannerAchievementsCollection {
   total: Int!
 }
 
+type ComponentBannerAchievementsCursorCollection {
+  items: [Entry]!
+  limit: Int!
+  pages: CursorPages!
+}
+
 type ComponentBannerCollection {
   items: [ComponentBanner]!
   limit: Int!
   skip: Int!
   total: Int!
+}
+
+type ComponentBannerCursorCollection {
+  items: [ComponentBanner]!
+  limit: Int!
+  pages: CursorPages!
 }
 
 input ComponentBannerFilter {
@@ -178,11 +207,32 @@ input ComponentBannerFilter {
 }
 
 type ComponentBannerLinkingCollections {
-  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): EntryCollection
-  sectionCollection(limit: Int = 100, locale: String, order: [ComponentBannerLinkingCollectionsSectionCollectionOrder], preview: Boolean, skip: Int = 0): SectionCollection
+  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): EntryCollection
+  entryCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): EntryCursorCollection
+  sectionCollection(limit: Int = 100, locale: String, order: [ComponentBannerLinkingCollectionsSectionCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): SectionCollection
+  sectionCursorCollection(limit: Int = 100, locale: String, order: [ComponentBannerLinkingCollectionsSectionCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): SectionCursorCollection
 }
 
 enum ComponentBannerLinkingCollectionsSectionCollectionOrder {
+  grid_ASC
+  grid_DESC
+  layoutType_ASC
+  layoutType_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
+  title_ASC
+  title_DESC
+}
+
+enum ComponentBannerLinkingCollectionsSectionCursorCollectionOrder {
   grid_ASC
   grid_DESC
   layoutType_ASC
@@ -219,15 +269,15 @@ enum ComponentBannerOrder {
 """
 type ComponentCard implements Entry & _Node {
   _id: ID!
-  categories(locale: String): [String]
-  color(locale: String): String
-  company(locale: String): String
+  categories(locale: String, useFallbackLocale: Boolean): [String]
+  color(locale: String, useFallbackLocale: Boolean): String
+  company(locale: String, useFallbackLocale: Boolean): String
   contentfulMetadata: ContentfulMetadata!
-  description(locale: String): String
+  description(locale: String, useFallbackLocale: Boolean): String
   linkedFrom(allowedLocales: [String]): ComponentCardLinkingCollections
-  subtitle(locale: String): String
+  subtitle(locale: String, useFallbackLocale: Boolean): String
   sys: Sys!
-  title(locale: String): String
+  title(locale: String, useFallbackLocale: Boolean): String
 }
 
 type ComponentCardCollection {
@@ -235,6 +285,12 @@ type ComponentCardCollection {
   limit: Int!
   skip: Int!
   total: Int!
+}
+
+type ComponentCardCursorCollection {
+  items: [ComponentCard]!
+  limit: Int!
+  pages: CursorPages!
 }
 
 input ComponentCardFilter {
@@ -284,9 +340,12 @@ input ComponentCardFilter {
 }
 
 type ComponentCardLinkingCollections {
-  componentsCardsCollection(limit: Int = 100, locale: String, order: [ComponentCardLinkingCollectionsComponentsCardsCollectionOrder], preview: Boolean, skip: Int = 0): ComponentsCardsCollection
-  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): EntryCollection
-  sectionCollection(limit: Int = 100, locale: String, order: [ComponentCardLinkingCollectionsSectionCollectionOrder], preview: Boolean, skip: Int = 0): SectionCollection
+  componentsCardsCollection(limit: Int = 100, locale: String, order: [ComponentCardLinkingCollectionsComponentsCardsCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): ComponentsCardsCollection
+  componentsCardsCursorCollection(limit: Int = 100, locale: String, order: [ComponentCardLinkingCollectionsComponentsCardsCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): ComponentsCardsCursorCollection
+  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): EntryCollection
+  entryCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): EntryCursorCollection
+  sectionCollection(limit: Int = 100, locale: String, order: [ComponentCardLinkingCollectionsSectionCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): SectionCollection
+  sectionCursorCollection(limit: Int = 100, locale: String, order: [ComponentCardLinkingCollectionsSectionCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): SectionCursorCollection
 }
 
 enum ComponentCardLinkingCollectionsComponentsCardsCollectionOrder {
@@ -300,7 +359,37 @@ enum ComponentCardLinkingCollectionsComponentsCardsCollectionOrder {
   sys_publishedVersion_DESC
 }
 
+enum ComponentCardLinkingCollectionsComponentsCardsCursorCollectionOrder {
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
 enum ComponentCardLinkingCollectionsSectionCollectionOrder {
+  grid_ASC
+  grid_DESC
+  layoutType_ASC
+  layoutType_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
+  title_ASC
+  title_DESC
+}
+
+enum ComponentCardLinkingCollectionsSectionCursorCollectionOrder {
   grid_ASC
   grid_DESC
   layoutType_ASC
@@ -343,15 +432,16 @@ enum ComponentCardOrder {
 """
 type ComponentSeo implements Entry & _Node {
   _id: ID!
-  canonicalUrl(locale: String): String
+  canonicalUrl(locale: String, useFallbackLocale: Boolean): String
   contentfulMetadata: ContentfulMetadata!
-  internalName(locale: String): String
+  internalName(locale: String, useFallbackLocale: Boolean): String
   linkedFrom(allowedLocales: [String]): ComponentSeoLinkingCollections
-  nofollow(locale: String): Boolean
-  noindex(locale: String): Boolean
-  pageDescription(locale: String): String
-  pageTitle(locale: String): String
-  shareImagesCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): AssetCollection
+  nofollow(locale: String, useFallbackLocale: Boolean): Boolean
+  noindex(locale: String, useFallbackLocale: Boolean): Boolean
+  pageDescription(locale: String, useFallbackLocale: Boolean): String
+  pageTitle(locale: String, useFallbackLocale: Boolean): String
+  shareImagesCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): AssetCollection
+  shareImagesCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): AssetCursorCollection
   sys: Sys!
 }
 
@@ -360,6 +450,12 @@ type ComponentSeoCollection {
   limit: Int!
   skip: Int!
   total: Int!
+}
+
+type ComponentSeoCursorCollection {
+  items: [ComponentSeo]!
+  limit: Int!
+  pages: CursorPages!
 }
 
 input ComponentSeoFilter {
@@ -405,9 +501,12 @@ input ComponentSeoFilter {
 }
 
 type ComponentSeoLinkingCollections {
-  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): EntryCollection
-  pageLandingCollection(limit: Int = 100, locale: String, order: [ComponentSeoLinkingCollectionsPageLandingCollectionOrder], preview: Boolean, skip: Int = 0): PageLandingCollection
-  pageProductCollection(limit: Int = 100, locale: String, order: [ComponentSeoLinkingCollectionsPageProductCollectionOrder], preview: Boolean, skip: Int = 0): PageProductCollection
+  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): EntryCollection
+  entryCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): EntryCursorCollection
+  pageLandingCollection(limit: Int = 100, locale: String, order: [ComponentSeoLinkingCollectionsPageLandingCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): PageLandingCollection
+  pageLandingCursorCollection(limit: Int = 100, locale: String, order: [ComponentSeoLinkingCollectionsPageLandingCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): PageLandingCursorCollection
+  pageProductCollection(limit: Int = 100, locale: String, order: [ComponentSeoLinkingCollectionsPageProductCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): PageProductCollection
+  pageProductCursorCollection(limit: Int = 100, locale: String, order: [ComponentSeoLinkingCollectionsPageProductCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): PageProductCursorCollection
 }
 
 enum ComponentSeoLinkingCollectionsPageLandingCollectionOrder {
@@ -431,7 +530,47 @@ enum ComponentSeoLinkingCollectionsPageLandingCollectionOrder {
   url_DESC
 }
 
+enum ComponentSeoLinkingCollectionsPageLandingCursorCollectionOrder {
+  heroBannerHeadlineColor_ASC
+  heroBannerHeadlineColor_DESC
+  internalName_ASC
+  internalName_DESC
+  layoutType_ASC
+  layoutType_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
+  url_ASC
+  url_DESC
+}
+
 enum ComponentSeoLinkingCollectionsPageProductCollectionOrder {
+  internalName_ASC
+  internalName_DESC
+  name_ASC
+  name_DESC
+  price_ASC
+  price_DESC
+  slug_ASC
+  slug_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum ComponentSeoLinkingCollectionsPageProductCursorCollectionOrder {
   internalName_ASC
   internalName_DESC
   name_ASC
@@ -476,12 +615,12 @@ enum ComponentSeoOrder {
 """
 type ComponentTagList implements Entry & _Node {
   _id: ID!
-  color(locale: String): String
+  color(locale: String, useFallbackLocale: Boolean): String
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): ComponentTagListLinkingCollections
   sys: Sys!
-  tags(locale: String): [String]
-  title(locale: String): String
+  tags(locale: String, useFallbackLocale: Boolean): [String]
+  title(locale: String, useFallbackLocale: Boolean): String
 }
 
 type ComponentTagListCollection {
@@ -489,6 +628,12 @@ type ComponentTagListCollection {
   limit: Int!
   skip: Int!
   total: Int!
+}
+
+type ComponentTagListCursorCollection {
+  items: [ComponentTagList]!
+  limit: Int!
+  pages: CursorPages!
 }
 
 input ComponentTagListFilter {
@@ -517,11 +662,32 @@ input ComponentTagListFilter {
 }
 
 type ComponentTagListLinkingCollections {
-  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): EntryCollection
-  sectionCollection(limit: Int = 100, locale: String, order: [ComponentTagListLinkingCollectionsSectionCollectionOrder], preview: Boolean, skip: Int = 0): SectionCollection
+  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): EntryCollection
+  entryCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): EntryCursorCollection
+  sectionCollection(limit: Int = 100, locale: String, order: [ComponentTagListLinkingCollectionsSectionCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): SectionCollection
+  sectionCursorCollection(limit: Int = 100, locale: String, order: [ComponentTagListLinkingCollectionsSectionCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): SectionCursorCollection
 }
 
 enum ComponentTagListLinkingCollectionsSectionCollectionOrder {
+  grid_ASC
+  grid_DESC
+  layoutType_ASC
+  layoutType_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
+  title_ASC
+  title_DESC
+}
+
+enum ComponentTagListLinkingCollectionsSectionCursorCollectionOrder {
   grid_ASC
   grid_DESC
   layoutType_ASC
@@ -560,7 +726,8 @@ enum ComponentTagListOrder {
 """
 type ComponentsCards implements Entry & _Node {
   _id: ID!
-  cardsCollection(limit: Int = 100, locale: String, order: [ComponentsCardsCardsCollectionOrder], preview: Boolean, skip: Int = 0, where: ComponentCardFilter): ComponentsCardsCardsCollection
+  cardsCollection(limit: Int = 100, locale: String, order: [ComponentsCardsCardsCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: ComponentCardFilter): ComponentsCardsCardsCollection
+  cardsCursorCollection(limit: Int = 100, locale: String, order: [ComponentsCardsCardsCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: ComponentCardFilter): ComponentsCardsCardsCursorCollection
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): ComponentsCardsLinkingCollections
   sys: Sys!
@@ -592,11 +759,42 @@ enum ComponentsCardsCardsCollectionOrder {
   title_DESC
 }
 
+type ComponentsCardsCardsCursorCollection {
+  items: [ComponentCard]!
+  limit: Int!
+  pages: CursorPages!
+}
+
+enum ComponentsCardsCardsCursorCollectionOrder {
+  color_ASC
+  color_DESC
+  company_ASC
+  company_DESC
+  subtitle_ASC
+  subtitle_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  title_ASC
+  title_DESC
+}
+
 type ComponentsCardsCollection {
   items: [ComponentsCards]!
   limit: Int!
   skip: Int!
   total: Int!
+}
+
+type ComponentsCardsCursorCollection {
+  items: [ComponentsCards]!
+  limit: Int!
+  pages: CursorPages!
 }
 
 input ComponentsCardsFilter {
@@ -609,11 +807,32 @@ input ComponentsCardsFilter {
 }
 
 type ComponentsCardsLinkingCollections {
-  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): EntryCollection
-  sectionCollection(limit: Int = 100, locale: String, order: [ComponentsCardsLinkingCollectionsSectionCollectionOrder], preview: Boolean, skip: Int = 0): SectionCollection
+  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): EntryCollection
+  entryCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): EntryCursorCollection
+  sectionCollection(limit: Int = 100, locale: String, order: [ComponentsCardsLinkingCollectionsSectionCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): SectionCollection
+  sectionCursorCollection(limit: Int = 100, locale: String, order: [ComponentsCardsLinkingCollectionsSectionCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): SectionCursorCollection
 }
 
 enum ComponentsCardsLinkingCollectionsSectionCollectionOrder {
+  grid_ASC
+  grid_DESC
+  layoutType_ASC
+  layoutType_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
+  title_ASC
+  title_DESC
+}
+
+enum ComponentsCardsLinkingCollectionsSectionCursorCollectionOrder {
   grid_ASC
   grid_DESC
   layoutType_ASC
@@ -683,6 +902,11 @@ type ContentfulTag {
   name: String
 }
 
+type CursorPages {
+  next: String
+  prev: String
+}
+
 """
 A date-time string at UTC, such as 2007-12-03T10:15:30Z,
     compliant with the 'date-time' format outlined in section 5.6 of
@@ -706,6 +930,12 @@ type EntryCollection {
   limit: Int!
   skip: Int!
   total: Int!
+}
+
+type EntryCursorCollection {
+  items: [Entry]!
+  limit: Int!
+  pages: CursorPages!
 }
 
 input EntryFilter {
@@ -869,16 +1099,17 @@ scalar JSON
 type PageLanding implements Entry & _Node {
   _id: ID!
   contentfulMetadata: ContentfulMetadata!
-  heroBannerHeadlineColor(locale: String): String
-  heroBannerImage(locale: String, preview: Boolean): Asset
-  internalName(locale: String): String
-  layoutType(locale: String): String
+  heroBannerHeadlineColor(locale: String, useFallbackLocale: Boolean): String
+  heroBannerImage(locale: String, preview: Boolean, useFallbackLocale: Boolean): Asset
+  internalName(locale: String, useFallbackLocale: Boolean): String
+  layoutType(locale: String, useFallbackLocale: Boolean): String
   linkedFrom(allowedLocales: [String]): PageLandingLinkingCollections
-  sectionsCollection(limit: Int = 100, locale: String, order: [PageLandingSectionsCollectionOrder], preview: Boolean, skip: Int = 0, where: SectionFilter): PageLandingSectionsCollection
-  seoFields(locale: String, preview: Boolean, where: ComponentSeoFilter): ComponentSeo
+  sectionsCollection(limit: Int = 100, locale: String, order: [PageLandingSectionsCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: SectionFilter): PageLandingSectionsCollection
+  sectionsCursorCollection(limit: Int = 100, locale: String, order: [PageLandingSectionsCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: SectionFilter): PageLandingSectionsCursorCollection
+  seoFields(locale: String, preview: Boolean, useFallbackLocale: Boolean, where: ComponentSeoFilter): ComponentSeo
   sys: Sys!
-  textAlign(locale: String): String
-  url(locale: String): String
+  textAlign(locale: String, useFallbackLocale: Boolean): String
+  url(locale: String, useFallbackLocale: Boolean): String
 }
 
 type PageLandingCollection {
@@ -886,6 +1117,12 @@ type PageLandingCollection {
   limit: Int!
   skip: Int!
   total: Int!
+}
+
+type PageLandingCursorCollection {
+  items: [PageLanding]!
+  limit: Int!
+  pages: CursorPages!
 }
 
 input PageLandingFilter {
@@ -936,7 +1173,8 @@ input PageLandingFilter {
 }
 
 type PageLandingLinkingCollections {
-  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): EntryCollection
+  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): EntryCollection
+  entryCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): EntryCursorCollection
 }
 
 enum PageLandingOrder {
@@ -986,20 +1224,45 @@ enum PageLandingSectionsCollectionOrder {
   title_DESC
 }
 
+type PageLandingSectionsCursorCollection {
+  items: [Section]!
+  limit: Int!
+  pages: CursorPages!
+}
+
+enum PageLandingSectionsCursorCollectionOrder {
+  grid_ASC
+  grid_DESC
+  layoutType_ASC
+  layoutType_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
+  title_ASC
+  title_DESC
+}
+
 """
 [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/pageProduct)
 """
 type PageProduct implements Entry & _Node {
   _id: ID!
   contentfulMetadata: ContentfulMetadata!
-  description(locale: String): String
-  featuredProductImage(locale: String, preview: Boolean): Asset
-  internalName(locale: String): String
+  description(locale: String, useFallbackLocale: Boolean): String
+  featuredProductImage(locale: String, preview: Boolean, useFallbackLocale: Boolean): Asset
+  internalName(locale: String, useFallbackLocale: Boolean): String
   linkedFrom(allowedLocales: [String]): PageProductLinkingCollections
-  name(locale: String): String
-  price(locale: String): Float
-  seoFields(locale: String, preview: Boolean, where: ComponentSeoFilter): ComponentSeo
-  slug(locale: String): String
+  name(locale: String, useFallbackLocale: Boolean): String
+  price(locale: String, useFallbackLocale: Boolean): Float
+  seoFields(locale: String, preview: Boolean, useFallbackLocale: Boolean, where: ComponentSeoFilter): ComponentSeo
+  slug(locale: String, useFallbackLocale: Boolean): String
   sys: Sys!
 }
 
@@ -1008,6 +1271,12 @@ type PageProductCollection {
   limit: Int!
   skip: Int!
   total: Int!
+}
+
+type PageProductCursorCollection {
+  items: [PageProduct]!
+  limit: Int!
+  pages: CursorPages!
 }
 
 input PageProductFilter {
@@ -1058,7 +1327,8 @@ input PageProductFilter {
 }
 
 type PageProductLinkingCollections {
-  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): EntryCollection
+  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): EntryCollection
+  entryCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): EntryCursorCollection
 }
 
 enum PageProductOrder {
@@ -1086,29 +1356,40 @@ The 'Quality' type represents quality as whole numeric values between `1` and `1
 scalar Quality
 
 type Query {
-  _node(id: ID!, locale: String, preview: Boolean): _Node
-  _nodes(ids: [ID!]!, locale: String, preview: Boolean): [_Node]!
-  asset(id: String!, locale: String, preview: Boolean): Asset
-  assetCollection(limit: Int = 100, locale: String, order: [AssetOrder], preview: Boolean, skip: Int = 0, where: AssetFilter): AssetCollection
-  componentBanner(id: String!, locale: String, preview: Boolean): ComponentBanner
-  componentBannerCollection(limit: Int = 100, locale: String, order: [ComponentBannerOrder], preview: Boolean, skip: Int = 0, where: ComponentBannerFilter): ComponentBannerCollection
-  componentCard(id: String!, locale: String, preview: Boolean): ComponentCard
-  componentCardCollection(limit: Int = 100, locale: String, order: [ComponentCardOrder], preview: Boolean, skip: Int = 0, where: ComponentCardFilter): ComponentCardCollection
-  componentSeo(id: String!, locale: String, preview: Boolean): ComponentSeo
-  componentSeoCollection(limit: Int = 100, locale: String, order: [ComponentSeoOrder], preview: Boolean, skip: Int = 0, where: ComponentSeoFilter): ComponentSeoCollection
-  componentTagList(id: String!, locale: String, preview: Boolean): ComponentTagList
-  componentTagListCollection(limit: Int = 100, locale: String, order: [ComponentTagListOrder], preview: Boolean, skip: Int = 0, where: ComponentTagListFilter): ComponentTagListCollection
-  componentsCards(id: String!, locale: String, preview: Boolean): ComponentsCards
-  componentsCardsCollection(limit: Int = 100, locale: String, order: [ComponentsCardsOrder], preview: Boolean, skip: Int = 0, where: ComponentsCardsFilter): ComponentsCardsCollection
-  entryCollection(limit: Int = 100, locale: String, order: [EntryOrder], preview: Boolean, skip: Int = 0, where: EntryFilter): EntryCollection
-  pageLanding(id: String!, locale: String, preview: Boolean): PageLanding
-  pageLandingCollection(limit: Int = 100, locale: String, order: [PageLandingOrder], preview: Boolean, skip: Int = 0, where: PageLandingFilter): PageLandingCollection
-  pageProduct(id: String!, locale: String, preview: Boolean): PageProduct
-  pageProductCollection(limit: Int = 100, locale: String, order: [PageProductOrder], preview: Boolean, skip: Int = 0, where: PageProductFilter): PageProductCollection
-  section(id: String!, locale: String, preview: Boolean): Section
-  sectionCollection(limit: Int = 100, locale: String, order: [SectionOrder], preview: Boolean, skip: Int = 0, where: SectionFilter): SectionCollection
-  singleAchievement(id: String!, locale: String, preview: Boolean): SingleAchievement
-  singleAchievementCollection(limit: Int = 100, locale: String, order: [SingleAchievementOrder], preview: Boolean, skip: Int = 0, where: SingleAchievementFilter): SingleAchievementCollection
+  _node(id: ID!, locale: String, preview: Boolean, useFallbackLocale: Boolean): _Node
+  _nodes(ids: [ID!]!, locale: String, preview: Boolean, useFallbackLocale: Boolean): [_Node]!
+  asset(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): Asset
+  assetCollection(limit: Int = 100, locale: String, order: [AssetOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: AssetFilter): AssetCollection
+  assetCursorCollection(limit: Int = 100, locale: String, order: [AssetOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: AssetFilter): AssetCursorCollection
+  componentBanner(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): ComponentBanner
+  componentBannerCollection(limit: Int = 100, locale: String, order: [ComponentBannerOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: ComponentBannerFilter): ComponentBannerCollection
+  componentBannerCursorCollection(limit: Int = 100, locale: String, order: [ComponentBannerOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: ComponentBannerFilter): ComponentBannerCursorCollection
+  componentCard(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): ComponentCard
+  componentCardCollection(limit: Int = 100, locale: String, order: [ComponentCardOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: ComponentCardFilter): ComponentCardCollection
+  componentCardCursorCollection(limit: Int = 100, locale: String, order: [ComponentCardOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: ComponentCardFilter): ComponentCardCursorCollection
+  componentSeo(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): ComponentSeo
+  componentSeoCollection(limit: Int = 100, locale: String, order: [ComponentSeoOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: ComponentSeoFilter): ComponentSeoCollection
+  componentSeoCursorCollection(limit: Int = 100, locale: String, order: [ComponentSeoOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: ComponentSeoFilter): ComponentSeoCursorCollection
+  componentTagList(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): ComponentTagList
+  componentTagListCollection(limit: Int = 100, locale: String, order: [ComponentTagListOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: ComponentTagListFilter): ComponentTagListCollection
+  componentTagListCursorCollection(limit: Int = 100, locale: String, order: [ComponentTagListOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: ComponentTagListFilter): ComponentTagListCursorCollection
+  componentsCards(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): ComponentsCards
+  componentsCardsCollection(limit: Int = 100, locale: String, order: [ComponentsCardsOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: ComponentsCardsFilter): ComponentsCardsCollection
+  componentsCardsCursorCollection(limit: Int = 100, locale: String, order: [ComponentsCardsOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: ComponentsCardsFilter): ComponentsCardsCursorCollection
+  entryCollection(limit: Int = 100, locale: String, order: [EntryOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: EntryFilter): EntryCollection
+  entryCursorCollection(limit: Int = 100, locale: String, order: [EntryOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: EntryFilter): EntryCursorCollection
+  pageLanding(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): PageLanding
+  pageLandingCollection(limit: Int = 100, locale: String, order: [PageLandingOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: PageLandingFilter): PageLandingCollection
+  pageLandingCursorCollection(limit: Int = 100, locale: String, order: [PageLandingOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: PageLandingFilter): PageLandingCursorCollection
+  pageProduct(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): PageProduct
+  pageProductCollection(limit: Int = 100, locale: String, order: [PageProductOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: PageProductFilter): PageProductCollection
+  pageProductCursorCollection(limit: Int = 100, locale: String, order: [PageProductOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: PageProductFilter): PageProductCursorCollection
+  section(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): Section
+  sectionCollection(limit: Int = 100, locale: String, order: [SectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: SectionFilter): SectionCollection
+  sectionCursorCollection(limit: Int = 100, locale: String, order: [SectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: SectionFilter): SectionCursorCollection
+  singleAchievement(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): SingleAchievement
+  singleAchievementCollection(limit: Int = 100, locale: String, order: [SingleAchievementOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: SingleAchievementFilter): SingleAchievementCollection
+  singleAchievementCursorCollection(limit: Int = 100, locale: String, order: [SingleAchievementOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: SingleAchievementFilter): SingleAchievementCursorCollection
 }
 
 """
@@ -1116,15 +1397,16 @@ type Query {
 """
 type Section implements Entry & _Node {
   _id: ID!
-  componentsCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, where: SectionComponentsFilter): SectionComponentsCollection
+  componentsCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: SectionComponentsFilter): SectionComponentsCollection
+  componentsCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: SectionComponentsFilter): SectionComponentsCursorCollection
   contentfulMetadata: ContentfulMetadata!
-  description(locale: String): String
-  grid(locale: String): String
-  layoutType(locale: String): String
+  description(locale: String, useFallbackLocale: Boolean): String
+  grid(locale: String, useFallbackLocale: Boolean): String
+  layoutType(locale: String, useFallbackLocale: Boolean): String
   linkedFrom(allowedLocales: [String]): SectionLinkingCollections
   sys: Sys!
-  textAlign(locale: String): String
-  title(locale: String): String
+  textAlign(locale: String, useFallbackLocale: Boolean): String
+  title(locale: String, useFallbackLocale: Boolean): String
 }
 
 type SectionCollection {
@@ -1141,6 +1423,12 @@ type SectionComponentsCollection {
   total: Int!
 }
 
+type SectionComponentsCursorCollection {
+  items: [SectionComponentsItem]!
+  limit: Int!
+  pages: CursorPages!
+}
+
 input SectionComponentsFilter {
   AND: [SectionComponentsFilter]
   OR: [SectionComponentsFilter]
@@ -1149,6 +1437,12 @@ input SectionComponentsFilter {
 }
 
 union SectionComponentsItem = ComponentBanner | ComponentCard | ComponentTagList | ComponentsCards
+
+type SectionCursorCollection {
+  items: [Section]!
+  limit: Int!
+  pages: CursorPages!
+}
 
 input SectionFilter {
   AND: [SectionFilter]
@@ -1195,11 +1489,34 @@ input SectionFilter {
 }
 
 type SectionLinkingCollections {
-  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): EntryCollection
-  pageLandingCollection(limit: Int = 100, locale: String, order: [SectionLinkingCollectionsPageLandingCollectionOrder], preview: Boolean, skip: Int = 0): PageLandingCollection
+  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): EntryCollection
+  entryCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): EntryCursorCollection
+  pageLandingCollection(limit: Int = 100, locale: String, order: [SectionLinkingCollectionsPageLandingCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): PageLandingCollection
+  pageLandingCursorCollection(limit: Int = 100, locale: String, order: [SectionLinkingCollectionsPageLandingCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): PageLandingCursorCollection
 }
 
 enum SectionLinkingCollectionsPageLandingCollectionOrder {
+  heroBannerHeadlineColor_ASC
+  heroBannerHeadlineColor_DESC
+  internalName_ASC
+  internalName_DESC
+  layoutType_ASC
+  layoutType_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
+  url_ASC
+  url_DESC
+}
+
+enum SectionLinkingCollectionsPageLandingCursorCollectionOrder {
   heroBannerHeadlineColor_ASC
   heroBannerHeadlineColor_DESC
   internalName_ASC
@@ -1246,9 +1563,9 @@ type SingleAchievement implements Entry & _Node {
   _id: ID!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): SingleAchievementLinkingCollections
-  number(locale: String): String
+  number(locale: String, useFallbackLocale: Boolean): String
   sys: Sys!
-  text(locale: String): String
+  text(locale: String, useFallbackLocale: Boolean): String
 }
 
 type SingleAchievementCollection {
@@ -1256,6 +1573,12 @@ type SingleAchievementCollection {
   limit: Int!
   skip: Int!
   total: Int!
+}
+
+type SingleAchievementCursorCollection {
+  items: [SingleAchievement]!
+  limit: Int!
+  pages: CursorPages!
 }
 
 input SingleAchievementFilter {
@@ -1280,7 +1603,8 @@ input SingleAchievementFilter {
 }
 
 type SingleAchievementLinkingCollections {
-  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): EntryCollection
+  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): EntryCollection
+  entryCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): EntryCursorCollection
 }
 
 enum SingleAchievementOrder {
@@ -1353,6 +1677,14 @@ Represents a taxonomy concept entity for finding and organizing content easily.
 """
 type TaxonomyConcept {
   id: String
+}
+
+input TimelineFilterInput {
+  """Preview content starting from a given release date"""
+  release_lte: String
+
+  """Preview content starting from a given timestamp"""
+  timestamp_lte: DateTime
 }
 
 interface _Node {

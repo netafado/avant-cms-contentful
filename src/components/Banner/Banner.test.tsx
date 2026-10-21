@@ -3,18 +3,6 @@ import { screen } from "@testing-library/dom";
 import Banner from "./index";
 import { BannerProps } from "./types";
 
-jest.mock("../Reveal", () => {
-  return function MockReveal({
-    children,
-    className,
-  }: {
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return <div className={className}>{children}</div>;
-  };
-});
-
 const mockProps: BannerProps = {
   name: "Test Name",
   image: {
@@ -34,19 +22,41 @@ const mockProps: BannerProps = {
 };
 
 describe("Banner Component", () => {
-  it("renders the banner with correct name", () => {
+  it("renders the logo masthead with the name as the h1", () => {
     render(<Banner {...mockProps} />);
 
-    const nameElement = screen.getByText("Test Name");
-    expect(nameElement).toBeInTheDocument();
+    const heading = screen.getByRole("heading", { level: 1 });
+    expect(heading).toBeInTheDocument();
+    expect(heading.tagName).toBe("H1");
+    expect(heading).toHaveTextContent("Test");
+    expect(heading).toHaveTextContent("Name");
   });
 
-  it("renders the image with correct attributes", () => {
+  it("renders the sun poster fallback image", () => {
     render(<Banner {...mockProps} />);
 
     const imageElement = screen.getByRole("img");
-    expect(imageElement).toHaveAttribute("src", "/test-image.jpg");
-    expect(imageElement).toHaveAttribute("alt", "Test image");
+    expect(imageElement).toHaveAttribute("src", "/images/sun-hero.jpg");
+  });
+
+  it("renders the role tagline", () => {
+    render(<Banner {...mockProps} />);
+
+    expect(screen.getByText("Software Engineer")).toBeInTheDocument();
+  });
+
+  it("renders the hero transformation message", () => {
+    render(<Banner {...mockProps} />);
+
+    // JSX strips the whitespace-only lines around the "|" text node, so the
+    // heading's text content has no spaces around the pipe.
+    expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent(
+      "AI|Human native",
+    );
+    expect(screen.getByText("transformation")).toHaveClass(
+      "uppercase",
+      "font-mono",
+    );
   });
 
   it("renders all achievements", () => {
@@ -57,16 +67,29 @@ describe("Banner Component", () => {
     expect(screen.getByText("40%")).toBeInTheDocument();
     expect(screen.getByText("Backend")).toBeInTheDocument();
     expect(screen.getByText("10+")).toBeInTheDocument();
-    expect(screen.getByText("Years of Experience")).toBeInTheDocument();
-    expect(screen.getByText("20+")).toBeInTheDocument();
-    expect(screen.getByText("Projects")).toBeInTheDocument();
   });
 
-  it("renders without achievements when none provided", () => {
-    const propsWithoutAchievements = { ...mockProps, achievements: undefined };
-    render(<Banner {...propsWithoutAchievements} />);
+  it("renders the CV link when provided", () => {
+    render(
+      <Banner
+        {...mockProps}
+        cv={{
+          src: "https://example.com/cv.pdf",
+          fileName: "cv.pdf",
+          contentType: "application/pdf",
+        }}
+      />,
+    );
 
-    const nameElement = screen.getByText("Test Name");
-    expect(nameElement).toBeInTheDocument();
+    const cvLink = screen.getByText("Download CV").closest("a");
+    expect(cvLink).toHaveAttribute("href", "https://example.com/cv.pdf");
+  });
+
+  it("renders without achievements and cv when none provided", () => {
+    render(<Banner {...mockProps} achievements={undefined} cv={undefined} />);
+
+    const heading = screen.getByRole("heading", { level: 1 });
+    expect(heading).toHaveTextContent("Test");
+    expect(screen.queryByText("Download CV")).not.toBeInTheDocument();
   });
 });

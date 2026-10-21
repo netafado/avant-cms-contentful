@@ -34,7 +34,7 @@ export const config: CodegenConfig = {
         skipTypename: false,
         exportFragmentSpreadSubTypes: true,
         dedupeFragments: true,
-        preResolveTypes: true,
+        preResolveTypes: false,
         avoidOptionals: false,
         strictScalars: true,
         scalars: {

@@ -12,24 +12,41 @@ import {
 import { useTheme } from "@/providers/theme";
 import clsx from "clsx";
 import { useLocale, useTranslations } from "next-intl";
-import { Link, usePathname, useRouter } from "@/i18n/routing";
-import { routing } from "@/i18n/routing";
+import { Link, usePathname, useRouter, routing } from "@/i18n/routing";
 import { useTransition } from "react";
 
 const links = [
   {
     href: "https://medium.com/@isaias.fran",
-    icon: <BookmarkIcon className="h-5 w-5" />,
+    label: "Medium articles",
+    icon: <BookmarkIcon className="h-4 w-4" />,
   },
   {
     href: "https://www.linkedin.com/in/isaias-francisco-21097437",
-    icon: <LinkedInLogoIcon className="h-5 w-5" />,
+    label: "LinkedIn profile",
+    icon: <LinkedInLogoIcon className="h-4 w-4" />,
   },
   {
     href: "https://github.com/netafado",
-    icon: <GitHubLogoIcon className="h-5 w-5" />,
+    label: "GitHub profile",
+    icon: <GitHubLogoIcon className="h-4 w-4" />,
   },
 ];
+
+const CLASSES = {
+  // difference blend keeps the white type legible over both the black hero
+  // and light sections without any bar background.
+  wrapper: "fixed inset-x-0 top-0 z-50 text-white mix-blend-difference",
+  bar: "mx-auto flex h-16 w-full items-center justify-between gap-4 px-6 md:h-20 md:px-10",
+  group: "flex items-center gap-0.5 md:gap-1",
+  siteLink:
+    "relative flex items-center gap-2 p-2 text-[11px] tracking-[0.22em] text-white/60 uppercase transition-colors duration-300 hover:text-white",
+  active:
+    "text-white after:absolute after:inset-x-2 after:bottom-0.5 after:h-px after:bg-white after:content-['']",
+  iconLink:
+    "flex items-center p-2 text-white/60 transition-colors duration-300 hover:text-white",
+  divider: "mx-2 h-4 w-px bg-white/25",
+};
 
 const Navigation = ({ currentPath }: { currentPath: string }) => {
   const { toggleTheme, theme } = useTheme();
@@ -41,15 +58,16 @@ const Navigation = ({ currentPath }: { currentPath: string }) => {
   const [isPending, startTransition] = useTransition();
 
   const siteLinks = [
-    { href: "/", label: t("home"), icon: <HomeIcon className="h-5 w-5" /> },
+    { href: "/", label: t("home"), icon: <HomeIcon className="h-4 w-4" /> },
     {
       href: "/resume",
       label: t("resume"),
-      icon: <FileTextIcon className="h-5 w-5" />,
+      icon: <FileTextIcon className="h-4 w-4" />,
     },
   ];
 
-  const switchTo = routing.locales.find((l) => l !== locale) ?? routing.defaultLocale;
+  const switchTo =
+    routing.locales.find((l) => l !== locale) ?? routing.defaultLocale;
 
   const handleLanguageSwitch = () => {
     startTransition(() => {
@@ -58,86 +76,64 @@ const Navigation = ({ currentPath }: { currentPath: string }) => {
   };
 
   return (
-    <div className="fixed bottom-10 right-1/2 translate-x-1/2 z-50 overflow-hidden">
-      <div className="relative flex border-gray-300 dark:border-gray-700 items-center justify-center gap-2 bg-gray-300/40 rounded-full px-1 h-12 border border-gray-200">
-        <ul
-          role="menubar"
-          className="relative flex border-gray-700 items-center justify-center gap-2"
-        >
+    <nav className={CLASSES.wrapper} aria-label="Main navigation">
+      <div className={CLASSES.bar}>
+        <ul role="menubar" className={CLASSES.group}>
           {siteLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               aria-label={link.label}
               role="menuitem"
-              className={clsx(
-                "text-gray-900 bg-gray-300 hover:bg-gray-400 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700",
-                "p-2 flex items-center dark:border-b border-gray-700 hover:border-gray-600 duration-200 justify-center text-gray-400 rounded-full",
-                {
-                  "bg-lime-500 dark:bg-lime-500 text-white hover:bg-lime-700 dark:hover:bg-lime-700":
-                    currentPath === link.href ||
-                    link.href.endsWith(currentPath),
-                }
-              )}
+              className={clsx(CLASSES.siteLink, {
+                [CLASSES.active]:
+                  currentPath === link.href || link.href.endsWith(currentPath),
+              })}
             >
-              <span className="flex items-center gap-2 hidden ">
-                {link.label}
-              </span>
+              <span className="hidden md:inline">{link.label}</span>
               {link.icon}
             </Link>
           ))}
         </ul>
 
-        <div className="relative  flex border-gray-300 dark:border-gray-700 dark:border-gray-700 py-2 items-center justify-center gap-2 border-l pl-2">
+        <div className={CLASSES.group}>
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              target="_blank"
+              aria-label={link.label}
+              className={clsx(CLASSES.iconLink)}
+              rel="noopener noreferrer"
+            >
+              {link.icon}
+            </Link>
+          ))}
+          <div aria-hidden className={CLASSES.divider} />
           <button
             onClick={handleLanguageSwitch}
             disabled={isPending}
             aria-label={t("switchLanguage")}
             className={clsx(
-              "text-gray-900 bg-gray-300  dark:bg-gray-800 dark:text-gray-300",
-              "p-3 flex items-center dark:border-b border-gray-700 hover:border-gray-600 duration-200 justify-center text-gray-400 rounded-full",
-              isPending && "opacity-50 cursor-wait"
+              CLASSES.siteLink,
+              isPending && "cursor-wait opacity-50"
             )}
           >
-            <span className="flex items-center gap-1 text-xs font-semibold">
-              <GlobeIcon className="h-4 w-4" />
-              {tLanguage(switchTo)}
-            </span>
+            <GlobeIcon className="h-4 w-4" />
+            <span className="hidden md:inline">{tLanguage(switchTo)}</span>
           </button>
           <button
             onClick={toggleTheme}
-            aria-label="Toggle theme"
-            className={clsx(
-              "text-gray-900 bg-gray-300  dark:bg-gray-800 dark:text-gray-300",
-              "p-3 flex items-center dark:border-b border-gray-700 hover:border-gray-600 duration-200 justify-center text-gray-400 rounded-full"
-            )}
+            aria-label={
+              theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+            }
+            className={clsx(CLASSES.iconLink, "p-2")}
           >
-            {theme === "dark" ? (
-              <SunIcon className="text-yellow-400" />
-            ) : (
-              <MoonIcon className="text-gray-400" />
-            )}
+            {theme === "dark" ? <SunIcon /> : <MoonIcon />}
           </button>
         </div>
-
-        <div className="relative flex border-gray-700 py-2 items-center justify-center gap-2">
-          {links.map((link, index) => (
-            <a
-              key={index}
-              href={link.href}
-              target="_blank"
-              className={clsx(
-                "text-gray-900 bg-gray-300 hover:bg-gray-400 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700",
-                "p-2 flex items-center dark:border-b border-gray-700 hover:border-gray-600 duration-200 justify-center text-gray-400 rounded-full"
-              )}
-              rel="noopener noreferrer"
-            >
-              {link.icon}
-            </a>
-          ))}
-        </div>
       </div>
-    </div>
+    </nav>
   );
 };
 

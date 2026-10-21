@@ -7,6 +7,7 @@ import {
   ReactNode,
 } from "react";
 import { ThemeContextType, Theme } from "./types";
+import { TOGGLE_THEME_EVENT } from "@/lib/webmcp/tools";
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
@@ -34,6 +35,14 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       }
     }
   }, [theme, isInitialized]);
+
+  useEffect(() => {
+    const handleWebMcpToggle = () =>
+      setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+    window.addEventListener(TOGGLE_THEME_EVENT, handleWebMcpToggle);
+    return () =>
+      window.removeEventListener(TOGGLE_THEME_EVENT, handleWebMcpToggle);
+  }, []);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));

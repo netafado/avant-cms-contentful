@@ -1,0 +1,10 @@
+query pageUrls($preview: Boolean) {
+  pageLandingCollection(limit: 100, preview: $preview) {
+    items {
+      url
+      sys {
+        id
+      }
+    }
+  }
+}

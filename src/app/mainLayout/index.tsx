@@ -1,6 +1,5 @@
 import Navigation from "@/components/Navigation";
 import Section from "@/components/Section";
-import Image from "next/image";
 import { FC } from "react";
 import { getTranslations } from "next-intl/server";
 
@@ -18,48 +17,36 @@ const MainLayout: FC<MainLayoutProps> = async ({ sections, url }) => {
     <div className="font-sans w-full">
       <main>
         <Navigation currentPath={url} />
-        {sections.map((section, index) => {
-          if (!section) return null;
-          return (
-            <Section
-              key={`section-${index}_${section.title || "default"}`}
-              {...section}
-              title={section.title || t("sectionTitleFallback")}
-              description={section.description}
-              components={section.components || []}
-            />
-          );
-        })}
+        <div id="content" className="scroll-mt-4">
+          {sections.map((section, index) => {
+            if (!section) return null;
+            return (
+              <Section
+                key={`section-${index}_${section.title || "default"}`}
+                {...section}
+                title={section.title || t("sectionTitleFallback")}
+                description={section.description}
+                components={section.components || []}
+              />
+            );
+          })}
+        </div>
       </main>
-      <footer className="row-start-3 mt-4 flex gap-[24px] flex-wrap items-center justify-center p-5 text-sm text-gray-500">
+      <footer className="flex flex-wrap items-center justify-center gap-x-10 gap-y-2 border-t border-white/10 bg-black px-6 py-8 font-mono text-[10px] tracking-[0.3em] text-white/40 uppercase">
         <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          className="transition-colors duration-300 hover:text-white"
           href="https://medium.com/@isaias.fran"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
           {t("footerMedium")}
         </a>
         <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          className="transition-colors duration-300 hover:text-white"
           href="https://github.com/netafado/avant-cms-contentful"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
           {t("footerTech")}
         </a>
       </footer>

@@ -7,6 +7,7 @@
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: "Didot", "Bodoni MT", "Playfair Display", Georgia, "Times New Roman", serif;
   --color-canvas-default: #ef4444;
   --color-error-50: #fef2f2;
   --color-error-100: #fee2e2;
@@ -81,8 +82,25 @@
   --color-beta-800: #9f1239;
   --color-beta-900: #881337;
   --color-beta-950: #4c0519;
-  
 
+  --color-solar-50: #fff8ed;
+  --color-solar-100: #ffefd4;
+  --color-solar-200: #ffe8c2;
+  --color-solar-300: #ffc76b;
+  --color-solar-400: #ff9e3d;
+  --color-solar-500: #ff7a18;
+  --color-solar-600: #e35b0e;
+  --color-solar-700: #b23a05;
+  --color-solar-800: #7c2404;
+  --color-solar-900: #4a1502;
+  --color-solar-950: #2b0c01;
+
+  --animate-scroll-cue: scroll-cue 2s ease-in-out infinite;
+
+  @keyframes scroll-cue {
+    0%, 100% { transform: translateY(0); opacity: 0.6; }
+    50% { transform: translateY(6px); opacity: 1; }
+  }
 }
 
 p {
@@ -92,5 +110,11 @@ p {
 .dark {
   p {
     color: var(--color-gray-400);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-scroll-cue {
+    animation: none;
   }
 }

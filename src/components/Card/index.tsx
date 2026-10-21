@@ -8,21 +8,25 @@ const Card = (props: CardProps) => {
   return (
     <div
       className={clsx(
-        "relative p-6 border py-4 px-4 border-gray-700 rounded-sm ",
+        "relative border border-black/15 px-6 py-6 dark:border-white/15",
         {
           "max-h-80 overflow-hidden": !!limitSize,
         }
       )}
     >
-      <h3 className="text-gray-900 dark:text-gray-100 font-semibold">
+      <h3 className="font-display text-xl font-normal text-gray-900 dark:text-gray-100">
         {company}
       </h3>
-      <p className="text-sm text-gray-500 dark:text-gray-400">{role}</p>
-      <p className="text-sm text-gray-500 text-xs">{duration}</p>
-      <ul className="mt-2 list-none flex flex-wrap gap-2 text-sm text-gray-700">
+      <p className="mt-1 text-[11px] tracking-[0.2em] text-gray-500 uppercase dark:text-gray-400">
+        {role}
+      </p>
+      <p className="mt-1 font-mono text-[10px] tracking-[0.15em] text-gray-400 uppercase dark:text-gray-500">
+        {duration}
+      </p>
+      <ul className="mt-3 flex flex-wrap gap-2">
         {tools?.map((tool, idx) => (
           <li
-            className="bg-success-500/30 text-xs text-success-500 px-2 rounded-sm"
+            className="border border-black/20 px-2 py-0.5 text-[10px] tracking-[0.15em] text-gray-600 uppercase dark:border-white/20 dark:text-gray-300"
             key={`tool_${idx}_${tool}`}
           >
             {tool}
@@ -31,7 +35,7 @@ const Card = (props: CardProps) => {
       </ul>
       <EditorView markdown={description} />
       {!!limitSize && (
-        <div className="absolute bottom-0 right-0 bg-gradient-to-t from-black to-transparent h-20 w-2 w-full" />
+        <div className="absolute bottom-0 right-0 h-20 w-full bg-gradient-to-t from-black to-transparent" />
       )}
     </div>
   );

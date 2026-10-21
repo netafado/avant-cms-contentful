@@ -5,7 +5,7 @@ jest.mock('next/image', () => ({
     __esModule: true,
     default: (props) => {
         // eslint-disable-next-line @next/next/no-img-element
-        return <img {...props} />
+        return <img alt="" {...props} />
     },
 }))
 
@@ -30,14 +30,24 @@ jest.mock('next/navigation', () => ({
 }))
 
 // Mock next-intl hooks for tests so components can call useTranslations
-// without an explicit NextIntlClientProvider wrapper.
+// without an explicit NextIntlClientProvider wrapper. Keys resolve against the
+// real English messages so tests can assert on actual copy.
 jest.mock('next-intl', () => {
-    const translate = (key) => key
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const messages = require('./messages/en.json')
+    const resolve = (namespace, key) => {
+        const path = namespace ? `${namespace}.${key}` : key
+        const value = path
+            .split('.')
+            .reduce((node, part) => (node == null ? node : node[part]), messages)
+        return typeof value === 'string' ? value : key
+    }
+    const translate = (namespace) => (key) => resolve(namespace, key)
     return {
         __esModule: true,
-        useTranslations: () => translate,
+        useTranslations: translate,
         useLocale: () => 'en',
-        useMessages: () => ({}),
+        useMessages: () => messages,
         useFormatter: () => ({
             formatTime: (d) => String(d),
             formatDate: (d) => String(d),
@@ -49,12 +59,23 @@ jest.mock('next-intl', () => {
 
 // Mock next-intl/server (used by async server components in tests)
 jest.mock('next-intl/server', () => {
-    const translate = (key) => key
-    const t = (key) => key
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const messages = require('./messages/en.json')
+    const resolve = (namespace, key) => {
+        const path = namespace ? `${namespace}.${key}` : key
+        const value = path
+            .split('.')
+            .reduce((node, part) => (node == null ? node : node[part]), messages)
+        return typeof value === 'string' ? value : key
+    }
     return {
         __esModule: true,
-        getTranslations: jest.fn().mockImplementation(async () => t),
-        getMessages: jest.fn().mockResolvedValue({}),
+        getTranslations: jest.fn().mockImplementation(async (namespace) =>
+            typeof namespace === 'object' && namespace !== null
+                ? (key) => resolve(namespace.namespace, key)
+                : (key) => resolve(namespace, key)
+        ),
+        getMessages: jest.fn().mockResolvedValue(messages),
         getFormatter: jest.fn().mockResolvedValue({
             formatTime: (d) => String(d),
             formatDate: (d) => String(d),
@@ -103,3 +124,15 @@ global.IntersectionObserver = class IntersectionObserver {
     observe() { }
     unobserve() { }
 }
+
+// jsdom does not implement matchMedia (used by the SunHero canvas)
+global.matchMedia = jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+}))

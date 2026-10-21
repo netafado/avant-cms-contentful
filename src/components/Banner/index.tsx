@@ -1,80 +1,82 @@
 "use client";
-import Image from "next/image";
-import classNames from "clsx";
-import Reveal from "../Reveal";
-import { BannerProps } from "./types";
-import { FC } from "react";
-import { ThickArrowDownIcon } from "@radix-ui/react-icons";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import { FC } from "react";
 import { useTranslations } from "next-intl";
+import Logo from "@/components/Logo";
+import SunHero from "../SunHero";
+import { BannerProps } from "./types";
 
-const Banner: FC<BannerProps> = ({ name, image, achievements, cv }) => {
+const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
   const t = useTranslations("Banner");
 
   return (
     <>
-      <div className="mx-auto my-auto px-4 w-full">
-        <div className="items-center md:py-10 md:p-10 lg:p-20">
-          <div className="relative mx-auto w-full text-center h-full">
-            <Reveal
-              delay={1000}
-              animation="fade-in slide-in-top"
-              className="prose absolute -bottom-4 left-1/2 z-20 w-full -translate-x-1/2"
-            >
-              <h1 className="bg-clip-text text-transparent bg-gradient-to-b from-brand-400 to-brand-600 m-0 text-6xl drop-shadow-md md:text-8xl font-bold">
-                {name}
-              </h1>
-            </Reveal>
-            <Reveal
-              animation="fade-in zoom-in"
-              className="absolute left-1/2 h-72 w-72 -translate-x-1/2 md:bottom-0"
-            >
-              <div
-                className={classNames(
-                  "h-full w-full rounded-full md:animate-spin-slow",
-                  "bg-gradient-to-tr from-orange-700 to-yellow-400 opacity-80"
-                )}
-              />
-            </Reveal>
-            <Image
-              src={image.src}
-              width={image.width}
-              height={image.height}
-              alt={image.alt}
-              className="relative mx-auto z-10"
-              priority
-            />
-          </div>
-
-          <div className="md:transition-all border-t border-lime-800 bg-gray-800 md:duration-1000 relative z-10 mx-auto max-w-4xl p-10 text-center md:p-3 ld:grid-cols-4 prose prose-invert grid grid-cols-2 lg:grid-cols-4 bg-gradient-omega-900 shadow-lg divide-gray-600/30 lg:divide-x">
-            {achievements?.items?.map((achievement, index) => (
-              <Reveal
-                key={index}
-                animation="fade-in slide-in-bottom"
-                className="flex flex-1 flex-col items-center gap-2"
-              >
-                <span className="text-3xl font-bold text-brand-500">
-                  {achievement.number}
-                </span>
-                <span className="text-sm text-gray-500">
-                  {achievement.text}
-                </span>
-              </Reveal>
-            ))}
-          </div>
-          {cv && (
+      <SunHero
+        masthead={<Logo name={name} as="h1" />}
+        poster={{
+          src: "/images/sun-hero.jpg",
+          alt: `The sun rendered as a burning sphere of plasma behind the name ${name}`,
+        }}
+      >
+        <div
+          aria-label="AI and human native transformation"
+          className="pointer-events-none absolute top-1/2 left-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center whitespace-nowrap text-white  px-4 md:px-6 py-2 md:py-3 bg-black/20 border border-white gradient border-white"
+        >
+          <h2 className="font-mono text-bold uppercase  sm:tracking-[0.4em] md:tracking-[0.45em]">
+            <span className="bg-white text-black px-2 pl-3 text-center mr-3">
+              AI
+            </span>
+            |
+            <span className="bg-white text-black px-2 text-center">
+              Human native
+            </span>
+          </h2>
+          <span className="text-light uppercase font-mono text-[clamp(3rem,6vw,4rem)] leading-[0.85] tracking-[-0.04em] tracking-widest">
+            transformation
+          </span>
+        </div>
+      </SunHero>
+      <div>
+        <div className="mx-auto mt-8 flex max-w-3xl flex-col items-center gap-4 text-center text-white">
+          {achievements?.items?.length ? (
+            <div className="grid  w-full max-w-3xl  gap-y-8 border-y border-white/20 py-4 [text-shadow:0_1px_16px_rgba(0,0,0,0.75)] lg:grid-cols-3 lg:divide-x lg:divide-white/20">
+              {achievements.items.map((achievement, index) => (
+                <div
+                  key={`achievement-${index}`}
+                  className="flex flex-col items-center gap-2 px-4"
+                >
+                  <span className="font-display text-3xl leading-none text-white md:text-4xl">
+                    {achievement.number}
+                  </span>
+                  <span className="text-[10px] tracking-[0.25em] text-white/70 uppercase md:text-[11px]">
+                    {achievement.text}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : null}
+        </div>
+        <div className="mx-auto mt-8 flex max-w-3xl flex-col items-center gap-4 text-center text-white">
+          {cv?.src && (
             <Link
-              href={cv?.src || "#"}
+              href={cv.src}
               target="_blank"
               rel="noopener noreferrer"
+              className="mt-12 flex items-center border border-white/70 px-10 py-3.5 font-sans text-xs tracking-[0.3em] text-white uppercase transition-colors duration-300 hover:border-white hover:bg-white hover:text-black"
             >
-              <button className="mt-2 border-b border-lime-500 mx-auto px-4 py-2 text-gray-400 hover:text-brand-400 transition-colors duration-300 flex items-center justify-center gap-2">
-                <ThickArrowDownIcon />
-                {t("downloadCv")}
-              </button>
+              <span className="block indent-[0.3em]">{t("downloadCv")}</span>
             </Link>
           )}
         </div>
+        <a
+          href="#content"
+          aria-label="Scroll to content"
+          className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 font-mono text-[10px] tracking-[0.35em] text-white/60 uppercase transition-colors hover:text-white"
+        >
+          Scroll
+          <ChevronDownIcon className="animate-scroll-cue h-4 w-4" />
+        </a>
       </div>
     </>
   );
