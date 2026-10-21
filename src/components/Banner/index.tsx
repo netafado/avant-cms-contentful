@@ -2,11 +2,14 @@
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { FC } from "react";
+import { useTranslations } from "next-intl";
 import Logo from "@/components/Logo";
 import SunHero from "../SunHero";
 import { BannerProps } from "./types";
 
 const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
+  const t = useTranslations("Banner");
+
   return (
     <>
       <SunHero
@@ -62,7 +65,7 @@ const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
               rel="noopener noreferrer"
               className="mt-12 flex items-center border border-white/70 px-10 py-3.5 font-sans text-xs tracking-[0.3em] text-white uppercase transition-colors duration-300 hover:border-white hover:bg-white hover:text-black"
             >
-              <span className="block indent-[0.3em]">Download CV</span>
+              <span className="block indent-[0.3em]">{t("downloadCv")}</span>
             </Link>
           )}
         </div>

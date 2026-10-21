@@ -7,10 +7,13 @@ import {
   SunIcon,
   MoonIcon,
   FileTextIcon,
+  GlobeIcon,
 } from "@radix-ui/react-icons";
 import { useTheme } from "@/providers/theme";
 import clsx from "clsx";
-import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
+import { Link, usePathname, useRouter, routing } from "@/i18n/routing";
+import { useTransition } from "react";
 
 const links = [
   {
@@ -27,15 +30,6 @@ const links = [
     href: "https://github.com/netafado",
     label: "GitHub profile",
     icon: <GitHubLogoIcon className="h-4 w-4" />,
-  },
-];
-
-const siteLinks = [
-  { href: "/", label: "Home", icon: <HomeIcon className="h-4 w-4" /> },
-  {
-    href: "/resume",
-    label: "Resume",
-    icon: <FileTextIcon className="h-4 w-4" />,
   },
 ];
 
@@ -56,6 +50,31 @@ const CLASSES = {
 
 const Navigation = ({ currentPath }: { currentPath: string }) => {
   const { toggleTheme, theme } = useTheme();
+  const t = useTranslations("Navigation");
+  const tLanguage = useTranslations("Language");
+  const locale = useLocale();
+  const pathname = usePathname();
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
+  const siteLinks = [
+    { href: "/", label: t("home"), icon: <HomeIcon className="h-4 w-4" /> },
+    {
+      href: "/resume",
+      label: t("resume"),
+      icon: <FileTextIcon className="h-4 w-4" />,
+    },
+  ];
+
+  const switchTo =
+    routing.locales.find((l) => l !== locale) ?? routing.defaultLocale;
+
+  const handleLanguageSwitch = () => {
+    startTransition(() => {
+      router.replace(pathname, { locale: switchTo });
+    });
+  };
+
   return (
     <nav className={CLASSES.wrapper} aria-label="Main navigation">
       <div className={CLASSES.bar}>
@@ -91,6 +110,18 @@ const Navigation = ({ currentPath }: { currentPath: string }) => {
             </Link>
           ))}
           <div aria-hidden className={CLASSES.divider} />
+          <button
+            onClick={handleLanguageSwitch}
+            disabled={isPending}
+            aria-label={t("switchLanguage")}
+            className={clsx(
+              CLASSES.siteLink,
+              isPending && "cursor-wait opacity-50"
+            )}
+          >
+            <GlobeIcon className="h-4 w-4" />
+            <span className="hidden md:inline">{tLanguage(switchTo)}</span>
+          </button>
           <button
             onClick={toggleTheme}
             aria-label={

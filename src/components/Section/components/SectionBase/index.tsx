@@ -1,12 +1,15 @@
 import React, { FC, Fragment } from "react";
 
 import { SectionProps } from "@/components/Section/types";
-import ComponentsHandler from "@/components/componentsHandler";
+import ComponentsHandler, {
+  type Translations,
+} from "@/components/componentsHandler";
 import EditorView from "@/components/EditorView";
 import { GRID, TEXT_ALIGN } from "@/components/Section/constants";
 import { clsx } from "clsx";
+import { getTranslations } from "next-intl/server";
 
-const SectionBase: FC<SectionProps> = ({
+const SectionBase: FC<SectionProps> = async ({
   title,
   description,
   children,
@@ -14,6 +17,14 @@ const SectionBase: FC<SectionProps> = ({
   grid,
   textAlign,
 }) => {
+  const t = await getTranslations("Components");
+  const translations: Translations = {
+    defaultName: t("defaultName"),
+    defaultText: t("defaultText"),
+    defaultImageAlt: t("defaultImageAlt"),
+    defaultCvFileName: t("defaultCvFileName"),
+  };
+
   const textAlignmentClass = TEXT_ALIGN[textAlign || "center"];
 
   return (
@@ -37,7 +48,7 @@ const SectionBase: FC<SectionProps> = ({
             if (!component || !component.__typename) return null;
             return (
               <Fragment key={index}>
-                {ComponentsHandler[component.__typename]?.(component)}
+                {ComponentsHandler[component.__typename]?.(component, translations)}
               </Fragment>
             );
           })}

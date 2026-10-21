@@ -29,6 +29,94 @@ jest.mock('next/navigation', () => ({
     },
 }))
 
+// Mock next-intl hooks for tests so components can call useTranslations
+// without an explicit NextIntlClientProvider wrapper. Keys resolve against the
+// real English messages so tests can assert on actual copy.
+jest.mock('next-intl', () => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const messages = require('./messages/en.json')
+    const resolve = (namespace, key) => {
+        const path = namespace ? `${namespace}.${key}` : key
+        const value = path
+            .split('.')
+            .reduce((node, part) => (node == null ? node : node[part]), messages)
+        return typeof value === 'string' ? value : key
+    }
+    const translate = (namespace) => (key) => resolve(namespace, key)
+    return {
+        __esModule: true,
+        useTranslations: translate,
+        useLocale: () => 'en',
+        useMessages: () => messages,
+        useFormatter: () => ({
+            formatTime: (d) => String(d),
+            formatDate: (d) => String(d),
+            formatNumber: (n) => String(n),
+        }),
+        NextIntlClientProvider: ({ children }) => children,
+    }
+})
+
+// Mock next-intl/server (used by async server components in tests)
+jest.mock('next-intl/server', () => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const messages = require('./messages/en.json')
+    const resolve = (namespace, key) => {
+        const path = namespace ? `${namespace}.${key}` : key
+        const value = path
+            .split('.')
+            .reduce((node, part) => (node == null ? node : node[part]), messages)
+        return typeof value === 'string' ? value : key
+    }
+    return {
+        __esModule: true,
+        getTranslations: jest.fn().mockImplementation(async (namespace) =>
+            typeof namespace === 'object' && namespace !== null
+                ? (key) => resolve(namespace.namespace, key)
+                : (key) => resolve(namespace, key)
+        ),
+        getMessages: jest.fn().mockResolvedValue(messages),
+        getFormatter: jest.fn().mockResolvedValue({
+            formatTime: (d) => String(d),
+            formatDate: (d) => String(d),
+            formatNumber: (n) => String(n),
+        }),
+        getNow: jest.fn().mockResolvedValue(new Date()),
+        getTimeZone: jest.fn().mockResolvedValue('UTC'),
+        getLocale: jest.fn().mockResolvedValue('en'),
+        unstable_setRequestLocale: jest.fn(),
+    }
+})
+
+// Mock the i18n routing module
+jest.mock('@/i18n/routing', () => {
+    const actual = jest.requireActual('next-intl/navigation')
+    return {
+        __esModule: true,
+        Link: ({ children, href, ...rest }) => (
+            <a href={href} {...rest}>
+                {children}
+            </a>
+        ),
+        useRouter: () => ({
+            push: jest.fn(),
+            replace: jest.fn(),
+            prefetch: jest.fn(),
+            back: jest.fn(),
+            forward: jest.fn(),
+            refresh: jest.fn(),
+        }),
+        usePathname: () => '/',
+        redirect: jest.fn(),
+        getPathname: actual.getPathname,
+        routing: {
+            locales: ['en', 'pt-BR'],
+            defaultLocale: 'en',
+            localePrefix: 'always',
+        },
+    }
+})
+
 // Mock IntersectionObserver for react-intersection-observer
 global.IntersectionObserver = class IntersectionObserver {
     constructor() { }

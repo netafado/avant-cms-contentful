@@ -9,7 +9,7 @@ const SectionOptions = {
   "no-title": SectionNoTitle,
 };
 
-const Section: FC<SectionProps> = ({
+const Section: FC<SectionProps> = async ({
   title,
   description,
   children,

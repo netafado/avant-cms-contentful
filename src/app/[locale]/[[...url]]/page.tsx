@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import PageContent from "@/components/PageContent";
+import JsonLd from "@/components/JsonLd";
 import { getPageData } from "@/lib/pages";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, personJsonLd, websiteJsonLd } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -16,8 +17,14 @@ export async function generateMetadata({
 export default async function Page({
   params,
 }: {
-  params: Promise<{ url: string }>;
+  params: Promise<{ url?: string[] }>;
 }) {
   const { url } = await params;
-  return <PageContent url={url} />;
+  const urlString = url?.length ? `/${url.join("/")}` : "/";
+  return (
+    <>
+      {urlString === "/" && <JsonLd data={[personJsonLd(), websiteJsonLd()]} />}
+      <PageContent url={urlString} />
+    </>
+  );
 }

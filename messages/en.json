@@ -1,0 +1,30 @@
+{
+  "Metadata": {
+    "title": "Isaias Santos - Full Stack Developer",
+    "description": "Portfolio of Isaias Santos, a Full Stack Developer specializing in Next.js and Contentful."
+  },
+  "Navigation": {
+    "home": "Home",
+    "resume": "Resume",
+    "switchLanguage": "Switch language"
+  },
+  "Layout": {
+    "sectionTitleFallback": "Section Title",
+    "footerMedium": "medium Articles",
+    "footerTech": "Developed with Next.js, Contentful and AWS"
+  },
+  "Banner": {
+    "downloadCv": "Download CV"
+  },
+  "Components": {
+    "defaultName": "Default Name",
+    "defaultText": "Default text",
+    "defaultImageAlt": "Default image",
+    "defaultCvFileName": "default-cv.pdf",
+    "cardsPlaceholder": "ComponentsCards Placeholder"
+  },
+  "Language": {
+    "en": "English",
+    "pt-BR": "Português"
+  }
+}
