@@ -5,6 +5,7 @@
   },
   "Navigation": {
     "home": "Início",
+    "blog": "Blog",
     "resume": "Currículo",
     "switchLanguage": "Alterar idioma"
   },

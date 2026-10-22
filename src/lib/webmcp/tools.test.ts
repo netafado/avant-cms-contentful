@@ -193,54 +193,118 @@ describe("toggle_theme", () => {
 });
 
 describe("list_posts", () => {
-  it("returns every post as JSON with frontmatter fields and no body", async () => {
-    const result = await runTool("list_posts");
-    expect(result.isError).toBeFalsy();
+  const samplePosts = [
+    {
+      title: "Newer post",
+      slug: "newer-post",
+      date: "2026-09-08",
+      description: "First.",
+      tags: ["ai"],
+    },
+    {
+      title: "Older post",
+      slug: "older-post",
+      date: "2026-07-30",
+      description: "Second.",
+      tags: ["seo"],
+    },
+  ];
 
-    const posts = JSON.parse(resultText(result));
-    expect(Array.isArray(posts)).toBe(true);
-    expect(posts.length).toBeGreaterThan(0);
+  it("fetches and serializes /api/blog", async () => {
+    const fetchMock = jest.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: () => Promise.resolve(samplePosts),
+    });
+    const originalFetch = global.fetch;
+    global.fetch = fetchMock as unknown as typeof fetch;
 
-    const slugs = posts.map((post: { slug: string }) => post.slug);
-    expect(new Set(slugs).size).toBe(slugs.length);
+    try {
+      const result = await runTool("list_posts");
+      expect(result.isError).toBeFalsy();
+      expect(fetchMock).toHaveBeenCalledWith("http://localhost/api/blog");
 
-    for (const post of posts) {
-      expect(typeof post.title).toBe("string");
-      expect(typeof post.slug).toBe("string");
-      expect(typeof post.date).toBe("string");
-      expect(typeof post.description).toBe("string");
-      expect(Array.isArray(post.tags)).toBe(true);
-      expect(post).not.toHaveProperty("body");
+      const posts = JSON.parse(resultText(result));
+      expect(posts).toHaveLength(2);
+      expect(posts[0].slug).toBe("newer-post");
+      for (const post of posts) {
+        expect(post).not.toHaveProperty("body");
+      }
+    } finally {
+      global.fetch = originalFetch;
     }
+  });
 
-    const dates = posts.map((post: { date: string }) => post.date);
-    expect(dates).toEqual([...dates].sort().reverse());
+  it("returns an error result when the endpoint is unreachable", async () => {
+    const originalFetch = global.fetch;
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: false,
+      status: 500,
+      json: () => Promise.resolve([]),
+    }) as unknown as typeof fetch;
+
+    try {
+      const result = await runTool("list_posts");
+      expect(result.isError).toBe(true);
+      expect(resultText(result)).toContain("500");
+    } finally {
+      global.fetch = originalFetch;
+    }
   });
 });
 
 describe("get_post", () => {
-  it("returns the post's frontmatter and raw markdown body", async () => {
-    const listResult = await runTool("list_posts");
-    const posts = JSON.parse(resultText(listResult));
-    const [first] = posts;
+  it("returns the post's metadata and raw markdown body", async () => {
+    const fetchMock = jest.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: () =>
+        Promise.resolve({
+          title: "Markdown post",
+          slug: "markdown-post",
+          date: "2026-09-08",
+          description: "Has a body.",
+          tags: ["ai"],
+          body: "## Hello\n\nWorld",
+        }),
+    });
+    const originalFetch = global.fetch;
+    global.fetch = fetchMock as unknown as typeof fetch;
 
-    const result = await runTool("get_post", { slug: first.slug });
-    expect(result.isError).toBeFalsy();
+    try {
+      const result = await runTool("get_post", { slug: "markdown-post" });
+      expect(result.isError).toBeFalsy();
+      expect(fetchMock).toHaveBeenCalledWith(
+        "http://localhost/api/blog?slug=markdown-post"
+      );
 
-    const post = JSON.parse(resultText(result));
-    expect(post.title).toBe(first.title);
-    expect(post.slug).toBe(first.slug);
-    expect(post.date).toBe(first.date);
-    expect(post.description).toBe(first.description);
-    expect(post.tags).toEqual(first.tags);
-    expect(typeof post.markdown).toBe("string");
-    expect(post.markdown.length).toBeGreaterThan(0);
-    expect(post.markdown).toContain("# ");
+      const post = JSON.parse(resultText(result));
+      expect(post.title).toBe("Markdown post");
+      expect(post.markdown).toContain("## Hello");
+    } finally {
+      global.fetch = originalFetch;
+    }
   });
 
   it("returns an error result for an unknown slug", async () => {
-    const result = await runTool("get_post", { slug: "does-not-exist" });
+    const originalFetch = global.fetch;
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: false,
+      status: 404,
+      json: () => Promise.resolve({}),
+    }) as unknown as typeof fetch;
+
+    try {
+      const result = await runTool("get_post", { slug: "does-not-exist" });
+      expect(result.isError).toBe(true);
+      expect(resultText(result)).toContain("does-not-exist");
+    } finally {
+      global.fetch = originalFetch;
+    }
+  });
+
+  it("returns an error result for a missing slug", async () => {
+    const result = await runTool("get_post", {});
     expect(result.isError).toBe(true);
-    expect(resultText(result)).toContain("does-not-exist");
   });
 });

@@ -1,80 +1,95 @@
-import {
-  listPosts,
-  getPost,
-  parseFrontmatter,
-  type Post,
-} from "./blog";
+import { listPosts, getPost, type Post } from "./blog";
+import { client } from "@/lib/contentful";
+import type { BlogPostFieldsFragment } from "@/lib/contentful/__generated/sdk";
 
-describe("parseFrontmatter", () => {
-  it("parses scalar key/value lines", () => {
-    const raw = `---
-title: Hello
-slug: hello-world
-date: 2026-09-12
-description: A short description.
----
+jest.mock("react", () => ({
+  ...jest.requireActual("react"),
+  // Request-scope memoization is a server concern; skip it so each test
+  // starts from a clean slate.
+  cache: (fn: unknown) => fn,
+}));
 
-# Body
-`;
-    const { frontmatter, body } = parseFrontmatter(raw);
-    expect(frontmatter).toEqual({
-      title: "Hello",
-      slug: "hello-world",
-      date: "2026-09-12",
-      description: "A short description.",
-      tags: [],
-    });
-    expect(body.trim()).toBe("# Body");
-  });
+jest.mock("@/lib/contentful", () => ({
+  client: {
+    blogPosts: jest.fn(),
+    blogPost: jest.fn(),
+  },
+}));
 
-  it("parses comma-separated arrays into trimmed string arrays", () => {
-    const raw = `---
-title: Tagged
-slug: tagged
-date: 2026-08-01
-description: Has tags.
-tags: [ai, agents, webmcp]
----
+const blogPostsMock = client.blogPosts as jest.Mock;
+const blogPostMock = client.blogPost as jest.Mock;
 
-body
-`;
-    const { frontmatter } = parseFrontmatter(raw);
-    expect(frontmatter.tags).toEqual(["ai", "agents", "webmcp"]);
-  });
-});
+function cmsEntry(overrides: Partial<BlogPostFieldsFragment> = {}) {
+  return {
+    __typename: "BlogPost",
+    sys: { id: "entry-1", spaceId: "space" },
+    title: "A post",
+    slug: "a-post",
+    date: "2026-09-08",
+    description: "A description.",
+    tags: ["ai", null, "web"],
+    body: "## Body",
+    seoFields: null,
+    ...overrides,
+  } as BlogPostFieldsFragment;
+}
 
 describe("listPosts", () => {
-  it("returns posts sorted by date descending", () => {
-    const posts = listPosts();
-    const dates = posts.map((post) => post.date);
-    const sorted = [...dates].sort().reverse();
-    expect(dates).toEqual(sorted);
-    expect(posts.length).toBe(3);
+  it("returns CMS entries mapped onto the Post shape, sorted newest first", async () => {
+    blogPostsMock.mockResolvedValue({
+      blogPostCollection: {
+        items: [
+          cmsEntry({ sys: { id: "old", spaceId: "space" }, date: "2026-07-30", slug: "old-post" }),
+          cmsEntry({ sys: { id: "new", spaceId: "space" }, date: "2026-09-08", slug: "new-post" }),
+          null,
+        ],
+      },
+    });
+
+    const posts: Post[] = await listPosts();
+    expect(posts.map((post) => post.slug)).toEqual(["new-post", "old-post"]);
+    expect(posts[0]).toMatchObject({
+      title: "A post",
+      date: "2026-09-08",
+      description: "A description.",
+      tags: ["ai", "web"],
+      body: "## Body",
+    });
   });
 
-  it("returns posts with all required fields populated", () => {
-    for (const post of listPosts()) {
-      expect(post.title.length).toBeGreaterThan(0);
-      expect(post.slug.length).toBeGreaterThan(0);
-      expect(post.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      expect(post.description.length).toBeGreaterThan(0);
-      expect(Array.isArray(post.tags)).toBe(true);
-      expect(post.tags.length).toBeGreaterThan(0);
-      expect(post.body.length).toBeGreaterThan(0);
-    }
+  it("returns an empty list when the CMS is unreachable", async () => {
+    const errorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+    blogPostsMock.mockRejectedValue(new Error("CMS down"));
+
+    await expect(listPosts()).resolves.toEqual([]);
+    expect(errorSpy).toHaveBeenCalled();
+    errorSpy.mockRestore();
   });
 });
 
 describe("getPost", () => {
-  it("returns the post matching the slug", () => {
-    const expected = listPosts()[0];
-    const post = getPost(expected.slug) as Post | undefined;
-    expect(post).toBeDefined();
-    expect(post?.slug).toBe(expected.slug);
-    expect(post?.title).toBe(expected.title);
+  it("filters by slug and returns the matching post", async () => {
+    blogPostMock.mockResolvedValue({
+      blogPostCollection: { items: [cmsEntry()] },
+    });
+
+    const post = await getPost("a-post");
+    expect(blogPostMock).toHaveBeenCalledWith({ where: { slug: "a-post" } });
+    expect(post).toMatchObject({ slug: "a-post", title: "A post" });
   });
 
-  it("returns undefined for an unknown slug", () => {
-    expect(getPost("does-not-exist")).toBeUndefined();
+  it("returns null for an unknown slug", async () => {
+    blogPostMock.mockResolvedValue({ blogPostCollection: { items: [] } });
+
+    await expect(getPost("does-not-exist")).resolves.toBeNull();
+  });
+
+  it("returns null when the CMS is unreachable", async () => {
+    const errorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+    blogPostMock.mockRejectedValue(new Error("CMS down"));
+
+    await expect(getPost("a-post")).resolves.toBeNull();
+    expect(errorSpy).toHaveBeenCalled();
+    errorSpy.mockRestore();
   });
 });

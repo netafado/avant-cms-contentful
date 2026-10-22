@@ -5,6 +5,7 @@
   },
   "Navigation": {
     "home": "Home",
+    "blog": "Blog",
     "resume": "Resume",
     "switchLanguage": "Switch language"
   },

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import EditorView from "@/components/EditorView";
-import { getPost, listPosts } from "@/lib/blog";
+import { getPost } from "@/lib/blog";
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
@@ -11,27 +11,30 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   timeZone: "UTC",
 });
 
-export function generateStaticParams() {
-  return listPosts().map((post) => ({ slug: post.slug }));
-}
-
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getPost(slug);
   if (!post) {
     return {};
   }
+  const seo = post.seoFields;
+  const title = seo?.pageTitle || post.title;
+  const description = seo?.pageDescription || post.description;
   return {
-    title: post.title,
-    description: post.description,
-    alternates: { canonical: `/blog/${post.slug}` },
+    title,
+    description,
+    alternates: { canonical: seo?.canonicalUrl || `/blog/${post.slug}` },
+    robots: {
+      index: !seo?.noindex,
+      follow: !seo?.nofollow,
+    },
     openGraph: {
-      title: post.title,
-      description: post.description,
+      title,
+      description,
       url: `/blog/${post.slug}`,
       type: "article",
       publishedTime: post.date,
@@ -39,8 +42,8 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: post.title,
-      description: post.description,
+      title,
+      description,
     },
   };
 }
@@ -51,7 +54,7 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getPost(slug);
   if (!post) {
     notFound();
   }

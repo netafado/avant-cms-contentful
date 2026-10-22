@@ -3,7 +3,6 @@ import {
   SOCIAL_LINKS,
   personJsonLd,
 } from "@/lib/seo";
-import { listPosts, getPost } from "@/lib/blog";
 
 /**
  * WebMCP tools exposed to AI agents via document.modelContext.
@@ -199,14 +198,20 @@ const listPostsTool: WebMCP.ModelContextTool = {
   inputSchema: { type: "object", properties: {} },
   annotations: { readOnlyHint: true },
   execute: async () => {
-    const posts = listPosts().map(({ title, slug, date, description, tags }) => ({
-      title,
-      slug,
-      date,
-      description,
-      tags,
-    }));
-    return textResult(JSON.stringify(posts, null, 2));
+    try {
+      // The blog data lives in Contentful and is only reachable server-side,
+      // so tools read it back through the site's own JSON endpoint.
+      const response = await fetch(`${window.location.origin}/api/blog`);
+      if (!response.ok) {
+        throw new Error(`/api/blog responded with status ${response.status}`);
+      }
+      const posts = await response.json();
+      return textResult(JSON.stringify(posts, null, 2));
+    } catch (error) {
+      return errorResult(
+        error instanceof Error ? error.message : "Could not read /api/blog"
+      );
+    }
   },
 };
 
@@ -214,7 +219,7 @@ const getPostTool: WebMCP.ModelContextTool = {
   name: "get_post",
   title: "Get blog post",
   description:
-    "Returns a single blog post by slug as JSON, including its frontmatter fields and raw markdown body.",
+    "Returns a single blog post by slug as JSON, including its metadata and raw markdown body.",
   inputSchema: {
     type: "object",
     properties: {
@@ -231,24 +236,38 @@ const getPostTool: WebMCP.ModelContextTool = {
     if (!slug) {
       return errorResult("Missing slug");
     }
-    const post = getPost(slug);
-    if (!post) {
-      return errorResult(`Post not found: ${slug}`);
+    try {
+      const response = await fetch(
+        `${window.location.origin}/api/blog?slug=${encodeURIComponent(slug)}`
+      );
+      if (response.status === 404) {
+        return errorResult(`Post not found: ${slug}`);
+      }
+      if (!response.ok) {
+        throw new Error(`/api/blog responded with status ${response.status}`);
+      }
+      const post = await response.json();
+      return textResult(
+        JSON.stringify(
+          {
+            title: post.title,
+            slug: post.slug,
+            date: post.date,
+            description: post.description,
+            tags: post.tags,
+            markdown: post.body,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return errorResult(
+        error instanceof Error
+          ? error.message
+          : `Could not load post: ${slug}`
+      );
     }
-    return textResult(
-      JSON.stringify(
-        {
-          title: post.title,
-          slug: post.slug,
-          date: post.date,
-          description: post.description,
-          tags: post.tags,
-          markdown: post.body,
-        },
-        null,
-        2
-      )
-    );
   },
 };
 
