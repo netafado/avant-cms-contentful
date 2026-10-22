@@ -1,7 +1,7 @@
 "use client";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
-import { FC } from "react";
+import { type CSSProperties, FC } from "react";
 import { useTranslations } from "next-intl";
 import Logo from "@/components/Logo";
 import SunHero from "../SunHero";
@@ -32,26 +32,36 @@ const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
       >
         <div
           aria-label="AI transformation"
-          className="pointer-events-none absolute top-1/2 left-1/2 z-10 flex max-w-[92vw] -translate-x-1/2 -translate-y-1/2 flex-col items-center text-white px-4 md:px-8 py-3 md:py-4 bg-black/20 border border-white gradient border-white"
+          className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center text-white"
         >
-          <h2 className="font-mono text-bold uppercase whitespace-nowrap sm:tracking-[0.4em] md:tracking-[0.45em]">
-            <span className="bg-white text-black px-2 pl-3 text-center">
-              AI
+          <div className="flex flex-col items-center [text-shadow:0_1px_12px_rgba(0,0,0,0.9),0_0_40px_rgba(0,0,0,0.6)]">
+            <h2 className="font-mono text-bold uppercase whitespace-nowrap sm:tracking-[0.4em] md:tracking-[0.45em]">
+              <span className="bg-white text-black px-2 pl-3 text-center">
+                AI
+              </span>
+            </h2>
+            <span className="text-light uppercase font-mono text-[clamp(3rem,6vw,4rem)] leading-[0.85] tracking-[-0.04em] tracking-widest whitespace-nowrap">
+              transformation
             </span>
-          </h2>
-          <span className="text-light uppercase font-mono text-[clamp(3rem,6vw,4rem)] leading-[0.85] tracking-[-0.04em] tracking-widest whitespace-nowrap">
-            transformation
-          </span>
+          </div>
           <ul
             aria-label="AI topics worked with"
-            className="mt-3 md:mt-4 flex flex-wrap justify-center gap-1.5 md:gap-2"
+            style={
+              { "--orbit-radius": "min(36vh, 36vw)" } as CSSProperties
+            }
+            className="mt-3 flex max-w-[92vw] flex-wrap justify-center gap-1.5 md:absolute md:top-1/2 md:left-1/2 md:mt-0 md:block md:size-[calc(var(--orbit-radius)*2)] md:max-w-none md:-translate-x-1/2 md:-translate-y-1/2"
           >
-            {AI_TOPICS.map((topic) => (
+            {AI_TOPICS.map((topic, index) => (
               <li
                 key={topic}
-                className="rounded-full border border-white/60 bg-black/30 px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.15em] text-white/90 md:px-3 md:text-[10px]"
+                style={{ "--orbit-i": index } as CSSProperties}
+                className="md:absolute md:inset-0 md:[transform:rotate(calc(var(--orbit-i)*45deg))]"
               >
-                {topic}
+                <span className="md:absolute md:inset-0 md:flex md:items-start md:justify-center md:animate-orbit-spin">
+                  <span className="inline-block rounded-full border border-white/60 bg-black/30 px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.15em] text-white/90 md:px-3 md:text-[10px] md:animate-orbit-counter">
+                    {topic}
+                  </span>
+                </span>
               </li>
             ))}
           </ul>

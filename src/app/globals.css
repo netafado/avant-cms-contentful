@@ -95,11 +95,26 @@
   --color-solar-900: #4a1502;
   --color-solar-950: #2b0c01;
 
+  --orbit-duration: 60s;
   --animate-scroll-cue: scroll-cue 2s ease-in-out infinite;
+  --animate-orbit-spin: orbit-spin var(--orbit-duration) linear infinite;
+  --animate-orbit-counter: orbit-counter var(--orbit-duration) linear infinite;
 
   @keyframes scroll-cue {
     0%, 100% { transform: translateY(0); opacity: 0.6; }
     50% { transform: translateY(6px); opacity: 1; }
+  }
+
+  @keyframes orbit-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes orbit-counter {
+    /* starts at the arm's static phase (i × 45°) so the chip is upright
+       while orbiting, then unwinds one full turn against the spin */
+    from { transform: rotate(calc(var(--orbit-i, 0) * -45deg)); }
+    to { transform: rotate(calc(var(--orbit-i, 0) * -45deg - 360deg)); }
   }
 }
 
@@ -116,5 +131,16 @@ p {
 @media (prefers-reduced-motion: reduce) {
   .animate-scroll-cue {
     animation: none;
+  }
+
+  .animate-orbit-spin,
+  .animate-orbit-counter {
+    animation: none;
+  }
+
+  /* frozen orbit: arm keeps its +i×45° phase, chip gets the inverse
+     so every pill sits upright at its slot on the ring */
+  .animate-orbit-counter {
+    transform: rotate(calc(var(--orbit-i, 0) * -45deg));
   }
 }
