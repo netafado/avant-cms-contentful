@@ -1,4 +1,4 @@
-directive @contentSourceMaps on QUERY
+directive @contentSourceMaps(outsidePreview: Boolean) on QUERY
 
 directive @contentfulSchemaMetadata(contentTypePublishedCounters: JSON) on SCHEMA
 
@@ -146,6 +146,110 @@ enum AssetOrder {
   url_DESC
   width_ASC
   width_DESC
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/blogPost)
+"""
+type BlogPost implements Entry & _Node {
+  _id: ID!
+  body(locale: String, useFallbackLocale: Boolean): String
+  contentfulMetadata: ContentfulMetadata!
+  date(locale: String, useFallbackLocale: Boolean): DateTime
+  description(locale: String, useFallbackLocale: Boolean): String
+  linkedFrom(allowedLocales: [String]): BlogPostLinkingCollections
+  seoFields(locale: String, preview: Boolean, useFallbackLocale: Boolean, where: ComponentSeoFilter): ComponentSeo
+  slug(locale: String, useFallbackLocale: Boolean): String
+  sys: Sys!
+  tags(locale: String, useFallbackLocale: Boolean): [String]
+  title(locale: String, useFallbackLocale: Boolean): String
+}
+
+type BlogPostCollection {
+  items: [BlogPost]!
+  limit: Int!
+  skip: Int!
+  total: Int!
+}
+
+type BlogPostCursorCollection {
+  items: [BlogPost]!
+  limit: Int!
+  pages: CursorPages!
+}
+
+input BlogPostFilter {
+  AND: [BlogPostFilter]
+  OR: [BlogPostFilter]
+  body: String
+  body_contains: String
+  body_exists: Boolean
+  body_in: [String]
+  body_not: String
+  body_not_contains: String
+  body_not_in: [String]
+  contentfulMetadata: ContentfulMetadataFilter
+  date: DateTime
+  date_exists: Boolean
+  date_gt: DateTime
+  date_gte: DateTime
+  date_in: [DateTime]
+  date_lt: DateTime
+  date_lte: DateTime
+  date_not: DateTime
+  date_not_in: [DateTime]
+  description: String
+  description_contains: String
+  description_exists: Boolean
+  description_in: [String]
+  description_not: String
+  description_not_contains: String
+  description_not_in: [String]
+  seoFields: cfComponentSeoNestedFilter
+  seoFields_exists: Boolean
+  slug: String
+  slug_contains: String
+  slug_exists: Boolean
+  slug_in: [String]
+  slug_not: String
+  slug_not_contains: String
+  slug_not_in: [String]
+  sys: SysFilter
+  tags_contains_all: [String]
+  tags_contains_none: [String]
+  tags_contains_some: [String]
+  tags_exists: Boolean
+  title: String
+  title_contains: String
+  title_exists: Boolean
+  title_in: [String]
+  title_not: String
+  title_not_contains: String
+  title_not_in: [String]
+}
+
+type BlogPostLinkingCollections {
+  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): EntryCollection
+  entryCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): EntryCursorCollection
+}
+
+enum BlogPostOrder {
+  date_ASC
+  date_DESC
+  description_ASC
+  description_DESC
+  slug_ASC
+  slug_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  title_ASC
+  title_DESC
 }
 
 """
@@ -501,12 +605,52 @@ input ComponentSeoFilter {
 }
 
 type ComponentSeoLinkingCollections {
+  blogPostCollection(limit: Int = 100, locale: String, order: [ComponentSeoLinkingCollectionsBlogPostCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): BlogPostCollection
+  blogPostCursorCollection(limit: Int = 100, locale: String, order: [ComponentSeoLinkingCollectionsBlogPostCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): BlogPostCursorCollection
   entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): EntryCollection
   entryCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): EntryCursorCollection
   pageLandingCollection(limit: Int = 100, locale: String, order: [ComponentSeoLinkingCollectionsPageLandingCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): PageLandingCollection
   pageLandingCursorCollection(limit: Int = 100, locale: String, order: [ComponentSeoLinkingCollectionsPageLandingCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): PageLandingCursorCollection
   pageProductCollection(limit: Int = 100, locale: String, order: [ComponentSeoLinkingCollectionsPageProductCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): PageProductCollection
   pageProductCursorCollection(limit: Int = 100, locale: String, order: [ComponentSeoLinkingCollectionsPageProductCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): PageProductCursorCollection
+}
+
+enum ComponentSeoLinkingCollectionsBlogPostCollectionOrder {
+  date_ASC
+  date_DESC
+  description_ASC
+  description_DESC
+  slug_ASC
+  slug_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  title_ASC
+  title_DESC
+}
+
+enum ComponentSeoLinkingCollectionsBlogPostCursorCollectionOrder {
+  date_ASC
+  date_DESC
+  description_ASC
+  description_DESC
+  slug_ASC
+  slug_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  title_ASC
+  title_DESC
 }
 
 enum ComponentSeoLinkingCollectionsPageLandingCollectionOrder {
@@ -1361,6 +1505,9 @@ type Query {
   asset(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): Asset
   assetCollection(limit: Int = 100, locale: String, order: [AssetOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: AssetFilter): AssetCollection
   assetCursorCollection(limit: Int = 100, locale: String, order: [AssetOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: AssetFilter): AssetCursorCollection
+  blogPost(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): BlogPost
+  blogPostCollection(limit: Int = 100, locale: String, order: [BlogPostOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: BlogPostFilter): BlogPostCollection
+  blogPostCursorCollection(limit: Int = 100, locale: String, order: [BlogPostOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: BlogPostFilter): BlogPostCursorCollection
   componentBanner(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): ComponentBanner
   componentBannerCollection(limit: Int = 100, locale: String, order: [ComponentBannerOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: ComponentBannerFilter): ComponentBannerCollection
   componentBannerCursorCollection(limit: Int = 100, locale: String, order: [ComponentBannerOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: ComponentBannerFilter): ComponentBannerCursorCollection

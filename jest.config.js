@@ -11,9 +11,6 @@ const customJestConfig = {
     setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
     testEnvironment: 'jest-environment-jsdom',
     testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
-    transform: {
-        '^.+\\.md$': '<rootDir>/jest.md-transform.js',
-    },
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/src/$1',
     },

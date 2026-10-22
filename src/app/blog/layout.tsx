@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
 import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, SITE_NAME, SITE_URL } from "@/lib/seo";
 import WebMcpBridge from "@/components/WebMcpBridge";
+import { ThemeProvider } from "@/providers/theme";
+import Navigation from "@/components/Navigation";
+import enMessages from "../../../messages/en.json";
 import "../globals.css";
 
 // The localized portfolio lives under src/app/[locale] with its own root
-// layout; the static blog is served unprefixed, so it carries this shell.
+// layout; the blog is served unprefixed, so it carries this shell. It is
+// English-only, hence the statically imported en messages.
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -68,6 +73,11 @@ export default function BlogLayout({
       <body
         className={`bg-white dark:bg-black ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <NextIntlClientProvider locale="en" messages={enMessages}>
+          <ThemeProvider>
+            <Navigation showLanguageSwitch={false} />
+          </ThemeProvider>
+        </NextIntlClientProvider>
         <WebMcpBridge />
         {children}
       </body>

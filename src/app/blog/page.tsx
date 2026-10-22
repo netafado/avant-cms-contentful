@@ -27,8 +27,8 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   timeZone: "UTC",
 });
 
-export default function BlogIndexPage() {
-  const posts = listPosts();
+export default async function BlogIndexPage() {
+  const posts = await listPosts();
 
   return (
     <main className="mx-auto mt-16 max-w-3xl px-4 pb-24 text-gray-900 dark:text-gray-100 md:mt-24">
@@ -38,6 +38,12 @@ export default function BlogIndexPage() {
           {DEFAULT_DESCRIPTION}
         </p>
       </header>
+
+      {posts.length === 0 && (
+        <p className="mt-8 text-sm text-gray-600 dark:text-gray-400">
+          No posts published yet.
+        </p>
+      )}
 
       <ul className="mt-8 space-y-8">
         {posts.map((post) => (

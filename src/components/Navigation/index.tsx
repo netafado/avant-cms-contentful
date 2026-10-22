@@ -8,7 +8,9 @@ import {
   MoonIcon,
   FileTextIcon,
   GlobeIcon,
+  ReaderIcon,
 } from "@radix-ui/react-icons";
+import NextLink from "next/link";
 import { useTheme } from "@/providers/theme";
 import clsx from "clsx";
 import { useLocale, useTranslations } from "next-intl";
@@ -48,7 +50,20 @@ const CLASSES = {
   divider: "mx-2 h-4 w-px bg-white/25",
 };
 
-const Navigation = ({ currentPath }: { currentPath: string }) => {
+type NavigationProps = {
+  /** Path used for active-link highlight; defaults to the current pathname. */
+  currentPath?: string;
+  /**
+   * The blog lives outside the locale segment and has no translation, so its
+   * layout hides the language switch rather than linking to a missing route.
+   */
+  showLanguageSwitch?: boolean;
+};
+
+const Navigation = ({
+  currentPath,
+  showLanguageSwitch = true,
+}: NavigationProps) => {
   const { toggleTheme, theme } = useTheme();
   const t = useTranslations("Navigation");
   const tLanguage = useTranslations("Language");
@@ -57,14 +72,25 @@ const Navigation = ({ currentPath }: { currentPath: string }) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
+  // /blog is served unprefixed outside the [locale] segment, so it needs the
+  // plain next/link; the locale-aware Link would produce a missing /en/blog.
   const siteLinks = [
-    { href: "/", label: t("home"), icon: <HomeIcon className="h-4 w-4" /> },
+    { href: "/", label: t("home"), icon: <HomeIcon className="h-4 w-4" />, plain: false },
+    {
+      href: "/blog",
+      label: t("blog"),
+      icon: <ReaderIcon className="h-4 w-4" />,
+      plain: true,
+    },
     {
       href: "/resume",
       label: t("resume"),
       icon: <FileTextIcon className="h-4 w-4" />,
+      plain: false,
     },
   ];
+
+  const activePath = currentPath ?? pathname;
 
   const switchTo =
     routing.locales.find((l) => l !== locale) ?? routing.defaultLocale;
@@ -79,21 +105,39 @@ const Navigation = ({ currentPath }: { currentPath: string }) => {
     <nav className={CLASSES.wrapper} aria-label="Main navigation">
       <div className={CLASSES.bar}>
         <ul role="menubar" className={CLASSES.group}>
-          {siteLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              aria-label={link.label}
-              role="menuitem"
-              className={clsx(CLASSES.siteLink, {
-                [CLASSES.active]:
-                  currentPath === link.href || link.href.endsWith(currentPath),
-              })}
-            >
-              <span className="hidden md:inline">{link.label}</span>
-              {link.icon}
-            </Link>
-          ))}
+          {siteLinks.map((link) => {
+            const className = clsx(CLASSES.siteLink, {
+              [CLASSES.active]:
+                activePath === link.href || link.href.endsWith(activePath),
+            });
+            const children = (
+              <>
+                <span className="hidden md:inline">{link.label}</span>
+                {link.icon}
+              </>
+            );
+            return link.plain ? (
+              <NextLink
+                key={link.href}
+                href={link.href}
+                aria-label={link.label}
+                role="menuitem"
+                className={className}
+              >
+                {children}
+              </NextLink>
+            ) : (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-label={link.label}
+                role="menuitem"
+                className={className}
+              >
+                {children}
+              </Link>
+            );
+          })}
         </ul>
 
         <div className={CLASSES.group}>
@@ -110,18 +154,20 @@ const Navigation = ({ currentPath }: { currentPath: string }) => {
             </Link>
           ))}
           <div aria-hidden className={CLASSES.divider} />
-          <button
-            onClick={handleLanguageSwitch}
-            disabled={isPending}
-            aria-label={t("switchLanguage")}
-            className={clsx(
-              CLASSES.siteLink,
-              isPending && "cursor-wait opacity-50"
-            )}
-          >
-            <GlobeIcon className="h-4 w-4" />
-            <span className="hidden md:inline">{tLanguage(switchTo)}</span>
-          </button>
+          {showLanguageSwitch && (
+            <button
+              onClick={handleLanguageSwitch}
+              disabled={isPending}
+              aria-label={t("switchLanguage")}
+              className={clsx(
+                CLASSES.siteLink,
+                isPending && "cursor-wait opacity-50"
+              )}
+            >
+              <GlobeIcon className="h-4 w-4" />
+              <span className="hidden md:inline">{tLanguage(switchTo)}</span>
+            </button>
+          )}
           <button
             onClick={toggleTheme}
             aria-label={

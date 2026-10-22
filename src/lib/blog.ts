@@ -1,6 +1,6 @@
-import post1 from "@/content/blog/ai-agents-reshaping-the-web.md" with { type: "text" };
-import post2 from "@/content/blog/llm-discoverability-seo.md" with { type: "text" };
-import post3 from "@/content/blog/headless-cms-ai-content-pipelines.md" with { type: "text" };
+import { cache } from "react";
+import { client } from "@/lib/contentful";
+import type { BlogPostFieldsFragment } from "@/lib/contentful/__generated/sdk";
 
 export type Post = {
   title: string;
@@ -9,76 +9,60 @@ export type Post = {
   description: string;
   tags: string[];
   body: string;
+  seoFields?: BlogPostFieldsFragment["seoFields"];
 };
 
-type Frontmatter = {
-  title: string;
-  slug: string;
-  date: string;
-  description: string;
-  tags: string[];
-};
-
-export function parseFrontmatter(
-  raw: string
-): { frontmatter: Frontmatter; body: string } {
-  const normalized = raw.replace(/\r\n/g, "\n");
-  const lines = normalized.split("\n");
-  if (lines[0]?.trim() !== "---") {
-    throw new Error("Missing opening frontmatter fence");
-  }
-  let endIndex = -1;
-  for (let i = 1; i < lines.length; i++) {
-    if (lines[i].trim() === "---") {
-      endIndex = i;
-      break;
-    }
-  }
-  if (endIndex === -1) {
-    throw new Error("Missing closing frontmatter fence");
-  }
-
-  const meta: Record<string, string | string[]> = {};
-  for (const line of lines.slice(1, endIndex)) {
-    const trimmed = line.trim();
-    if (!trimmed) continue;
-    const colon = trimmed.indexOf(":");
-    if (colon === -1) continue;
-    const key = trimmed.slice(0, colon).trim();
-    let value = trimmed.slice(colon + 1).trim();
-    if (value.startsWith("[") && value.endsWith("]")) {
-      value = value.slice(1, -1).trim();
-      meta[key] = value
-        ? value.split(",").map((entry) => entry.trim())
-        : [];
-    } else {
-      meta[key] = value;
-    }
-  }
-
-  const frontmatter: Frontmatter = {
-    title: String(meta.title ?? ""),
-    slug: String(meta.slug ?? ""),
-    date: String(meta.date ?? ""),
-    description: String(meta.description ?? ""),
-    tags: Array.isArray(meta.tags) ? meta.tags : [],
+function toPost(item: BlogPostFieldsFragment): Post {
+  return {
+    title: item.title ?? "",
+    slug: item.slug ?? "",
+    date: item.date ? String(item.date) : "",
+    description: item.description ?? "",
+    tags: (item.tags ?? []).filter((tag): tag is string => Boolean(tag)),
+    body: item.body ?? "",
+    seoFields: item.seoFields ?? undefined,
   };
-
-  const body = lines.slice(endIndex + 1).join("\n").trim();
-  return { frontmatter, body };
 }
 
-const POSTS: Post[] = [post1, post2, post3]
-  .map((raw) => {
-    const { frontmatter, body } = parseFrontmatter(raw);
-    return { ...frontmatter, body };
-  })
-  .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
-
-export function listPosts(): Post[] {
-  return POSTS;
+function sortByDateDesc(posts: Post[]): Post[] {
+  return [...posts].sort((a, b) =>
+    a.date < b.date ? 1 : a.date > b.date ? -1 : 0
+  );
 }
 
-export function getPost(slug: string): Post | undefined {
-  return POSTS.find((post) => post.slug === slug);
-}
+/**
+ * Lists published blog posts from Contentful, newest first. Memoized per
+ * request so the listing page and the sitemap share a single CMS call.
+ * Returns an empty list when the CMS is unreachable so callers can
+ * render an empty state instead of failing.
+ */
+export const listPosts = cache(async (): Promise<Post[]> => {
+  try {
+    const data = await client.blogPosts();
+    const items = data.blogPostCollection?.items ?? [];
+    return sortByDateDesc(
+      items
+        .filter((item): item is BlogPostFieldsFragment => item !== null)
+        .map(toPost)
+    );
+  } catch (error) {
+    console.error("Error fetching blog posts:", error);
+    return [];
+  }
+});
+
+/**
+ * Fetches a single blog post by slug, memoized per request so
+ * generateMetadata and the page component share a single CMS call.
+ * Returns null when the post is missing or the CMS is unreachable.
+ */
+export const getPost = cache(async (slug: string): Promise<Post | null> => {
+  try {
+    const data = await client.blogPost({ where: { slug } });
+    const item = data.blogPostCollection?.items?.[0];
+    return item ? toPost(item) : null;
+  } catch (error) {
+    console.error(`Error fetching blog post "${slug}":`, error);
+    return null;
+  }
+});

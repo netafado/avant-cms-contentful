@@ -21,7 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  for (const post of listPosts()) {
+  for (const post of await listPosts()) {
     entries.push({
       url: `${SITE_URL}/blog/${post.slug}`,
       lastModified: new Date(post.date),
@@ -34,6 +34,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const data = await client.pageUrls();
     for (const item of data.pageLandingCollection?.items || []) {
       if (!item?.url || item.url === "/") continue;
+      // The blog listing is rendered by the app at /blog; a legacy CMS
+      // landing entry with url "blog" must not shadow or duplicate it.
+      if (item.url.replace(/^\/+/, "") === "blog") continue;
       entries.push({
         url: `${SITE_URL}/${item.url.replace(/^\/+/, "")}`,
         lastModified: new Date(),

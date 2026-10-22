@@ -1,0 +1,42 @@
+fragment BlogPostFields on BlogPost {
+  __typename
+  sys {
+    id
+    spaceId
+  }
+  title
+  slug
+  date
+  description
+  tags
+  body
+  seoFields {
+    ...SeoFields
+  }
+}
+
+query blogPosts($locale: String, $preview: Boolean) {
+  blogPostCollection(
+    limit: 100
+    locale: $locale
+    preview: $preview
+    order: [date_DESC]
+  ) {
+    items {
+      ...BlogPostFields
+    }
+  }
+}
+
+query blogPost($locale: String, $preview: Boolean, $where: BlogPostFilter) {
+  blogPostCollection(
+    limit: 1
+    locale: $locale
+    preview: $preview
+    where: $where
+  ) {
+    items {
+      ...BlogPostFields
+    }
+  }
+}
