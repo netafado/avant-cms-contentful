@@ -45,18 +45,21 @@ describe("Banner Component", () => {
     expect(screen.getByText("Software Engineer")).toBeInTheDocument();
   });
 
-  it("renders the hero transformation message", () => {
+  it("renders the hero transformation message with AI topics over the banner", () => {
     render(<Banner {...mockProps} />);
 
-    // JSX strips the whitespace-only lines around the "|" text node, so the
-    // heading's text content has no spaces around the pipe.
-    expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent(
-      "AI|Human native",
-    );
+    const transformation = screen.getByRole("heading", { level: 2 });
+    expect(transformation).toHaveTextContent("AI");
+    expect(transformation).not.toHaveTextContent("Human native");
     expect(screen.getByText("transformation")).toHaveClass(
       "uppercase",
       "font-mono",
     );
+
+    const topics = screen.getByLabelText("AI topics worked with");
+    expect(topics).toBeInTheDocument();
+    expect(topics).toHaveTextContent("LLM APIs (OpenAI, Claude)");
+    expect(topics).toHaveTextContent("AI Agents (MCP/WebMCP)");
   });
 
   it("renders all achievements", () => {

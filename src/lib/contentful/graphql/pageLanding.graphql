@@ -8,7 +8,7 @@ fragment PageLandingFields on PageLanding {
   seoFields {
     ...SeoFields
   }
-  sectionsCollection(limit: 3) {
+  sectionsCollection(limit: 10) {
     items {
       ...SectionFields
     }
