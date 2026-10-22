@@ -48,11 +48,9 @@ describe("Banner Component", () => {
   it("renders the hero transformation message", () => {
     render(<Banner {...mockProps} />);
 
-    // JSX strips the whitespace-only lines around the "|" text node, so the
-    // heading's text content has no spaces around the pipe.
-    expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent(
-      "AI|Human native",
-    );
+    const transformation = screen.getByRole("heading", { level: 2 });
+    expect(transformation).toHaveTextContent("AI");
+    expect(transformation).not.toHaveTextContent("Human native");
     expect(screen.getByText("transformation")).toHaveClass(
       "uppercase",
       "font-mono",

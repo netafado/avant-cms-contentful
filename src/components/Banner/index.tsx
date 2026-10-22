@@ -20,16 +20,12 @@ const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
         }}
       >
         <div
-          aria-label="AI and human native transformation"
+          aria-label="AI transformation"
           className="pointer-events-none absolute top-1/2 left-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center whitespace-nowrap text-white  px-4 md:px-6 py-2 md:py-3 bg-black/20 border border-white gradient border-white"
         >
           <h2 className="font-mono text-bold uppercase  sm:tracking-[0.4em] md:tracking-[0.45em]">
-            <span className="bg-white text-black px-2 pl-3 text-center mr-3">
+            <span className="bg-white text-black px-2 pl-3 text-center">
               AI
-            </span>
-            |
-            <span className="bg-white text-black px-2 text-center">
-              Human native
             </span>
           </h2>
           <span className="text-light uppercase font-mono text-[clamp(3rem,6vw,4rem)] leading-[0.85] tracking-[-0.04em] tracking-widest">

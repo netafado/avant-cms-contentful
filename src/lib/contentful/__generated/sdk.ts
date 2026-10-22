@@ -3596,7 +3596,7 @@ export const SectionFieldsFragmentDoc = gql`
   grid
   layoutType
   textAlign
-  componentsCollection(limit: 5) {
+  componentsCollection(limit: 10) {
     items {
       __typename
       ... on ComponentBanner {
@@ -3629,7 +3629,7 @@ export const PageLandingFieldsFragmentDoc = gql`
   seoFields {
     ...SeoFields
   }
-  sectionsCollection(limit: 3) {
+  sectionsCollection(limit: 10) {
     items {
       ...SectionFields
     }
