@@ -256,11 +256,13 @@ const SunHero: FC<SunHeroProps> = ({ masthead, poster, children }) => {
         />
       )}
       {/* Masthead lives on its own top layer: above the z-10 content overlay
-          (so orbiting pills pass behind it) and clear of the fixed nav, with
-          no blend mode — mix-blend-overlay dimmed the white frame into the
-          scrim, making it look sunken behind the banner. */}
+          (so orbiting pills pass behind it) with no blend mode —
+          mix-blend-overlay dimmed the white frame into the scrim, making it
+          look sunken behind the banner. On desktop it hangs from the very top
+          edge, sharing the nav band; on mobile it stays below the icon-only
+          nav row, where a centered mark would collide with the icons. */}
       {masthead && (
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-20 flex w-full flex-col items-center px-6 pt-16 text-center md:pt-20">
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-20 flex w-full flex-col items-center px-6 pt-16 text-center md:pt-0">
           {masthead}
         </div>
       )}
