@@ -45,9 +45,9 @@ const Logo: FC<LogoProps> = ({
         className,
       )}
     >
-      <Frame className="border border-white/70 px-7 py-5 text-center md:px-3 md:py-4">
+      <Frame className="border border-white/70 px-5 py-3.5 text-center md:px-3 md:py-4">
         {/* indent mirrors the tracking so both lines stay optically centered */}
-        <span className="block font-sans text-3xl leading-none font-extrabold tracking-[0.3em] indent-[0.3em] uppercase md:text-2xl">
+        <span className="block font-sans text-xl leading-none font-extrabold tracking-[0.3em] indent-[0.3em] uppercase md:text-2xl">
           {main}
         </span>
         {secondary && (

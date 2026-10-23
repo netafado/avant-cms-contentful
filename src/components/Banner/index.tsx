@@ -40,14 +40,16 @@ const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
                 AI
               </span>
             </h2>
-            <span className="text-light uppercase font-mono text-[clamp(3rem,6vw,4rem)] leading-[0.85] tracking-[-0.04em] tracking-widest whitespace-nowrap">
+            <span className="text-light uppercase font-mono text-[clamp(1.75rem,3vw,2.5rem)] leading-[0.85] tracking-[-0.04em] tracking-widest whitespace-nowrap">
               transformation
             </span>
           </div>
           <ul
             aria-label="AI topics worked with"
             style={
-              { "--orbit-radius": "min(36vh, 36vw)" } as CSSProperties
+              // The sun disc is 14vh in radius (shader SUN_RADIUS), so 22vh
+              // keeps the pills hugging its corona instead of the screen edge.
+              { "--orbit-radius": "min(22vh, 22vw)" } as CSSProperties
             }
             className="mt-3 flex max-w-[92vw] flex-wrap justify-center gap-1.5 md:absolute md:top-1/2 md:left-1/2 md:mt-0 md:block md:size-[calc(var(--orbit-radius)*2)] md:max-w-none md:-translate-x-1/2 md:-translate-y-1/2"
           >

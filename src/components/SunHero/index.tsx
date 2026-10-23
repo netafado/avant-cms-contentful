@@ -255,11 +255,17 @@ const SunHero: FC<SunHeroProps> = ({ masthead, poster, children }) => {
           )}
         />
       )}
-      <div className="mix-blend-overlay  flex h-full w-full flex-col items-center px-6 text-center relative z-10 flex h-full w-full flex-col items-center px-6 text-center ">
-        {masthead && <div className="w-full pt-0">{masthead}</div>}
-        <div className="flex w-full flex-1 flex-col items-center justify-end pb-[11vh] md:pb-[12vh]">
-          {children}
+      {/* Masthead lives on its own top layer: above the z-10 content overlay
+          (so orbiting pills pass behind it) and clear of the fixed nav, with
+          no blend mode — mix-blend-overlay dimmed the white frame into the
+          scrim, making it look sunken behind the banner. */}
+      {masthead && (
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-20 flex w-full flex-col items-center px-6 pt-16 text-center md:pt-20">
+          {masthead}
         </div>
+      )}
+      <div className="relative z-10 flex h-full w-full flex-col items-center justify-end px-6 pb-[11vh] text-center md:pb-[12vh]">
+        {children}
       </div>
       <canvas
         ref={canvasRef}
