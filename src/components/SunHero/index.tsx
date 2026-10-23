@@ -264,7 +264,10 @@ const SunHero: FC<SunHeroProps> = ({ masthead, poster, children }) => {
           {masthead}
         </div>
       )}
-      <div className="relative z-10 flex h-full w-full flex-col items-center justify-end px-6 pb-[11vh] text-center md:pb-[12vh]">
+      {/* Banner content keeps the blend the masthead deliberately dropped:
+          mix-blend-overlay is what melts the "AI transformation" headline and
+          the orbiting topic pills into the sun as they cross it. */}
+      <div className="mix-blend-overlay relative z-10 flex h-full w-full flex-col items-center justify-end px-6 pb-[11vh] text-center md:pb-[12vh]">
         {children}
       </div>
       <canvas
