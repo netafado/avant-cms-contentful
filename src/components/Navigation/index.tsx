@@ -110,10 +110,11 @@ const Navigation = ({
               [CLASSES.active]:
                 activePath === link.href || link.href.endsWith(activePath),
             });
+            // Icons are the mobile-only affordance; desktop shows text only.
             const children = (
               <>
                 <span className="hidden md:inline">{link.label}</span>
-                {link.icon}
+                <span className="md:hidden">{link.icon}</span>
               </>
             );
             return link.plain ? (
@@ -164,7 +165,7 @@ const Navigation = ({
                 isPending && "cursor-wait opacity-50"
               )}
             >
-              <GlobeIcon className="h-4 w-4" />
+              <GlobeIcon className="h-4 w-4 md:hidden" />
               <span className="hidden md:inline">{tLanguage(switchTo)}</span>
             </button>
           )}
