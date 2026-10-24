@@ -16,6 +16,7 @@ import clsx from "clsx";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname, useRouter, routing } from "@/i18n/routing";
 import { useTransition } from "react";
+import BottomNav from "@/components/BottomNav";
 
 const links = [
   {
@@ -102,85 +103,114 @@ const Navigation = ({
   };
 
   return (
-    <nav className={CLASSES.wrapper} aria-label="Main navigation">
-      <div className={CLASSES.bar}>
-        <ul role="menubar" className={CLASSES.group}>
-          {siteLinks.map((link) => {
-            const className = clsx(CLASSES.siteLink, {
-              [CLASSES.active]:
-                activePath === link.href || link.href.endsWith(activePath),
-            });
-            // Icons are the mobile-only affordance; desktop shows text only.
-            const children = (
-              <>
-                <span className="hidden md:inline">{link.label}</span>
-                <span className="md:hidden">{link.icon}</span>
-              </>
-            );
-            return link.plain ? (
-              <NextLink
-                key={link.href}
-                href={link.href}
-                aria-label={link.label}
-                role="menuitem"
-                className={className}
+    <>
+      <nav className={CLASSES.wrapper} aria-label="Main navigation">
+        <div className={CLASSES.bar}>
+          {/* On mobile the toggles pin to opposite corners: language on the
+              left, theme on the right, so the top bar stays clean now that
+              the socials live in the bottom dock. */}
+          <div className="flex items-center md:hidden">
+            {showLanguageSwitch && (
+              <button
+                onClick={handleLanguageSwitch}
+                disabled={isPending}
+                aria-label={t("switchLanguage")}
+                className={clsx(
+                  CLASSES.iconLink,
+                  isPending && "cursor-wait opacity-50"
+                )}
               >
-                {children}
-              </NextLink>
-            ) : (
+                <GlobeIcon className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+          {/* Site links live in the mobile bottom dock; the top bar keeps
+              them for desktop only. */}
+          <ul role="menubar" className={clsx(CLASSES.group, "hidden md:flex")}>
+            {siteLinks.map((link) => {
+              const className = clsx(CLASSES.siteLink, {
+                [CLASSES.active]:
+                  activePath === link.href || link.href.endsWith(activePath),
+              });
+              // Icons are the mobile-only affordance; desktop shows text only.
+              const children = (
+                <>
+                  <span className="hidden md:inline">{link.label}</span>
+                  <span className="md:hidden">{link.icon}</span>
+                </>
+              );
+              return link.plain ? (
+                <NextLink
+                  key={link.href}
+                  href={link.href}
+                  aria-label={link.label}
+                  role="menuitem"
+                  className={className}
+                >
+                  {children}
+                </NextLink>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-label={link.label}
+                  role="menuitem"
+                  className={className}
+                >
+                  {children}
+                </Link>
+              );
+            })}
+          </ul>
+
+          <div className={CLASSES.group}>
+            {/* Socials are docked in the BottomNav on mobile; the top bar
+                keeps them for desktop only. */}
+            {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
+                target="_blank"
                 aria-label={link.label}
-                role="menuitem"
-                className={className}
+                className={clsx(CLASSES.iconLink, "hidden md:flex")}
+                rel="noopener noreferrer"
               >
-                {children}
+                {link.icon}
               </Link>
-            );
-          })}
-        </ul>
-
-        <div className={CLASSES.group}>
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              target="_blank"
-              aria-label={link.label}
-              className={clsx(CLASSES.iconLink)}
-              rel="noopener noreferrer"
-            >
-              {link.icon}
-            </Link>
-          ))}
-          <div aria-hidden className={CLASSES.divider} />
-          {showLanguageSwitch && (
+            ))}
+            <div aria-hidden className={clsx(CLASSES.divider, "hidden md:block")} />
+            {showLanguageSwitch && (
+              <button
+                onClick={handleLanguageSwitch}
+                disabled={isPending}
+                aria-label={t("switchLanguage")}
+                className={clsx(
+                  CLASSES.siteLink,
+                  "hidden md:flex",
+                  isPending && "cursor-wait opacity-50"
+                )}
+              >
+                {tLanguage(switchTo)}
+              </button>
+            )}
             <button
-              onClick={handleLanguageSwitch}
-              disabled={isPending}
-              aria-label={t("switchLanguage")}
-              className={clsx(
-                CLASSES.siteLink,
-                isPending && "cursor-wait opacity-50"
-              )}
+              onClick={toggleTheme}
+              aria-label={
+                theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+              }
+              className={clsx(CLASSES.iconLink, "p-2")}
             >
-              <GlobeIcon className="h-4 w-4 md:hidden" />
-              <span className="hidden md:inline">{tLanguage(switchTo)}</span>
+              {theme === "dark" ? <SunIcon /> : <MoonIcon />}
             </button>
-          )}
-          <button
-            onClick={toggleTheme}
-            aria-label={
-              theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
-            }
-            className={clsx(CLASSES.iconLink, "p-2")}
-          >
-            {theme === "dark" ? <SunIcon /> : <MoonIcon />}
-          </button>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+      <BottomNav
+        links={siteLinks}
+        activePath={activePath}
+        socials={links.map((link) => ({ ...link, plain: true }))}
+      />
+    </>
   );
 };
 

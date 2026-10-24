@@ -1,33 +1,18 @@
 import clsx from "clsx";
+import Image from "next/image";
 import { ElementType, FC } from "react";
 
 type LogoProps = {
   /**
-   * Full name. The first word becomes the primary line; the remaining words
-   * are compressed to initials + surname ("Isaias Francisco Santos" renders
-   * "ISAIAS" over "F.SANTOS", matching the brand mark).
+   * Full name, used as the mark's alt text so the frame element (an h1 on
+   * the home hero) still carries the site name for assistive tech and SEO.
    */
   name: string;
-  /** Small line rendered beneath the frame. */
+  /** Small line rendered beneath the mark. */
   tagline?: string;
   /** Element used for the frame — h1 on the home hero, div elsewhere. */
   as?: ElementType;
   className?: string;
-};
-
-const compactSurname = (words: string[]) =>
-  words
-    .map((word, index) =>
-      index === words.length - 1 ? word : `${word.charAt(0)}.`,
-    )
-    .join("");
-
-const splitName = (name: string) => {
-  const [main, ...rest] = name.trim().split(/\s+/);
-  return {
-    main: main || name,
-    secondary: rest.length ? compactSurname(rest) : null,
-  };
 };
 
 const Logo: FC<LogoProps> = ({
@@ -36,28 +21,26 @@ const Logo: FC<LogoProps> = ({
   as: Frame = "div",
   className,
 }) => {
-  const { main, secondary } = splitName(name);
-
   return (
     <div
       className={clsx(
-        "flex w-full flex-col items-center text-white select-none",
+        "mt-3 flex w-full flex-col items-center text-white select-none",
         className,
       )}
     >
-      <Frame className="border border-white/70 px-5 py-3.5 text-center md:px-3 md:py-4">
-        {/* indent mirrors the tracking so both lines stay optically centered */}
-        <span className="block font-sans text-xl leading-none font-extrabold tracking-[0.3em] indent-[0.3em] uppercase md:text-2xl">
-          {main}
-        </span>
-        {secondary && (
-          <span className="mt-1 block font-sans text-[8px] leading-none font-light tracking-[0.5em] indent-[0.5em] uppercase md:mt-1">
-            {secondary}
-          </span>
-        )}
+      <Frame>
+        <Image
+          src="/images/i-santos-logo.png"
+          alt={name}
+          width={1279}
+          height={271}
+          priority
+          sizes="(min-width: 768px) 154px, 128px"
+          className="h-auto w-32 md:w-[154px]"
+        />
       </Frame>
       {tagline && (
-        <span className="mt-2 block font-mono text-[9px] tracking-[0.55em] indent-[0.55em] text-white/70 uppercase sticky top-2 ">
+        <span className="mt-2 block font-mono text-[9px] leading-none tracking-[0.55em] indent-[0.55em] text-white/70 uppercase">
           {tagline}
         </span>
       )}
