@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, within } from "@testing-library/react";
 import { screen } from "@testing-library/dom";
 import Banner from "./index";
 import { BannerProps } from "./types";
@@ -28,14 +28,14 @@ describe("Banner Component", () => {
     const heading = screen.getByRole("heading", { level: 1 });
     expect(heading).toBeInTheDocument();
     expect(heading.tagName).toBe("H1");
-    expect(heading).toHaveTextContent("Test");
-    expect(heading).toHaveTextContent("Name");
+    const mark = within(heading).getByRole("img");
+    expect(mark).toHaveAttribute("alt", "Test Name");
   });
 
   it("renders the sun poster fallback image", () => {
     render(<Banner {...mockProps} />);
 
-    const imageElement = screen.getByRole("img");
+    const imageElement = screen.getByAltText(/burning sphere of plasma/i);
     expect(imageElement).toHaveAttribute("src", "/images/sun-hero.jpg");
   });
 
@@ -92,7 +92,9 @@ describe("Banner Component", () => {
     render(<Banner {...mockProps} achievements={undefined} cv={undefined} />);
 
     const heading = screen.getByRole("heading", { level: 1 });
-    expect(heading).toHaveTextContent("Test");
+    expect(
+      within(heading).getByRole("img"),
+    ).toHaveAttribute("alt", "Test Name");
     expect(screen.queryByText("Download CV")).not.toBeInTheDocument();
   });
 });
