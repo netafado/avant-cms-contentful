@@ -7,10 +7,14 @@ import MainLayout from "@/app/mainLayout";
 
 interface PageContentProps {
   url?: string;
+  locale: string;
 }
 
-export default async function PageContent({ url = "/" }: PageContentProps) {
-  const page = await getPageData(url);
+export default async function PageContent({
+  url = "/",
+  locale,
+}: PageContentProps) {
+  const page = await getPageData(url, locale);
   if (!page) {
     throw new Error(`Landing page not found for url: ${url}`);
   }
