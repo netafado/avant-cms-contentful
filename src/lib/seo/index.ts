@@ -136,3 +136,38 @@ export function websiteJsonLd() {
     },
   };
 }
+
+type ProjectJsonLdInput = {
+  title: string;
+  slug: string;
+  summary: string;
+  client?: string;
+  categories: string[];
+  technologies: string[];
+};
+
+/** schema.org CreativeWork for a project case study at /projects/[slug]. */
+export function projectJsonLd(project: ProjectJsonLdInput) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    headline: project.title,
+    description: project.summary,
+    url: new URL(`/projects/${project.slug}`, SITE_URL).toString(),
+    author: {
+      "@type": "Person",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    keywords: [...project.categories, ...project.technologies].join(", "),
+    ...(project.client
+      ? {
+          sourceOrganization: {
+            "@type": "Organization",
+            name: project.client,
+          },
+        }
+      : {}),
+  };
+}

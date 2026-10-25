@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { client } from "@/lib/contentful";
 import { listPosts } from "@/lib/blog";
+import { listProjects } from "@/lib/projects";
 import { SITE_URL } from "@/lib/seo";
 
 export const revalidate = 3600;
@@ -27,6 +28,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(post.date),
       changeFrequency: "monthly",
       priority: 0.6,
+    });
+  }
+
+  for (const project of await listProjects()) {
+    entries.push({
+      url: `${SITE_URL}/projects/${project.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
     });
   }
 
