@@ -16,9 +16,9 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; url?: string[] }>;
 }): Promise<Metadata> {
-  const { url } = await params;
+  const { locale, url } = await params;
   const slug = slugFromUrl(url);
-  const page = await getPageData(slug);
+  const page = await getPageData(slug, locale);
   return buildMetadata(page?.seoFields, slug);
 }
 
@@ -27,12 +27,12 @@ export default async function Page({
 }: {
   params: Promise<{ locale: string; url?: string[] }>;
 }) {
-  const { url } = await params;
+  const { locale, url } = await params;
   const slug = slugFromUrl(url);
   return (
     <>
       {slug === "/" && <JsonLd data={[personJsonLd(), websiteJsonLd()]} />}
-      <PageContent url={slug} />
+      <PageContent url={slug} locale={locale} />
     </>
   );
 }

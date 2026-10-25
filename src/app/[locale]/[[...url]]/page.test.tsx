@@ -82,6 +82,14 @@ describe("[locale]/[[...url]] route", () => {
       expect(findElement(tree, PageContent)?.props.url).toBe("/");
       expect(findElement(tree, JsonLd)).toBeDefined();
     });
+
+    it("forwards the route locale so PageContent fetches localized CMS content", async () => {
+      const tree = await Page({
+        params: Promise.resolve({ locale: "pt-BR", url: ["resume"] }),
+      });
+
+      expect(findElement(tree, PageContent)?.props.locale).toBe("pt-BR");
+    });
   });
 
   describe("generateMetadata", () => {
@@ -90,8 +98,16 @@ describe("[locale]/[[...url]] route", () => {
         params: Promise.resolve({ locale: "en", url: ["resume"] }),
       });
 
-      expect(mockGetPageData).toHaveBeenCalledWith("resume");
+      expect(mockGetPageData).toHaveBeenCalledWith("resume", "en");
       expect(metadata.alternates?.canonical).toMatch(/\/resume$/);
+    });
+
+    it("looks up SEO fields in the route locale", async () => {
+      await generateMetadata({
+        params: Promise.resolve({ locale: "pt-BR", url: undefined }),
+      });
+
+      expect(mockGetPageData).toHaveBeenCalledWith("/", "pt-BR");
     });
   });
 });
