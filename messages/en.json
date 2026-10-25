@@ -5,6 +5,7 @@
   },
   "Navigation": {
     "home": "Home",
+    "projects": "Projects",
     "blog": "Blog",
     "resume": "Resume",
     "switchLanguage": "Switch language"
@@ -23,6 +24,14 @@
     "defaultImageAlt": "Default image",
     "defaultCvFileName": "default-cv.pdf",
     "cardsPlaceholder": "ComponentsCards Placeholder"
+  },
+  "Projects": {
+    "viewProject": "View project",
+    "backToProjects": "Projects",
+    "categories": "Categories",
+    "technologies": "Technologies",
+    "role": "Role",
+    "period": "Period"
   },
   "Language": {
     "en": "EN",

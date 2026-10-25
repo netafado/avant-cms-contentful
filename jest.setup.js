@@ -88,9 +88,9 @@ jest.mock('next-intl/server', () => {
     }
 })
 
-// Mock the i18n routing module
+// Mock the i18n routing module. next-intl/navigation is ESM-only, so the
+// real module can't be required here; getPathname is stubbed instead.
 jest.mock('@/i18n/routing', () => {
-    const actual = jest.requireActual('next-intl/navigation')
     return {
         __esModule: true,
         Link: ({ children, href, ...rest }) => (
@@ -108,7 +108,7 @@ jest.mock('@/i18n/routing', () => {
         }),
         usePathname: () => '/',
         redirect: jest.fn(),
-        getPathname: actual.getPathname,
+        getPathname: ({ href }) => (typeof href === 'string' ? href : href?.pathname ?? '/'),
         routing: {
             locales: ['en', 'pt-BR'],
             defaultLocale: 'en',

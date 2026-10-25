@@ -8,11 +8,15 @@ import { getTranslations } from "next-intl/server";
 
 const SectionNoTitle: FC<SectionProps> = async ({ components }) => {
   const t = await getTranslations("Components");
+  const tProjects = await getTranslations("Projects");
   const translations: Translations = {
     defaultName: t("defaultName"),
     defaultText: t("defaultText"),
     defaultImageAlt: t("defaultImageAlt"),
     defaultCvFileName: t("defaultCvFileName"),
+    viewProject: tProjects("viewProject"),
+    categories: tProjects("categories"),
+    technologies: tProjects("technologies"),
   };
 
   return (

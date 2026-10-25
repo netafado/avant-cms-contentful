@@ -12,11 +12,14 @@ import Card from "@/components/Card";
 import type { CardProps } from "@/components/Card/types";
 import transformToComponentProps from "@/utils/transformToComponentProps";
 import ComponentTags from "@/components/CardWithTagList";
+import ProjectCard from "@/components/ProjectCard";
+import { toProjectSummary } from "@/lib/projects";
 
 import {
   isComponentBanner,
   isComponentCards,
   isComponentCard,
+  isComponentProjectList,
   isComponentTagList,
   isSingleAchievement,
 } from "@/utils/componentsGuard";
@@ -32,6 +35,9 @@ type Translations = {
   defaultText: string;
   defaultImageAlt: string;
   defaultCvFileName: string;
+  viewProject: string;
+  categories: string;
+  technologies: string;
 };
 
 const buildBanner = (
@@ -121,6 +127,29 @@ const ComponentsHandler = {
   ComponentsCards: (component: SectionComponentsItem) => {
     const hasCards = isComponentCards(component);
     return hasCards ? <div>ComponentsCards Placeholder</div> : null;
+  },
+  // Returned as a bare Fragment so each card becomes a direct child of the
+  // section grid and the CMS `grid` field keeps control of the column count.
+  ComponentProjectList: (component: SectionComponentsItem, t: Translations) => {
+    if (!isComponentProjectList(component)) {
+      return null;
+    }
+    const projects = (component.projectsCollection?.items ?? [])
+      .filter((item): item is NonNullable<typeof item> => item !== null)
+      .map(toProjectSummary)
+      .filter((project) => project.slug);
+    const labels = {
+      viewProject: t.viewProject,
+      categories: t.categories,
+      technologies: t.technologies,
+    };
+    return (
+      <>
+        {projects.map((project) => (
+          <ProjectCard key={project.slug} project={project} labels={labels} />
+        ))}
+      </>
+    );
   },
 };
 
