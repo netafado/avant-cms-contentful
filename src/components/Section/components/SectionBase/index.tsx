@@ -32,9 +32,9 @@ const SectionBase: FC<SectionProps> = async ({
   const textAlignmentClass = TEXT_ALIGN[textAlign || "center"];
 
   return (
-    <section className={`mt-16 px-4 md:mt-24 ${textAlignmentClass}`}>
-      <div className="max-w-5xl mx-auto">
-        <h2 className="mb-4 border-b border-black/10 pb-4 font-display text-3xl font-normal text-gray-900 dark:border-white/15 dark:text-white md:text-4xl">
+    <section className={`mt-16 px-6 md:mt-24 md:px-12 ${textAlignmentClass}`}>
+      <div className="mx-auto max-w-[1360px]">
+        <h2 className="mb-6 border-b border-black/10 pb-6 font-display text-3xl font-normal tracking-tight text-gray-900 dark:border-hairline dark:text-bright md:text-4xl">
           {title}
         </h2>
         {description && <EditorView markdown={description} />}
@@ -44,7 +44,7 @@ const SectionBase: FC<SectionProps> = async ({
       <div className="mt-8">
         <div
           className={clsx(
-            "mt-6 grid gap-6 text-left  mx-auto px-4",
+            "mt-6 grid gap-6 text-left mx-auto",
             GRID[(grid as keyof typeof GRID) || "1"],
           )}
         >

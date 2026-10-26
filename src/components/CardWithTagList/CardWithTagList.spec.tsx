@@ -23,7 +23,7 @@ describe("CardWithTagList", () => {
     render(<CardWithTagList {...defaultProps} color="gray" />);
     const tagElement = screen.getByText("React");
     screen.debug();
-    expect(tagElement).toHaveClass("bg-gray-500/30 text-gray-500");
+    expect(tagElement).toHaveClass("bg-transparent", "text-gray-600");
   });
 
   it("should handles empty list gracefully", () => {
@@ -35,6 +35,6 @@ describe("CardWithTagList", () => {
   it("should uses default color when an invalid color is provided", () => {
     render(<CardWithTagList {...defaultProps} color="invalid-color" />);
     const tagElement = screen.getByText("React");
-    expect(tagElement).toHaveClass("bg-gray-500/30 text-gray-500");
+    expect(tagElement).toHaveClass("bg-transparent", "text-gray-600");
   });
 });

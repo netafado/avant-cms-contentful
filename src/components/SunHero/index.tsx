@@ -240,7 +240,7 @@ const SunHero: FC<SunHeroProps> = ({ masthead, poster, children }) => {
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
       aria-label="Animated sun hero"
-      className="relative flex h-svh min-h-[640px] w-full items-center justify-center bg-black isolation-auto"
+      className="relative flex h-svh min-h-[640px] w-full items-center justify-center bg-ground isolation-auto"
     >
       {poster && (
         <Image

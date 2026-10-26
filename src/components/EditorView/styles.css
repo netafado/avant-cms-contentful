@@ -5,6 +5,6 @@
 }
 
 .dark .wmde-markdown-custom {
-  --color-fg-default: var(--color-gray-400);
-  color: var(--color-gray-400);
+  --color-fg-default: var(--dp-color-read);
+  color: var(--dp-color-read);
 }

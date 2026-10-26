@@ -3,11 +3,47 @@
 @custom-variant dark (&:where(.dark, .dark *));
 @plugin "@tailwindcss/typography";
 
+/* Modern Dark design tokens — the authoritative palette for the dark theme.
+   Static values on purpose: the white lighting is static, only control colors
+   transition. Aliased into Tailwind utilities via @theme inline below. */
+:root {
+  --dp-color-ground: #050505;
+  --dp-color-panel: #0e0e0e;
+  --dp-color-hairline: #222222;
+  --dp-color-hairline-2: #303030;
+  --dp-color-bright: #f2f2f2;
+  --dp-color-read: #a6a9ad;
+  --dp-color-meta: #8a8d91;
+  --dp-color-live: #3fd6c6;
+  --dp-color-inverse-ink: #0a0a0a;
+  --dp-color-dim: #96999d;
+  --dp-radius-panel: 6px;
+  --dp-spacing-gutter: 48px;
+  --dp-spacing-gap: 24px;
+  --dp-spacing-max: 1360px;
+}
 
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-display: "Didot", "Bodoni MT", "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-display: var(--font-geist-sans);
+  --color-ground: var(--dp-color-ground);
+  --color-panel: var(--dp-color-panel);
+  --color-hairline: var(--dp-color-hairline);
+  --color-hairline-2: var(--dp-color-hairline-2);
+  --color-bright: var(--dp-color-bright);
+  --color-read: var(--dp-color-read);
+  --color-meta: var(--dp-color-meta);
+  --color-dim: var(--dp-color-dim);
+  --color-live: var(--dp-color-live);
+  --color-inverse-ink: var(--dp-color-inverse-ink);
+  --radius-panel: var(--dp-radius-panel);
+
+  /* Motion tokens: control color changes are brief (120ms, ease-out). The
+     hero canvas/poster fades override with their own duration-1000. */
+  --default-transition-duration: 120ms;
+  --default-transition-timing-function: ease-out;
+
   --color-canvas-default: #ef4444;
   --color-error-50: #fef2f2;
   --color-error-100: #fee2e2;
@@ -124,8 +160,28 @@ p {
 
 .dark {
   p {
-    color: var(--color-gray-400);
+    color: var(--dp-color-read);
   }
+}
+
+/* Focus stays a visible offset outline in both themes. */
+:focus-visible {
+  outline: 2px solid var(--dp-color-bright);
+  outline-offset: 3px;
+}
+
+html:not(.dark) :focus-visible {
+  outline-color: var(--color-black-500);
+}
+
+::selection {
+  background: var(--dp-color-bright);
+  color: var(--dp-color-inverse-ink);
+}
+
+html:not(.dark) ::selection {
+  background: var(--color-black-500);
+  color: #ffffff;
 }
 
 @media (prefers-reduced-motion: reduce) {

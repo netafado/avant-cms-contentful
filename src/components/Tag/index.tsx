@@ -8,7 +8,7 @@ const Tag = ({ text, color, size = "small", className }: TagProps) => {
   return (
     <span
       className={classNames(
-        "inline-block px-3 py-1 rounded-full font-semibold mr-1 mb-1",
+        "inline-block rounded-full border border-black/20 px-3 py-1 font-mono uppercase mr-1 mb-1",
         SIZE[size],
         isValid ? colorClasses[color] : colorClasses.gray,
         className

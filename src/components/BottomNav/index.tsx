@@ -48,22 +48,28 @@ const BottomNav = ({ links, socials, activePath }: BottomNavProps) => {
     >
       <nav
         aria-label="Primary navigation"
-        className="flex items-center gap-0.5 rounded-full border border-white/10 bg-black/70 p-1.5 shadow-lg shadow-black/40 backdrop-blur-md"
+        className="flex items-center gap-0.5 rounded-full border border-hairline bg-panel/90 p-1.5 shadow-lg shadow-black/40 backdrop-blur-md"
       >
         {links.map((link) => {
           const active =
             activePath === link.href || link.href.endsWith(activePath);
           const className = clsx(
-            "flex items-center rounded-full transition-colors duration-300",
+            "flex items-center rounded-full transition-colors",
             active
-              ? "gap-2 bg-white/15 px-4 py-2.5 text-white"
+              ? "gap-2 bg-white/10 px-4 py-2.5 text-bright"
               : "p-2.5 text-white/60 hover:text-white",
           );
           const children = (
             <>
+              {active && (
+                <span
+                  aria-hidden
+                  className="size-1.5 rounded-full bg-live"
+                />
+              )}
               {link.icon}
               {active && (
-                <span className="font-sans text-[11px] tracking-[0.14em] uppercase">
+                <span className="font-mono text-[11px] tracking-[0.14em] uppercase">
                   {link.label}
                 </span>
               )}
@@ -93,7 +99,7 @@ const BottomNav = ({ links, socials, activePath }: BottomNavProps) => {
         })}
         {socials && socials.length > 0 && (
           <>
-            <div aria-hidden className="mx-1 h-4 w-px bg-white/25" />
+            <div aria-hidden className="mx-1 h-4 w-px bg-hairline-2" />
             {socials.map((link) => (
               <NextLink
                 key={link.href}
@@ -101,7 +107,7 @@ const BottomNav = ({ links, socials, activePath }: BottomNavProps) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={link.label}
-                className="p-2.5 text-white/60 transition-colors duration-300 hover:text-white"
+                className="p-2.5 text-white/60 transition-colors hover:text-white"
               >
                 {link.icon}
               </NextLink>

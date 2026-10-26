@@ -91,7 +91,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className="dark">
       <body
-        className={`bg-white dark:bg-black ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`bg-white text-gray-900 antialiased dark:bg-ground dark:text-bright ${geistSans.variable} ${geistMono.variable}`}
       >
         <WebMcpBridge />
         <NextIntlClientProvider messages={messages}>

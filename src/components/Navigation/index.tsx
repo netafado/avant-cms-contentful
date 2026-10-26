@@ -41,14 +41,14 @@ const CLASSES = {
   // difference blend keeps the white type legible over both the black hero
   // and light sections without any bar background.
   wrapper: "fixed inset-x-0 top-0 z-50 text-white mix-blend-difference",
-  bar: "mx-auto flex h-16 w-full items-center justify-between gap-4 px-6 md:h-20 md:px-10",
+  bar: "mx-auto flex h-16 w-full items-center justify-between gap-4 px-6 md:h-20 md:px-12",
   group: "flex items-center gap-0.5 md:gap-1",
   siteLink:
-    "relative flex items-center gap-2 p-2 text-[11px] tracking-[0.22em] text-white/60 uppercase transition-colors duration-300 hover:text-white",
+    "relative flex items-center gap-2 p-2 font-mono text-[11px] tracking-[0.22em] text-white/60 uppercase transition-colors hover:text-white",
   active:
     "text-white after:absolute after:inset-x-2 after:bottom-0.5 after:h-px after:bg-white after:content-['']",
   iconLink:
-    "flex items-center p-2 text-white/60 transition-colors duration-300 hover:text-white",
+    "flex items-center p-2 text-white/60 transition-colors hover:text-white",
   divider: "mx-2 h-4 w-px bg-white/25",
 };
 

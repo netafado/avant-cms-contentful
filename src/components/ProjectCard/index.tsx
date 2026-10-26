@@ -24,27 +24,27 @@ const ProjectCard = ({ project, labels }: ProjectCardProps) => {
   return (
     <Link
       href={`/projects/${slug}`}
-      className="group flex h-full flex-col border border-black/15 px-6 py-6 transition-colors duration-300 hover:border-black/40 dark:border-white/15 dark:hover:border-white/40"
+      className="group flex h-full flex-col rounded-panel border border-black/15 px-6 py-6 transition-colors hover:border-black/40 dark:border-hairline dark:bg-panel dark:hover:border-hairline-2"
     >
       {client && (
-        <p className="text-[11px] tracking-[0.2em] text-gray-500 uppercase dark:text-gray-400">
+        <p className="font-mono text-[11px] tracking-[0.2em] text-gray-500 uppercase dark:text-meta">
           {client}
         </p>
       )}
-      <h3 className="mt-2 font-display text-xl font-normal text-gray-900 dark:text-gray-100">
+      <h3 className="mt-2 font-display text-xl font-normal tracking-tight text-gray-900 dark:text-bright">
         {title}
       </h3>
       {period && (
-        <p className="mt-1 font-mono text-[10px] tracking-[0.15em] text-gray-400 uppercase dark:text-gray-500">
+        <p className="mt-1 font-mono text-[10px] tracking-[0.15em] text-gray-400 uppercase dark:text-dim">
           {period}
         </p>
       )}
       {highlight && (
-        <p className="mt-3 text-sm font-medium text-gray-900 dark:text-gray-100">
+        <p className="mt-3 text-sm font-medium text-gray-900 dark:text-bright">
           {highlight}
         </p>
       )}
-      <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">{summary}</p>
+      <p className="mt-2 text-sm text-gray-700 dark:text-read">{summary}</p>
       {categories.length > 0 && (
         <ul className="mt-4 flex flex-wrap" aria-label={labels.categories}>
           {categories.map((category, idx) => (
@@ -59,19 +59,19 @@ const ProjectCard = ({ project, labels }: ProjectCardProps) => {
           {visibleTechnologies.map((technology, idx) => (
             <li
               key={`technology_${idx}_${technology}`}
-              className="border border-black/20 px-2 py-0.5 text-[10px] tracking-[0.15em] text-gray-600 uppercase dark:border-white/20 dark:text-gray-300"
+              className="rounded-full border border-black/20 px-2 py-0.5 font-mono text-[10px] tracking-[0.15em] text-gray-600 uppercase dark:border-hairline-2 dark:text-dim"
             >
               {technology}
             </li>
           ))}
           {hiddenCount > 0 && (
-            <li className="px-2 py-0.5 text-[10px] tracking-[0.15em] text-gray-400 uppercase dark:text-gray-500">
+            <li className="px-2 py-0.5 font-mono text-[10px] tracking-[0.15em] text-gray-400 uppercase dark:text-dim">
               +{hiddenCount}
             </li>
           )}
         </ul>
       )}
-      <span className="mt-auto pt-5 font-mono text-[10px] tracking-[0.3em] text-gray-500 uppercase transition-colors duration-300 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white">
+      <span className="mt-auto pt-5 font-mono text-[10px] tracking-[0.3em] text-gray-500 uppercase transition-colors group-hover:text-gray-900 dark:text-meta dark:group-hover:text-bright">
         {labels.viewProject} →
       </span>
     </Link>
