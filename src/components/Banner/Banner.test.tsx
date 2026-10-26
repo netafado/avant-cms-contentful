@@ -42,25 +42,25 @@ describe("Banner Component", () => {
   it("renders the role tagline", () => {
     render(<Banner {...mockProps} />);
 
-    expect(screen.getByText("Software Engineer")).toBeInTheDocument();
+    expect(screen.getByText("Solution Architect")).toBeInTheDocument();
   });
 
-  it("renders the hero transformation message with the orbiting tagline", () => {
+  it("renders the hero headline with the orbiting tagline", () => {
     render(<Banner {...mockProps} />);
 
-    const transformation = screen.getByRole("heading", { level: 2 });
-    expect(transformation).toHaveTextContent("AI");
-    expect(transformation).not.toHaveTextContent("Human native");
-    expect(screen.getByText("transformation")).toHaveClass(
+    const headline = screen.getByRole("heading", { level: 2 });
+    expect(headline).toHaveTextContent("Solution");
+    expect(headline).not.toHaveTextContent("Human native");
+    expect(screen.getByText("architect")).toHaveClass(
       "uppercase",
       "font-mono",
     );
 
     const orbit = screen.getByRole("img", {
-      name: "System design - AI engineer - LLMs integration - AI for humans",
+      name: "Solution Architect | Distributed Systems & AI-Enabled Platforms",
     });
     expect(orbit).toBeInTheDocument();
-    expect(orbit).toHaveTextContent("LLMs integration");
+    expect(orbit).toHaveTextContent("Distributed Systems");
   });
 
   it("renders all achievements", () => {

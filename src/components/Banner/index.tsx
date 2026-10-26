@@ -8,7 +8,7 @@ import SunHero from "../SunHero";
 import { BannerProps } from "./types";
 
 const ORBIT_TAGLINE =
-  "System design - AI engineer - LLMs integration - AI for humans";
+  "Solution Architect | Distributed Systems & AI-Enabled Platforms";
 
 const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
   const t = useTranslations("Banner");
@@ -23,17 +23,17 @@ const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
         }}
       >
         <div
-          aria-label="AI transformation"
+          aria-label="Solution architect"
           className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center text-white"
         >
           <div className="flex flex-col items-center [text-shadow:0_1px_12px_rgba(0,0,0,0.9),0_0_40px_rgba(0,0,0,0.6)]">
             <h2 className="font-mono text-bold uppercase whitespace-nowrap sm:tracking-[0.4em] md:tracking-[0.45em]">
               <span className="rounded-panel bg-white px-2 pl-3 text-center text-black">
-                AI
+                Solution
               </span>
             </h2>
             <span className="text-light uppercase font-mono text-[clamp(1.75rem,3vw,2.5rem)] leading-[0.85] tracking-[-0.04em] whitespace-nowrap">
-              transformation
+              architect
             </span>
           </div>
           <div

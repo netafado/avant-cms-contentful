@@ -17,7 +17,7 @@ type LogoProps = {
 
 const Logo: FC<LogoProps> = ({
   name,
-  tagline = "Software Engineer",
+  tagline = "Solution Architect",
   as: Frame = "div",
   className,
 }) => {

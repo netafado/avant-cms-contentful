@@ -1,11 +1,13 @@
 # Isaias Santos
 
-> Full Stack Developer specializing in Next.js, TypeScript, and Contentful headless CMS.
+> Solution Architect specializing in distributed systems and AI-enabled platforms — Next.js, TypeScript, and Contentful headless CMS.
 
-Isaias Santos is a full stack developer who designs and builds content-driven
-web applications. His work focuses on the JavaScript ecosystem: Next.js and
-React on the frontend, Node.js services on the backend, GraphQL APIs, and
-headless CMS architectures with Contentful, deployed to AWS. This site is his
+Isaias Santos is a Solution Architect who designs and builds distributed
+systems and AI-enabled platforms for commerce, ERP, and customer-facing
+products. His work spans solution and system design, event-driven
+architectures on AWS, and hands-on delivery across the JavaScript ecosystem:
+Next.js and React on the frontend, Node.js services on the backend, GraphQL
+APIs, and headless CMS architectures with Contentful. This site is his
 portfolio and a living example of that stack: a Next.js App Router application
 whose pages, sections, and components are fully managed in Contentful.
 
@@ -15,6 +17,7 @@ whose pages, sections, and components are fully managed in Contentful.
 
 ## Skills
 
+- Solution architecture, distributed systems, event-driven design
 - Next.js / React / TypeScript
 - Contentful headless CMS and content modeling
 - GraphQL API design and integration

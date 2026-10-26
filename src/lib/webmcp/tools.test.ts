@@ -51,7 +51,9 @@ describe("get_profile", () => {
 
     const profile = JSON.parse(resultText(result));
     expect(profile.name).toBe("Isaias Santos");
-    expect(profile.jobTitle).toBe("Full Stack Developer");
+    expect(profile.jobTitle).toBe(
+      "Solution Architect | Distributed Systems & AI-Enabled Platforms"
+    );
     expect(Array.isArray(profile.skills)).toBe(true);
     expect(profile.skills).toContain("Next.js");
     expect(profile.socialLinks.github).toBe("https://github.com/netafado");

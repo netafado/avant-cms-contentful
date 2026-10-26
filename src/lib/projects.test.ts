@@ -27,7 +27,7 @@ function cmsEntry(overrides: Partial<ProjectFieldsFragment> = {}) {
     slug: "bold-checkout",
     client: "Bold Commerce",
     role: "Full-Stack Engineer",
-    period: "Apr 2025 – Sep 2025",
+    period: "May 2025 – Sep 2025",
     highlight: "API-first checkout integration",
     summary: "A summary.",
     categories: ["E-commerce", null, "Payments"],

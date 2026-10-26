@@ -54,7 +54,7 @@ const project = {
   slug: "bold-checkout",
   client: "Bold Commerce",
   role: "Full-Stack Engineer",
-  period: "Apr 2025 – Sep 2025",
+  period: "May 2025 – Sep 2025",
   highlight: "API-first checkout integration",
   summary: "Designed the integration.",
   categories: ["E-commerce", "Payments"],
@@ -87,7 +87,7 @@ describe("[locale]/projects/[slug] route", () => {
       ).toBeInTheDocument();
       expect(screen.getByText("Designed the integration.")).toBeInTheDocument();
       expect(screen.getByText("Full-Stack Engineer")).toBeInTheDocument();
-      expect(screen.getByText("Apr 2025 – Sep 2025")).toBeInTheDocument();
+      expect(screen.getByText("May 2025 – Sep 2025")).toBeInTheDocument();
       expect(screen.getByText("Payments")).toBeInTheDocument();
       expect(screen.getByText("Node.js")).toBeInTheDocument();
       expect(firstProps<{ markdown: string }>(EditorView).markdown).toBe(
