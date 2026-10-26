@@ -983,6 +983,251 @@ export enum ComponentCardOrder {
   TitleDesc = 'title_DESC'
 }
 
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/componentProjectList) */
+export type ComponentProjectList = Entry & _Node & {
+  __typename?: 'ComponentProjectList';
+  _id: Scalars['ID']['output'];
+  contentfulMetadata: ContentfulMetadata;
+  internalName?: Maybe<Scalars['String']['output']>;
+  linkedFrom?: Maybe<ComponentProjectListLinkingCollections>;
+  projectsCollection?: Maybe<ComponentProjectListProjectsCollection>;
+  projectsCursorCollection?: Maybe<ComponentProjectListProjectsCursorCollection>;
+  sys: Sys;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/componentProjectList) */
+export type ComponentProjectListInternalNameArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/componentProjectList) */
+export type ComponentProjectListLinkedFromArgs = {
+  allowedLocales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/componentProjectList) */
+export type ComponentProjectListProjectsCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Array<InputMaybe<ComponentProjectListProjectsCollectionOrder>>>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<ProjectFilter>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/componentProjectList) */
+export type ComponentProjectListProjectsCursorCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Array<InputMaybe<ComponentProjectListProjectsCursorCollectionOrder>>>;
+  pageNext?: InputMaybe<Scalars['String']['input']>;
+  pagePrev?: InputMaybe<Scalars['String']['input']>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<ProjectFilter>;
+};
+
+export type ComponentProjectListCollection = {
+  __typename?: 'ComponentProjectListCollection';
+  items: Array<Maybe<ComponentProjectList>>;
+  limit: Scalars['Int']['output'];
+  skip: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
+};
+
+export type ComponentProjectListCursorCollection = {
+  __typename?: 'ComponentProjectListCursorCollection';
+  items: Array<Maybe<ComponentProjectList>>;
+  limit: Scalars['Int']['output'];
+  pages: CursorPages;
+};
+
+export type ComponentProjectListFilter = {
+  AND?: InputMaybe<Array<InputMaybe<ComponentProjectListFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<ComponentProjectListFilter>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  internalName?: InputMaybe<Scalars['String']['input']>;
+  internalName_contains?: InputMaybe<Scalars['String']['input']>;
+  internalName_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  internalName_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  internalName_not?: InputMaybe<Scalars['String']['input']>;
+  internalName_not_contains?: InputMaybe<Scalars['String']['input']>;
+  internalName_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  projects?: InputMaybe<CfProjectNestedFilter>;
+  projectsCollection_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  sys?: InputMaybe<SysFilter>;
+};
+
+export type ComponentProjectListLinkingCollections = {
+  __typename?: 'ComponentProjectListLinkingCollections';
+  entryCollection?: Maybe<EntryCollection>;
+  entryCursorCollection?: Maybe<EntryCursorCollection>;
+  sectionCollection?: Maybe<SectionCollection>;
+  sectionCursorCollection?: Maybe<SectionCursorCollection>;
+};
+
+
+export type ComponentProjectListLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type ComponentProjectListLinkingCollectionsEntryCursorCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  pageNext?: InputMaybe<Scalars['String']['input']>;
+  pagePrev?: InputMaybe<Scalars['String']['input']>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type ComponentProjectListLinkingCollectionsSectionCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Array<InputMaybe<ComponentProjectListLinkingCollectionsSectionCollectionOrder>>>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type ComponentProjectListLinkingCollectionsSectionCursorCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Array<InputMaybe<ComponentProjectListLinkingCollectionsSectionCursorCollectionOrder>>>;
+  pageNext?: InputMaybe<Scalars['String']['input']>;
+  pagePrev?: InputMaybe<Scalars['String']['input']>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export enum ComponentProjectListLinkingCollectionsSectionCollectionOrder {
+  GridAsc = 'grid_ASC',
+  GridDesc = 'grid_DESC',
+  LayoutTypeAsc = 'layoutType_ASC',
+  LayoutTypeDesc = 'layoutType_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
+  TextAlignAsc = 'textAlign_ASC',
+  TextAlignDesc = 'textAlign_DESC',
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC'
+}
+
+export enum ComponentProjectListLinkingCollectionsSectionCursorCollectionOrder {
+  GridAsc = 'grid_ASC',
+  GridDesc = 'grid_DESC',
+  LayoutTypeAsc = 'layoutType_ASC',
+  LayoutTypeDesc = 'layoutType_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
+  TextAlignAsc = 'textAlign_ASC',
+  TextAlignDesc = 'textAlign_DESC',
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC'
+}
+
+export enum ComponentProjectListOrder {
+  InternalNameAsc = 'internalName_ASC',
+  InternalNameDesc = 'internalName_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
+}
+
+export type ComponentProjectListProjectsCollection = {
+  __typename?: 'ComponentProjectListProjectsCollection';
+  items: Array<Maybe<Project>>;
+  limit: Scalars['Int']['output'];
+  skip: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
+};
+
+export enum ComponentProjectListProjectsCollectionOrder {
+  ClientAsc = 'client_ASC',
+  ClientDesc = 'client_DESC',
+  HighlightAsc = 'highlight_ASC',
+  HighlightDesc = 'highlight_DESC',
+  OrderAsc = 'order_ASC',
+  OrderDesc = 'order_DESC',
+  PeriodAsc = 'period_ASC',
+  PeriodDesc = 'period_DESC',
+  RoleAsc = 'role_ASC',
+  RoleDesc = 'role_DESC',
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC'
+}
+
+export type ComponentProjectListProjectsCursorCollection = {
+  __typename?: 'ComponentProjectListProjectsCursorCollection';
+  items: Array<Maybe<Project>>;
+  limit: Scalars['Int']['output'];
+  pages: CursorPages;
+};
+
+export enum ComponentProjectListProjectsCursorCollectionOrder {
+  ClientAsc = 'client_ASC',
+  ClientDesc = 'client_DESC',
+  HighlightAsc = 'highlight_ASC',
+  HighlightDesc = 'highlight_DESC',
+  OrderAsc = 'order_ASC',
+  OrderDesc = 'order_DESC',
+  PeriodAsc = 'period_ASC',
+  PeriodDesc = 'period_DESC',
+  RoleAsc = 'role_ASC',
+  RoleDesc = 'role_DESC',
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC'
+}
+
 /** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/componentSeo) */
 export type ComponentSeo = Entry & _Node & {
   __typename?: 'ComponentSeo';
@@ -1136,6 +1381,8 @@ export type ComponentSeoLinkingCollections = {
   pageLandingCursorCollection?: Maybe<PageLandingCursorCollection>;
   pageProductCollection?: Maybe<PageProductCollection>;
   pageProductCursorCollection?: Maybe<PageProductCursorCollection>;
+  projectCollection?: Maybe<ProjectCollection>;
+  projectCursorCollection?: Maybe<ProjectCursorCollection>;
 };
 
 
@@ -1214,6 +1461,27 @@ export type ComponentSeoLinkingCollectionsPageProductCursorCollectionArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   locale?: InputMaybe<Scalars['String']['input']>;
   order?: InputMaybe<Array<InputMaybe<ComponentSeoLinkingCollectionsPageProductCursorCollectionOrder>>>;
+  pageNext?: InputMaybe<Scalars['String']['input']>;
+  pagePrev?: InputMaybe<Scalars['String']['input']>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type ComponentSeoLinkingCollectionsProjectCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Array<InputMaybe<ComponentSeoLinkingCollectionsProjectCollectionOrder>>>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type ComponentSeoLinkingCollectionsProjectCursorCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Array<InputMaybe<ComponentSeoLinkingCollectionsProjectCursorCollectionOrder>>>;
   pageNext?: InputMaybe<Scalars['String']['input']>;
   pagePrev?: InputMaybe<Scalars['String']['input']>;
   preview?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1336,6 +1604,56 @@ export enum ComponentSeoLinkingCollectionsPageProductCursorCollectionOrder {
   SysPublishedAtDesc = 'sys_publishedAt_DESC',
   SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
+}
+
+export enum ComponentSeoLinkingCollectionsProjectCollectionOrder {
+  ClientAsc = 'client_ASC',
+  ClientDesc = 'client_DESC',
+  HighlightAsc = 'highlight_ASC',
+  HighlightDesc = 'highlight_DESC',
+  OrderAsc = 'order_ASC',
+  OrderDesc = 'order_DESC',
+  PeriodAsc = 'period_ASC',
+  PeriodDesc = 'period_DESC',
+  RoleAsc = 'role_ASC',
+  RoleDesc = 'role_DESC',
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC'
+}
+
+export enum ComponentSeoLinkingCollectionsProjectCursorCollectionOrder {
+  ClientAsc = 'client_ASC',
+  ClientDesc = 'client_DESC',
+  HighlightAsc = 'highlight_ASC',
+  HighlightDesc = 'highlight_DESC',
+  OrderAsc = 'order_ASC',
+  OrderDesc = 'order_DESC',
+  PeriodAsc = 'period_ASC',
+  PeriodDesc = 'period_DESC',
+  RoleAsc = 'role_ASC',
+  RoleDesc = 'role_DESC',
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC'
 }
 
 export enum ComponentSeoOrder {
@@ -2379,6 +2697,315 @@ export enum PageProductOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/project) */
+export type Project = Entry & _Node & {
+  __typename?: 'Project';
+  _id: Scalars['ID']['output'];
+  body?: Maybe<Scalars['String']['output']>;
+  categories?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  client?: Maybe<Scalars['String']['output']>;
+  contentfulMetadata: ContentfulMetadata;
+  highlight?: Maybe<Scalars['String']['output']>;
+  linkedFrom?: Maybe<ProjectLinkingCollections>;
+  order?: Maybe<Scalars['Int']['output']>;
+  period?: Maybe<Scalars['String']['output']>;
+  role?: Maybe<Scalars['String']['output']>;
+  seoFields?: Maybe<ComponentSeo>;
+  slug?: Maybe<Scalars['String']['output']>;
+  summary?: Maybe<Scalars['String']['output']>;
+  sys: Sys;
+  technologies?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/project) */
+export type ProjectBodyArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/project) */
+export type ProjectCategoriesArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/project) */
+export type ProjectClientArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/project) */
+export type ProjectHighlightArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/project) */
+export type ProjectLinkedFromArgs = {
+  allowedLocales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/project) */
+export type ProjectOrderArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/project) */
+export type ProjectPeriodArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/project) */
+export type ProjectRoleArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/project) */
+export type ProjectSeoFieldsArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<ComponentSeoFilter>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/project) */
+export type ProjectSlugArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/project) */
+export type ProjectSummaryArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/project) */
+export type ProjectTechnologiesArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/project) */
+export type ProjectTitleArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type ProjectCollection = {
+  __typename?: 'ProjectCollection';
+  items: Array<Maybe<Project>>;
+  limit: Scalars['Int']['output'];
+  skip: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
+};
+
+export type ProjectCursorCollection = {
+  __typename?: 'ProjectCursorCollection';
+  items: Array<Maybe<Project>>;
+  limit: Scalars['Int']['output'];
+  pages: CursorPages;
+};
+
+export type ProjectFilter = {
+  AND?: InputMaybe<Array<InputMaybe<ProjectFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<ProjectFilter>>>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  body_contains?: InputMaybe<Scalars['String']['input']>;
+  body_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  body_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  body_not?: InputMaybe<Scalars['String']['input']>;
+  body_not_contains?: InputMaybe<Scalars['String']['input']>;
+  body_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  categories_contains_all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  categories_contains_none?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  categories_contains_some?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  categories_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  client?: InputMaybe<Scalars['String']['input']>;
+  client_contains?: InputMaybe<Scalars['String']['input']>;
+  client_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  client_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  client_not?: InputMaybe<Scalars['String']['input']>;
+  client_not_contains?: InputMaybe<Scalars['String']['input']>;
+  client_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  highlight?: InputMaybe<Scalars['String']['input']>;
+  highlight_contains?: InputMaybe<Scalars['String']['input']>;
+  highlight_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  highlight_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  highlight_not?: InputMaybe<Scalars['String']['input']>;
+  highlight_not_contains?: InputMaybe<Scalars['String']['input']>;
+  highlight_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  order?: InputMaybe<Scalars['Int']['input']>;
+  order_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  order_gt?: InputMaybe<Scalars['Int']['input']>;
+  order_gte?: InputMaybe<Scalars['Int']['input']>;
+  order_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  order_lt?: InputMaybe<Scalars['Int']['input']>;
+  order_lte?: InputMaybe<Scalars['Int']['input']>;
+  order_not?: InputMaybe<Scalars['Int']['input']>;
+  order_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  period?: InputMaybe<Scalars['String']['input']>;
+  period_contains?: InputMaybe<Scalars['String']['input']>;
+  period_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  period_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  period_not?: InputMaybe<Scalars['String']['input']>;
+  period_not_contains?: InputMaybe<Scalars['String']['input']>;
+  period_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  role?: InputMaybe<Scalars['String']['input']>;
+  role_contains?: InputMaybe<Scalars['String']['input']>;
+  role_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  role_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  role_not?: InputMaybe<Scalars['String']['input']>;
+  role_not_contains?: InputMaybe<Scalars['String']['input']>;
+  role_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  seoFields?: InputMaybe<CfComponentSeoNestedFilter>;
+  seoFields_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  slug_contains?: InputMaybe<Scalars['String']['input']>;
+  slug_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  slug_not?: InputMaybe<Scalars['String']['input']>;
+  slug_not_contains?: InputMaybe<Scalars['String']['input']>;
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  summary?: InputMaybe<Scalars['String']['input']>;
+  summary_contains?: InputMaybe<Scalars['String']['input']>;
+  summary_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  summary_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  summary_not?: InputMaybe<Scalars['String']['input']>;
+  summary_not_contains?: InputMaybe<Scalars['String']['input']>;
+  summary_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  sys?: InputMaybe<SysFilter>;
+  technologies_contains_all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  technologies_contains_none?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  technologies_contains_some?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  technologies_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_contains?: InputMaybe<Scalars['String']['input']>;
+  title_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  title_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  title_not?: InputMaybe<Scalars['String']['input']>;
+  title_not_contains?: InputMaybe<Scalars['String']['input']>;
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ProjectLinkingCollections = {
+  __typename?: 'ProjectLinkingCollections';
+  componentProjectListCollection?: Maybe<ComponentProjectListCollection>;
+  componentProjectListCursorCollection?: Maybe<ComponentProjectListCursorCollection>;
+  entryCollection?: Maybe<EntryCollection>;
+  entryCursorCollection?: Maybe<EntryCursorCollection>;
+};
+
+
+export type ProjectLinkingCollectionsComponentProjectListCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Array<InputMaybe<ProjectLinkingCollectionsComponentProjectListCollectionOrder>>>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type ProjectLinkingCollectionsComponentProjectListCursorCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Array<InputMaybe<ProjectLinkingCollectionsComponentProjectListCursorCollectionOrder>>>;
+  pageNext?: InputMaybe<Scalars['String']['input']>;
+  pagePrev?: InputMaybe<Scalars['String']['input']>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type ProjectLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type ProjectLinkingCollectionsEntryCursorCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  pageNext?: InputMaybe<Scalars['String']['input']>;
+  pagePrev?: InputMaybe<Scalars['String']['input']>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export enum ProjectLinkingCollectionsComponentProjectListCollectionOrder {
+  InternalNameAsc = 'internalName_ASC',
+  InternalNameDesc = 'internalName_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
+}
+
+export enum ProjectLinkingCollectionsComponentProjectListCursorCollectionOrder {
+  InternalNameAsc = 'internalName_ASC',
+  InternalNameDesc = 'internalName_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
+}
+
+export enum ProjectOrder {
+  ClientAsc = 'client_ASC',
+  ClientDesc = 'client_DESC',
+  HighlightAsc = 'highlight_ASC',
+  HighlightDesc = 'highlight_DESC',
+  OrderAsc = 'order_ASC',
+  OrderDesc = 'order_DESC',
+  PeriodAsc = 'period_ASC',
+  PeriodDesc = 'period_DESC',
+  RoleAsc = 'role_ASC',
+  RoleDesc = 'role_DESC',
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC'
+}
+
 export type Query = {
   __typename?: 'Query';
   _node?: Maybe<_Node>;
@@ -2395,6 +3022,9 @@ export type Query = {
   componentCard?: Maybe<ComponentCard>;
   componentCardCollection?: Maybe<ComponentCardCollection>;
   componentCardCursorCollection?: Maybe<ComponentCardCursorCollection>;
+  componentProjectList?: Maybe<ComponentProjectList>;
+  componentProjectListCollection?: Maybe<ComponentProjectListCollection>;
+  componentProjectListCursorCollection?: Maybe<ComponentProjectListCursorCollection>;
   componentSeo?: Maybe<ComponentSeo>;
   componentSeoCollection?: Maybe<ComponentSeoCollection>;
   componentSeoCursorCollection?: Maybe<ComponentSeoCursorCollection>;
@@ -2412,6 +3042,9 @@ export type Query = {
   pageProduct?: Maybe<PageProduct>;
   pageProductCollection?: Maybe<PageProductCollection>;
   pageProductCursorCollection?: Maybe<PageProductCursorCollection>;
+  project?: Maybe<Project>;
+  projectCollection?: Maybe<ProjectCollection>;
+  projectCursorCollection?: Maybe<ProjectCursorCollection>;
   section?: Maybe<Section>;
   sectionCollection?: Maybe<SectionCollection>;
   sectionCursorCollection?: Maybe<SectionCursorCollection>;
@@ -2558,6 +3191,37 @@ export type QueryComponentCardCursorCollectionArgs = {
   preview?: InputMaybe<Scalars['Boolean']['input']>;
   useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<ComponentCardFilter>;
+};
+
+
+export type QueryComponentProjectListArgs = {
+  id: Scalars['String']['input'];
+  locale?: InputMaybe<Scalars['String']['input']>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryComponentProjectListCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Array<InputMaybe<ComponentProjectListOrder>>>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<ComponentProjectListFilter>;
+};
+
+
+export type QueryComponentProjectListCursorCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Array<InputMaybe<ComponentProjectListOrder>>>;
+  pageNext?: InputMaybe<Scalars['String']['input']>;
+  pagePrev?: InputMaybe<Scalars['String']['input']>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<ComponentProjectListFilter>;
 };
 
 
@@ -2739,6 +3403,37 @@ export type QueryPageProductCursorCollectionArgs = {
 };
 
 
+export type QueryProjectArgs = {
+  id: Scalars['String']['input'];
+  locale?: InputMaybe<Scalars['String']['input']>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryProjectCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Array<InputMaybe<ProjectOrder>>>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<ProjectFilter>;
+};
+
+
+export type QueryProjectCursorCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Array<InputMaybe<ProjectOrder>>>;
+  pageNext?: InputMaybe<Scalars['String']['input']>;
+  pagePrev?: InputMaybe<Scalars['String']['input']>;
+  preview?: InputMaybe<Scalars['Boolean']['input']>;
+  useFallbackLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<ProjectFilter>;
+};
+
+
 export type QuerySectionArgs = {
   id: Scalars['String']['input'];
   locale?: InputMaybe<Scalars['String']['input']>;
@@ -2910,7 +3605,7 @@ export type SectionComponentsFilter = {
   sys?: InputMaybe<SysFilter>;
 };
 
-export type SectionComponentsItem = ComponentBanner | ComponentCard | ComponentTagList | ComponentsCards;
+export type SectionComponentsItem = ComponentBanner | ComponentCard | ComponentProjectList | ComponentTagList | ComponentsCards;
 
 export type SectionCursorCollection = {
   __typename?: 'SectionCursorCollection';
@@ -3336,6 +4031,87 @@ export type CfComponentSeoNestedFilter = {
   sys?: InputMaybe<SysFilter>;
 };
 
+export type CfProjectNestedFilter = {
+  AND?: InputMaybe<Array<InputMaybe<CfProjectNestedFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<CfProjectNestedFilter>>>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  body_contains?: InputMaybe<Scalars['String']['input']>;
+  body_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  body_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  body_not?: InputMaybe<Scalars['String']['input']>;
+  body_not_contains?: InputMaybe<Scalars['String']['input']>;
+  body_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  categories_contains_all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  categories_contains_none?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  categories_contains_some?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  categories_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  client?: InputMaybe<Scalars['String']['input']>;
+  client_contains?: InputMaybe<Scalars['String']['input']>;
+  client_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  client_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  client_not?: InputMaybe<Scalars['String']['input']>;
+  client_not_contains?: InputMaybe<Scalars['String']['input']>;
+  client_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  highlight?: InputMaybe<Scalars['String']['input']>;
+  highlight_contains?: InputMaybe<Scalars['String']['input']>;
+  highlight_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  highlight_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  highlight_not?: InputMaybe<Scalars['String']['input']>;
+  highlight_not_contains?: InputMaybe<Scalars['String']['input']>;
+  highlight_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  order?: InputMaybe<Scalars['Int']['input']>;
+  order_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  order_gt?: InputMaybe<Scalars['Int']['input']>;
+  order_gte?: InputMaybe<Scalars['Int']['input']>;
+  order_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  order_lt?: InputMaybe<Scalars['Int']['input']>;
+  order_lte?: InputMaybe<Scalars['Int']['input']>;
+  order_not?: InputMaybe<Scalars['Int']['input']>;
+  order_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  period?: InputMaybe<Scalars['String']['input']>;
+  period_contains?: InputMaybe<Scalars['String']['input']>;
+  period_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  period_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  period_not?: InputMaybe<Scalars['String']['input']>;
+  period_not_contains?: InputMaybe<Scalars['String']['input']>;
+  period_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  role?: InputMaybe<Scalars['String']['input']>;
+  role_contains?: InputMaybe<Scalars['String']['input']>;
+  role_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  role_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  role_not?: InputMaybe<Scalars['String']['input']>;
+  role_not_contains?: InputMaybe<Scalars['String']['input']>;
+  role_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  seoFields_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  slug_contains?: InputMaybe<Scalars['String']['input']>;
+  slug_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  slug_not?: InputMaybe<Scalars['String']['input']>;
+  slug_not_contains?: InputMaybe<Scalars['String']['input']>;
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  summary?: InputMaybe<Scalars['String']['input']>;
+  summary_contains?: InputMaybe<Scalars['String']['input']>;
+  summary_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  summary_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  summary_not?: InputMaybe<Scalars['String']['input']>;
+  summary_not_contains?: InputMaybe<Scalars['String']['input']>;
+  summary_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  sys?: InputMaybe<SysFilter>;
+  technologies_contains_all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  technologies_contains_none?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  technologies_contains_some?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  technologies_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_contains?: InputMaybe<Scalars['String']['input']>;
+  title_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  title_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  title_not?: InputMaybe<Scalars['String']['input']>;
+  title_not_contains?: InputMaybe<Scalars['String']['input']>;
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type CfSectionNestedFilter = {
   AND?: InputMaybe<Array<InputMaybe<CfSectionNestedFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<CfSectionNestedFilter>>>;
@@ -3395,6 +4171,7 @@ export type CfcomponentsMultiTypeNestedFilter = {
 
 
 
+
 export type BlogPostFieldsFragment = { __typename: 'BlogPost', title: string | null, slug: string | null, date: string | Date | null, description: string | null, tags: Array<string | null> | null, body: string | null, sys: { id: string, spaceId: string }, seoFields: SeoFieldsFragment | null };
 
 export type BlogPostsQueryVariables = Exact<{
@@ -3427,6 +4204,8 @@ export type ComponentFieldsTagListFragment = { __typename: 'ComponentTagList', c
 
 export type ComponentFieldsCardsFragment = { __typename: 'ComponentsCards', sys: { id: string }, cardsCollection: { items: Array<ComponentFieldsCardFragment | null> } | null };
 
+export type ComponentFieldsProjectListFragment = { __typename: 'ComponentProjectList', internalName: string | null, sys: { id: string }, projectsCollection: { items: Array<ProjectCardFieldsFragment | null> } | null };
+
 export type ImageFieldsFragment = { __typename: 'Asset', title: string | null, description: string | null, width: number | null, height: number | null, url: string | null, contentType: string | null, sys: { id: string } };
 
 export type PageLandingFieldsFragment = { __typename: 'PageLanding', internalName: string | null, sys: { id: string, spaceId: string }, seoFields: SeoFieldsFragment | null, sectionsCollection: { items: Array<SectionFieldsFragment | null> } | null };
@@ -3447,6 +4226,30 @@ export type PageUrlsQueryVariables = Exact<{
 
 export type PageUrlsQuery = { pageLandingCollection: { items: Array<{ url: string | null, sys: { id: string } } | null> } | null };
 
+export type ProjectCardFieldsFragment = { __typename: 'Project', title: string | null, slug: string | null, client: string | null, role: string | null, period: string | null, highlight: string | null, summary: string | null, categories: Array<string | null> | null, technologies: Array<string | null> | null, order: number | null, sys: { id: string } };
+
+export type ProjectFieldsFragment = (
+  { body: string | null, seoFields: SeoFieldsFragment | null }
+  & ProjectCardFieldsFragment
+);
+
+export type ProjectsQueryVariables = Exact<{
+  locale?: string | null | undefined;
+  preview?: boolean | null | undefined;
+}>;
+
+
+export type ProjectsQuery = { projectCollection: { items: Array<ProjectCardFieldsFragment | null> } | null };
+
+export type ProjectQueryVariables = Exact<{
+  locale?: string | null | undefined;
+  preview?: boolean | null | undefined;
+  where?: ProjectFilter | null | undefined;
+}>;
+
+
+export type ProjectQuery = { projectCollection: { items: Array<ProjectFieldsFragment | null> } | null };
+
 export type SectionFieldsFragment = { __typename: 'Section', title: string | null, description: string | null, grid: string | null, layoutType: string | null, textAlign: string | null, sys: { id: string }, componentsCollection: { items: Array<
       | (
         { __typename: 'ComponentBanner' }
@@ -3455,6 +4258,10 @@ export type SectionFieldsFragment = { __typename: 'Section', title: string | nul
       | (
         { __typename: 'ComponentCard' }
         & ComponentFieldsCardFragment
+      )
+      | (
+        { __typename: 'ComponentProjectList' }
+        & ComponentFieldsProjectListFragment
       )
       | (
         { __typename: 'ComponentTagList' }
@@ -3585,6 +4392,38 @@ export const ComponentFieldsCardsFragmentDoc = gql`
   }
 }
     ${ComponentFieldsCardFragmentDoc}`;
+export const ProjectCardFieldsFragmentDoc = gql`
+    fragment ProjectCardFields on Project {
+  __typename
+  sys {
+    id
+  }
+  title
+  slug
+  client
+  role
+  period
+  highlight
+  summary
+  categories
+  technologies
+  order
+}
+    `;
+export const ComponentFieldsProjectListFragmentDoc = gql`
+    fragment ComponentFieldsProjectList on ComponentProjectList {
+  __typename
+  sys {
+    id
+  }
+  internalName
+  projectsCollection(limit: 20) {
+    items {
+      ...ProjectCardFields
+    }
+  }
+}
+    ${ProjectCardFieldsFragmentDoc}`;
 export const SectionFieldsFragmentDoc = gql`
     fragment SectionFields on Section {
   __typename
@@ -3611,13 +4450,17 @@ export const SectionFieldsFragmentDoc = gql`
       ... on ComponentsCards {
         ...ComponentFieldsCards
       }
+      ... on ComponentProjectList {
+        ...ComponentFieldsProjectList
+      }
     }
   }
 }
     ${ComponentFieldsBannerFragmentDoc}
 ${ComponentFieldsCardFragmentDoc}
 ${ComponentFieldsTagListFragmentDoc}
-${ComponentFieldsCardsFragmentDoc}`;
+${ComponentFieldsCardsFragmentDoc}
+${ComponentFieldsProjectListFragmentDoc}`;
 export const PageLandingFieldsFragmentDoc = gql`
     fragment PageLandingFields on PageLanding {
   __typename
@@ -3637,6 +4480,16 @@ export const PageLandingFieldsFragmentDoc = gql`
 }
     ${SeoFieldsFragmentDoc}
 ${SectionFieldsFragmentDoc}`;
+export const ProjectFieldsFragmentDoc = gql`
+    fragment ProjectFields on Project {
+  ...ProjectCardFields
+  body
+  seoFields {
+    ...SeoFields
+  }
+}
+    ${ProjectCardFieldsFragmentDoc}
+${SeoFieldsFragmentDoc}`;
 export const BlogPostsDocument = gql`
     query blogPosts($locale: String, $preview: Boolean) {
   blogPostCollection(
@@ -3686,6 +4539,29 @@ export const PageUrlsDocument = gql`
   }
 }
     `;
+export const ProjectsDocument = gql`
+    query projects($locale: String, $preview: Boolean) {
+  projectCollection(
+    limit: 50
+    locale: $locale
+    preview: $preview
+    order: [order_ASC]
+  ) {
+    items {
+      ...ProjectCardFields
+    }
+  }
+}
+    ${ProjectCardFieldsFragmentDoc}`;
+export const ProjectDocument = gql`
+    query project($locale: String, $preview: Boolean, $where: ProjectFilter) {
+  projectCollection(limit: 1, locale: $locale, preview: $preview, where: $where) {
+    items {
+      ...ProjectFields
+    }
+  }
+}
+    ${ProjectFieldsFragmentDoc}`;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -3705,6 +4581,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     pageUrls(variables?: PageUrlsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<PageUrlsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<PageUrlsQuery>({ document: PageUrlsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'pageUrls', 'query', variables);
+    },
+    projects(variables?: ProjectsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ProjectsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ProjectsQuery>({ document: ProjectsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'projects', 'query', variables);
+    },
+    project(variables?: ProjectQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ProjectQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ProjectQuery>({ document: ProjectDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'project', 'query', variables);
     }
   };
 }

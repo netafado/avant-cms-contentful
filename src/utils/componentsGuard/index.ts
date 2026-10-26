@@ -1,6 +1,7 @@
 import {
   ComponentBanner,
   ComponentCard,
+  ComponentProjectList,
   ComponentsCards,
   ComponentTagList,
   SectionComponentsItem,
@@ -29,6 +30,12 @@ export const isComponentTagList = (
   component: SectionComponentsItem
 ): component is ComponentTagList => {
   return component.__typename === "ComponentTagList";
+};
+
+export const isComponentProjectList = (
+  component: SectionComponentsItem
+): component is ComponentProjectList => {
+  return component.__typename === "ComponentProjectList";
 };
 
 export const isSingleAchievement = (

@@ -8,6 +8,7 @@ import {
   MoonIcon,
   FileTextIcon,
   GlobeIcon,
+  LayersIcon,
   ReaderIcon,
 } from "@radix-ui/react-icons";
 import NextLink from "next/link";
@@ -77,6 +78,12 @@ const Navigation = ({
   // plain next/link; the locale-aware Link would produce a missing /en/blog.
   const siteLinks = [
     { href: "/", label: t("home"), icon: <HomeIcon className="h-4 w-4" />, plain: false },
+    {
+      href: "/projects",
+      label: t("projects"),
+      icon: <LayersIcon className="h-4 w-4" />,
+      plain: false,
+    },
     {
       href: "/blog",
       label: t("blog"),

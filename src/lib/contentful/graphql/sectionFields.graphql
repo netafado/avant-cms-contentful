@@ -23,6 +23,9 @@ fragment SectionFields on Section {
       ... on ComponentsCards {
         ...ComponentFieldsCards
       }
+      ... on ComponentProjectList {
+        ...ComponentFieldsProjectList
+      }
     }
   }
 }

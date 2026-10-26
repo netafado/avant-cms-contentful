@@ -1,0 +1,50 @@
+fragment ProjectCardFields on Project {
+  __typename
+  sys {
+    id
+  }
+  title
+  slug
+  client
+  role
+  period
+  highlight
+  summary
+  categories
+  technologies
+  order
+}
+
+fragment ProjectFields on Project {
+  ...ProjectCardFields
+  body
+  seoFields {
+    ...SeoFields
+  }
+}
+
+query projects($locale: String, $preview: Boolean) {
+  projectCollection(
+    limit: 50
+    locale: $locale
+    preview: $preview
+    order: [order_ASC]
+  ) {
+    items {
+      ...ProjectCardFields
+    }
+  }
+}
+
+query project($locale: String, $preview: Boolean, $where: ProjectFilter) {
+  projectCollection(
+    limit: 1
+    locale: $locale
+    preview: $preview
+    where: $where
+  ) {
+    items {
+      ...ProjectFields
+    }
+  }
+}

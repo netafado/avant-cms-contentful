@@ -61,3 +61,16 @@ fragment ComponentFieldsCards on ComponentsCards {
     }
   }
 }
+
+fragment ComponentFieldsProjectList on ComponentProjectList {
+  __typename
+  sys {
+    id
+  }
+  internalName
+  projectsCollection(limit: 20) {
+    items {
+      ...ProjectCardFields
+    }
+  }
+}

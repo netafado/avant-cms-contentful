@@ -5,6 +5,7 @@
   },
   "Navigation": {
     "home": "Início",
+    "projects": "Projetos",
     "blog": "Blog",
     "resume": "Currículo",
     "switchLanguage": "Alterar idioma"
@@ -23,6 +24,14 @@
     "defaultImageAlt": "Imagem padrão",
     "defaultCvFileName": "cv-padrao.pdf",
     "cardsPlaceholder": "Placeholder de Cards"
+  },
+  "Projects": {
+    "viewProject": "Ver projeto",
+    "backToProjects": "Projetos",
+    "categories": "Categorias",
+    "technologies": "Tecnologias",
+    "role": "Função",
+    "period": "Período"
   },
   "Language": {
     "en": "EN",

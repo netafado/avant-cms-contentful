@@ -18,11 +18,15 @@ const SectionBase: FC<SectionProps> = async ({
   textAlign,
 }) => {
   const t = await getTranslations("Components");
+  const tProjects = await getTranslations("Projects");
   const translations: Translations = {
     defaultName: t("defaultName"),
     defaultText: t("defaultText"),
     defaultImageAlt: t("defaultImageAlt"),
     defaultCvFileName: t("defaultCvFileName"),
+    viewProject: tProjects("viewProject"),
+    categories: tProjects("categories"),
+    technologies: tProjects("technologies"),
   };
 
   const textAlignmentClass = TEXT_ALIGN[textAlign || "center"];

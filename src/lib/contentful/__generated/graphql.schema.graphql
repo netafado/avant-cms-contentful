@@ -532,6 +532,169 @@ enum ComponentCardOrder {
 }
 
 """
+[See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/componentProjectList)
+"""
+type ComponentProjectList implements Entry & _Node {
+  _id: ID!
+  contentfulMetadata: ContentfulMetadata!
+  internalName(locale: String, useFallbackLocale: Boolean): String
+  linkedFrom(allowedLocales: [String]): ComponentProjectListLinkingCollections
+  projectsCollection(limit: Int = 100, locale: String, order: [ComponentProjectListProjectsCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: ProjectFilter): ComponentProjectListProjectsCollection
+  projectsCursorCollection(limit: Int = 100, locale: String, order: [ComponentProjectListProjectsCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: ProjectFilter): ComponentProjectListProjectsCursorCollection
+  sys: Sys!
+}
+
+type ComponentProjectListCollection {
+  items: [ComponentProjectList]!
+  limit: Int!
+  skip: Int!
+  total: Int!
+}
+
+type ComponentProjectListCursorCollection {
+  items: [ComponentProjectList]!
+  limit: Int!
+  pages: CursorPages!
+}
+
+input ComponentProjectListFilter {
+  AND: [ComponentProjectListFilter]
+  OR: [ComponentProjectListFilter]
+  contentfulMetadata: ContentfulMetadataFilter
+  internalName: String
+  internalName_contains: String
+  internalName_exists: Boolean
+  internalName_in: [String]
+  internalName_not: String
+  internalName_not_contains: String
+  internalName_not_in: [String]
+  projects: cfProjectNestedFilter
+  projectsCollection_exists: Boolean
+  sys: SysFilter
+}
+
+type ComponentProjectListLinkingCollections {
+  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): EntryCollection
+  entryCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): EntryCursorCollection
+  sectionCollection(limit: Int = 100, locale: String, order: [ComponentProjectListLinkingCollectionsSectionCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): SectionCollection
+  sectionCursorCollection(limit: Int = 100, locale: String, order: [ComponentProjectListLinkingCollectionsSectionCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): SectionCursorCollection
+}
+
+enum ComponentProjectListLinkingCollectionsSectionCollectionOrder {
+  grid_ASC
+  grid_DESC
+  layoutType_ASC
+  layoutType_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
+  title_ASC
+  title_DESC
+}
+
+enum ComponentProjectListLinkingCollectionsSectionCursorCollectionOrder {
+  grid_ASC
+  grid_DESC
+  layoutType_ASC
+  layoutType_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  textAlign_ASC
+  textAlign_DESC
+  title_ASC
+  title_DESC
+}
+
+enum ComponentProjectListOrder {
+  internalName_ASC
+  internalName_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type ComponentProjectListProjectsCollection {
+  items: [Project]!
+  limit: Int!
+  skip: Int!
+  total: Int!
+}
+
+enum ComponentProjectListProjectsCollectionOrder {
+  client_ASC
+  client_DESC
+  highlight_ASC
+  highlight_DESC
+  order_ASC
+  order_DESC
+  period_ASC
+  period_DESC
+  role_ASC
+  role_DESC
+  slug_ASC
+  slug_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  title_ASC
+  title_DESC
+}
+
+type ComponentProjectListProjectsCursorCollection {
+  items: [Project]!
+  limit: Int!
+  pages: CursorPages!
+}
+
+enum ComponentProjectListProjectsCursorCollectionOrder {
+  client_ASC
+  client_DESC
+  highlight_ASC
+  highlight_DESC
+  order_ASC
+  order_DESC
+  period_ASC
+  period_DESC
+  role_ASC
+  role_DESC
+  slug_ASC
+  slug_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  title_ASC
+  title_DESC
+}
+
+"""
 [See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/componentSeo)
 """
 type ComponentSeo implements Entry & _Node {
@@ -613,6 +776,8 @@ type ComponentSeoLinkingCollections {
   pageLandingCursorCollection(limit: Int = 100, locale: String, order: [ComponentSeoLinkingCollectionsPageLandingCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): PageLandingCursorCollection
   pageProductCollection(limit: Int = 100, locale: String, order: [ComponentSeoLinkingCollectionsPageProductCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): PageProductCollection
   pageProductCursorCollection(limit: Int = 100, locale: String, order: [ComponentSeoLinkingCollectionsPageProductCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): PageProductCursorCollection
+  projectCollection(limit: Int = 100, locale: String, order: [ComponentSeoLinkingCollectionsProjectCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): ProjectCollection
+  projectCursorCollection(limit: Int = 100, locale: String, order: [ComponentSeoLinkingCollectionsProjectCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): ProjectCursorCollection
 }
 
 enum ComponentSeoLinkingCollectionsBlogPostCollectionOrder {
@@ -731,6 +896,56 @@ enum ComponentSeoLinkingCollectionsPageProductCursorCollectionOrder {
   sys_publishedAt_DESC
   sys_publishedVersion_ASC
   sys_publishedVersion_DESC
+}
+
+enum ComponentSeoLinkingCollectionsProjectCollectionOrder {
+  client_ASC
+  client_DESC
+  highlight_ASC
+  highlight_DESC
+  order_ASC
+  order_DESC
+  period_ASC
+  period_DESC
+  role_ASC
+  role_DESC
+  slug_ASC
+  slug_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  title_ASC
+  title_DESC
+}
+
+enum ComponentSeoLinkingCollectionsProjectCursorCollectionOrder {
+  client_ASC
+  client_DESC
+  highlight_ASC
+  highlight_DESC
+  order_ASC
+  order_DESC
+  period_ASC
+  period_DESC
+  role_ASC
+  role_DESC
+  slug_ASC
+  slug_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  title_ASC
+  title_DESC
 }
 
 enum ComponentSeoOrder {
@@ -1495,6 +1710,181 @@ enum PageProductOrder {
 }
 
 """
+[See type definition](https://app.contentful.com/spaces/brxm1vifnbbr/content_types/project)
+"""
+type Project implements Entry & _Node {
+  _id: ID!
+  body(locale: String, useFallbackLocale: Boolean): String
+  categories(locale: String, useFallbackLocale: Boolean): [String]
+  client(locale: String, useFallbackLocale: Boolean): String
+  contentfulMetadata: ContentfulMetadata!
+  highlight(locale: String, useFallbackLocale: Boolean): String
+  linkedFrom(allowedLocales: [String]): ProjectLinkingCollections
+  order(locale: String, useFallbackLocale: Boolean): Int
+  period(locale: String, useFallbackLocale: Boolean): String
+  role(locale: String, useFallbackLocale: Boolean): String
+  seoFields(locale: String, preview: Boolean, useFallbackLocale: Boolean, where: ComponentSeoFilter): ComponentSeo
+  slug(locale: String, useFallbackLocale: Boolean): String
+  summary(locale: String, useFallbackLocale: Boolean): String
+  sys: Sys!
+  technologies(locale: String, useFallbackLocale: Boolean): [String]
+  title(locale: String, useFallbackLocale: Boolean): String
+}
+
+type ProjectCollection {
+  items: [Project]!
+  limit: Int!
+  skip: Int!
+  total: Int!
+}
+
+type ProjectCursorCollection {
+  items: [Project]!
+  limit: Int!
+  pages: CursorPages!
+}
+
+input ProjectFilter {
+  AND: [ProjectFilter]
+  OR: [ProjectFilter]
+  body: String
+  body_contains: String
+  body_exists: Boolean
+  body_in: [String]
+  body_not: String
+  body_not_contains: String
+  body_not_in: [String]
+  categories_contains_all: [String]
+  categories_contains_none: [String]
+  categories_contains_some: [String]
+  categories_exists: Boolean
+  client: String
+  client_contains: String
+  client_exists: Boolean
+  client_in: [String]
+  client_not: String
+  client_not_contains: String
+  client_not_in: [String]
+  contentfulMetadata: ContentfulMetadataFilter
+  highlight: String
+  highlight_contains: String
+  highlight_exists: Boolean
+  highlight_in: [String]
+  highlight_not: String
+  highlight_not_contains: String
+  highlight_not_in: [String]
+  order: Int
+  order_exists: Boolean
+  order_gt: Int
+  order_gte: Int
+  order_in: [Int]
+  order_lt: Int
+  order_lte: Int
+  order_not: Int
+  order_not_in: [Int]
+  period: String
+  period_contains: String
+  period_exists: Boolean
+  period_in: [String]
+  period_not: String
+  period_not_contains: String
+  period_not_in: [String]
+  role: String
+  role_contains: String
+  role_exists: Boolean
+  role_in: [String]
+  role_not: String
+  role_not_contains: String
+  role_not_in: [String]
+  seoFields: cfComponentSeoNestedFilter
+  seoFields_exists: Boolean
+  slug: String
+  slug_contains: String
+  slug_exists: Boolean
+  slug_in: [String]
+  slug_not: String
+  slug_not_contains: String
+  slug_not_in: [String]
+  summary: String
+  summary_contains: String
+  summary_exists: Boolean
+  summary_in: [String]
+  summary_not: String
+  summary_not_contains: String
+  summary_not_in: [String]
+  sys: SysFilter
+  technologies_contains_all: [String]
+  technologies_contains_none: [String]
+  technologies_contains_some: [String]
+  technologies_exists: Boolean
+  title: String
+  title_contains: String
+  title_exists: Boolean
+  title_in: [String]
+  title_not: String
+  title_not_contains: String
+  title_not_in: [String]
+}
+
+type ProjectLinkingCollections {
+  componentProjectListCollection(limit: Int = 100, locale: String, order: [ProjectLinkingCollectionsComponentProjectListCollectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): ComponentProjectListCollection
+  componentProjectListCursorCollection(limit: Int = 100, locale: String, order: [ProjectLinkingCollectionsComponentProjectListCursorCollectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): ComponentProjectListCursorCollection
+  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean): EntryCollection
+  entryCursorCollection(limit: Int = 100, locale: String, pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean): EntryCursorCollection
+}
+
+enum ProjectLinkingCollectionsComponentProjectListCollectionOrder {
+  internalName_ASC
+  internalName_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum ProjectLinkingCollectionsComponentProjectListCursorCollectionOrder {
+  internalName_ASC
+  internalName_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum ProjectOrder {
+  client_ASC
+  client_DESC
+  highlight_ASC
+  highlight_DESC
+  order_ASC
+  order_DESC
+  period_ASC
+  period_DESC
+  role_ASC
+  role_DESC
+  slug_ASC
+  slug_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  title_ASC
+  title_DESC
+}
+
+"""
 The 'Quality' type represents quality as whole numeric values between `1` and `100`.
 """
 scalar Quality
@@ -1514,6 +1904,9 @@ type Query {
   componentCard(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): ComponentCard
   componentCardCollection(limit: Int = 100, locale: String, order: [ComponentCardOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: ComponentCardFilter): ComponentCardCollection
   componentCardCursorCollection(limit: Int = 100, locale: String, order: [ComponentCardOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: ComponentCardFilter): ComponentCardCursorCollection
+  componentProjectList(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): ComponentProjectList
+  componentProjectListCollection(limit: Int = 100, locale: String, order: [ComponentProjectListOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: ComponentProjectListFilter): ComponentProjectListCollection
+  componentProjectListCursorCollection(limit: Int = 100, locale: String, order: [ComponentProjectListOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: ComponentProjectListFilter): ComponentProjectListCursorCollection
   componentSeo(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): ComponentSeo
   componentSeoCollection(limit: Int = 100, locale: String, order: [ComponentSeoOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: ComponentSeoFilter): ComponentSeoCollection
   componentSeoCursorCollection(limit: Int = 100, locale: String, order: [ComponentSeoOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: ComponentSeoFilter): ComponentSeoCursorCollection
@@ -1531,6 +1924,9 @@ type Query {
   pageProduct(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): PageProduct
   pageProductCollection(limit: Int = 100, locale: String, order: [PageProductOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: PageProductFilter): PageProductCollection
   pageProductCursorCollection(limit: Int = 100, locale: String, order: [PageProductOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: PageProductFilter): PageProductCursorCollection
+  project(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): Project
+  projectCollection(limit: Int = 100, locale: String, order: [ProjectOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: ProjectFilter): ProjectCollection
+  projectCursorCollection(limit: Int = 100, locale: String, order: [ProjectOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: ProjectFilter): ProjectCursorCollection
   section(id: String!, locale: String, preview: Boolean, useFallbackLocale: Boolean): Section
   sectionCollection(limit: Int = 100, locale: String, order: [SectionOrder], preview: Boolean, skip: Int = 0, useFallbackLocale: Boolean, where: SectionFilter): SectionCollection
   sectionCursorCollection(limit: Int = 100, locale: String, order: [SectionOrder], pageNext: String, pagePrev: String, preview: Boolean, useFallbackLocale: Boolean, where: SectionFilter): SectionCursorCollection
@@ -1583,7 +1979,7 @@ input SectionComponentsFilter {
   sys: SysFilter
 }
 
-union SectionComponentsItem = ComponentBanner | ComponentCard | ComponentTagList | ComponentsCards
+union SectionComponentsItem = ComponentBanner | ComponentCard | ComponentProjectList | ComponentTagList | ComponentsCards
 
 type SectionCursorCollection {
   items: [Section]!
@@ -1924,6 +2320,87 @@ input cfComponentSeoNestedFilter {
   pageTitle_not_in: [String]
   shareImagesCollection_exists: Boolean
   sys: SysFilter
+}
+
+input cfProjectNestedFilter {
+  AND: [cfProjectNestedFilter]
+  OR: [cfProjectNestedFilter]
+  body: String
+  body_contains: String
+  body_exists: Boolean
+  body_in: [String]
+  body_not: String
+  body_not_contains: String
+  body_not_in: [String]
+  categories_contains_all: [String]
+  categories_contains_none: [String]
+  categories_contains_some: [String]
+  categories_exists: Boolean
+  client: String
+  client_contains: String
+  client_exists: Boolean
+  client_in: [String]
+  client_not: String
+  client_not_contains: String
+  client_not_in: [String]
+  contentfulMetadata: ContentfulMetadataFilter
+  highlight: String
+  highlight_contains: String
+  highlight_exists: Boolean
+  highlight_in: [String]
+  highlight_not: String
+  highlight_not_contains: String
+  highlight_not_in: [String]
+  order: Int
+  order_exists: Boolean
+  order_gt: Int
+  order_gte: Int
+  order_in: [Int]
+  order_lt: Int
+  order_lte: Int
+  order_not: Int
+  order_not_in: [Int]
+  period: String
+  period_contains: String
+  period_exists: Boolean
+  period_in: [String]
+  period_not: String
+  period_not_contains: String
+  period_not_in: [String]
+  role: String
+  role_contains: String
+  role_exists: Boolean
+  role_in: [String]
+  role_not: String
+  role_not_contains: String
+  role_not_in: [String]
+  seoFields_exists: Boolean
+  slug: String
+  slug_contains: String
+  slug_exists: Boolean
+  slug_in: [String]
+  slug_not: String
+  slug_not_contains: String
+  slug_not_in: [String]
+  summary: String
+  summary_contains: String
+  summary_exists: Boolean
+  summary_in: [String]
+  summary_not: String
+  summary_not_contains: String
+  summary_not_in: [String]
+  sys: SysFilter
+  technologies_contains_all: [String]
+  technologies_contains_none: [String]
+  technologies_contains_some: [String]
+  technologies_exists: Boolean
+  title: String
+  title_contains: String
+  title_exists: Boolean
+  title_in: [String]
+  title_not: String
+  title_not_contains: String
+  title_not_in: [String]
 }
 
 input cfSectionNestedFilter {
