@@ -45,7 +45,7 @@ describe("Banner Component", () => {
     expect(screen.getByText("Software Engineer")).toBeInTheDocument();
   });
 
-  it("renders the hero transformation message with AI topics over the banner", () => {
+  it("renders the hero transformation message with the orbiting tagline", () => {
     render(<Banner {...mockProps} />);
 
     const transformation = screen.getByRole("heading", { level: 2 });
@@ -56,10 +56,11 @@ describe("Banner Component", () => {
       "font-mono",
     );
 
-    const topics = screen.getByLabelText("AI topics worked with");
-    expect(topics).toBeInTheDocument();
-    expect(topics).toHaveTextContent("LLM APIs (OpenAI, Claude)");
-    expect(topics).toHaveTextContent("AI Agents (MCP/WebMCP)");
+    const orbit = screen.getByRole("img", {
+      name: "System design - AI engineer - LLMs integration - AI for humans",
+    });
+    expect(orbit).toBeInTheDocument();
+    expect(orbit).toHaveTextContent("LLMs integration");
   });
 
   it("renders all achievements", () => {
