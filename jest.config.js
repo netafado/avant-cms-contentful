@@ -10,7 +10,9 @@ const createJestConfig = nextJest({
 const customJestConfig = {
     setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
     testEnvironment: 'jest-environment-jsdom',
-    testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
+    // .worktrees checkouts resolve @/ against this repo's src, so their stale
+    // copies fail whenever main moves ahead of them.
+    testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/', '<rootDir>/.worktrees/'],
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/src/$1',
     },

@@ -6,10 +6,11 @@ export const SITE_URL = (
 
 export const SITE_NAME = "Isaias Santos";
 
-export const DEFAULT_TITLE = "Isaias Santos - Full Stack Developer";
+export const DEFAULT_TITLE =
+  "Isaias Santos - Solution Architect | Distributed Systems & AI-Enabled Platforms";
 
 export const DEFAULT_DESCRIPTION =
-  "Portfolio of Isaias Santos, a Full Stack Developer specializing in Next.js and Contentful.";
+  "Portfolio of Isaias Santos, a Solution Architect specializing in distributed systems and AI-enabled platforms — commerce, ERP and cloud-native platforms on AWS.";
 
 export const SOCIAL_LINKS = {
   github: "https://github.com/netafado",
@@ -101,12 +102,15 @@ export function personJsonLd() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: SITE_NAME,
-    jobTitle: "Full Stack Developer",
+    jobTitle: "Solution Architect | Distributed Systems & AI-Enabled Platforms",
     description: DEFAULT_DESCRIPTION,
     url: SITE_URL,
     image: new URL("/images/sun-hero.jpg", SITE_URL).toString(),
     sameAs: Object.values(SOCIAL_LINKS),
     knowsAbout: [
+      "Solution Architecture",
+      "Distributed Systems",
+      "Event-Driven Architecture",
       "Next.js",
       "React",
       "TypeScript",

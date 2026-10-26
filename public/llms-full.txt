@@ -1,11 +1,13 @@
 # Isaias Santos
 
-> Full Stack Developer specializing in Next.js, TypeScript, and Contentful headless CMS.
+> Solution Architect specializing in distributed systems and AI-enabled platforms — Next.js, TypeScript, and Contentful headless CMS.
 
-Isaias Santos is a full stack developer who designs and builds content-driven
-web applications. His work focuses on the JavaScript ecosystem: Next.js and
-React on the frontend, Node.js services on the backend, GraphQL APIs, and
-headless CMS architectures with Contentful, deployed to AWS. This site is his
+Isaias Santos is a Solution Architect who designs and builds distributed
+systems and AI-enabled platforms for commerce, ERP, and customer-facing
+products. His work spans solution and system design, event-driven
+architectures on AWS, and hands-on delivery across the JavaScript ecosystem:
+Next.js and React on the frontend, Node.js services on the backend, GraphQL
+APIs, and headless CMS architectures with Contentful. This site is his
 portfolio and a living example of that stack: a Next.js App Router application
 whose pages, sections, and components are fully managed in Contentful, so new
 landing pages can be created and updated without code changes.
@@ -29,6 +31,7 @@ works with:
 
 ## Skills
 
+- Solution architecture, distributed systems, event-driven design
 - Next.js / React / TypeScript
 - Contentful headless CMS and content modeling
 - GraphQL API design and integration
@@ -38,8 +41,9 @@ works with:
 
 ## Selected work
 
-The home page highlights full stack projects delivered with the stack above,
-including e-commerce and content platforms built on Next.js and Contentful.
+The home page highlights architecture-led projects delivered with the stack
+above, including commerce, ERP, and content platforms built on Next.js,
+Node.js, AWS, and Contentful.
 
 ## Links
 
@@ -56,8 +60,9 @@ a browser-side bridge registers structured tools on `document.modelContext`
 so AI agents can call site functionality directly instead of scraping the
 DOM. Tools available on every page:
 
-- `get_profile`: returns profile JSON — name, role (Full Stack Developer),
-  summary, skills (Next.js, React, TypeScript, Contentful, GraphQL,
+- `get_profile`: returns profile JSON — name, role (Solution Architect |
+  Distributed Systems & AI-Enabled Platforms), summary, skills (Next.js,
+  React, TypeScript, Contentful, GraphQL,
   Tailwind CSS, AWS, LLM APIs (OpenAI, Claude), RAG, prompt engineering,
   AI agents (MCP/WebMCP), LLMO / AI-friendly SEO), and social links
   (GitHub, LinkedIn, Medium).
