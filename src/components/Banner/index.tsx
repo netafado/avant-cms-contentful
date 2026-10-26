@@ -36,11 +36,11 @@ const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
         >
           <div className="flex flex-col items-center [text-shadow:0_1px_12px_rgba(0,0,0,0.9),0_0_40px_rgba(0,0,0,0.6)]">
             <h2 className="font-mono text-bold uppercase whitespace-nowrap sm:tracking-[0.4em] md:tracking-[0.45em]">
-              <span className="bg-white text-black px-2 pl-3 text-center">
+              <span className="rounded-panel bg-white px-2 pl-3 text-center text-black">
                 AI
               </span>
             </h2>
-            <span className="text-light uppercase font-mono text-[clamp(1.75rem,3vw,2.5rem)] leading-[0.85] tracking-[-0.04em] tracking-widest whitespace-nowrap">
+            <span className="text-light uppercase font-mono text-[clamp(1.75rem,3vw,2.5rem)] leading-[0.85] tracking-[-0.04em] whitespace-nowrap">
               transformation
             </span>
           </div>
@@ -70,18 +70,20 @@ const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
         </div>
       </SunHero>
       <div>
+        {/* Ruled row of facts anchoring the opening: mono numerals over the
+            flat ground, hairline rules. */}
         <div className="mx-auto mt-8 flex max-w-3xl flex-col items-center gap-4 text-center text-white">
           {achievements?.items?.length ? (
-            <div className="grid  w-full max-w-3xl  gap-y-8 border-y border-white/20 py-4 [text-shadow:0_1px_16px_rgba(0,0,0,0.75)] lg:grid-cols-3 lg:divide-x lg:divide-white/20">
+            <div className="grid  w-full max-w-3xl  gap-y-8 border-y border-hairline py-4 lg:grid-cols-3 lg:divide-x lg:divide-hairline">
               {achievements.items.map((achievement, index) => (
                 <div
                   key={`achievement-${index}`}
                   className="flex flex-col items-center gap-2 px-4"
                 >
-                  <span className="font-display text-3xl leading-none text-white md:text-4xl">
+                  <span className="font-mono text-2xl leading-none tracking-tight text-bright tabular-nums md:text-3xl">
                     {achievement.number}
                   </span>
-                  <span className="text-[10px] tracking-[0.25em] text-white/70 uppercase md:text-[11px]">
+                  <span className="font-mono text-[10px] tracking-[0.25em] text-meta uppercase md:text-[11px]">
                     {achievement.text}
                   </span>
                 </div>
@@ -95,7 +97,7 @@ const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
               href={cv.src}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-12 flex items-center border border-white/70 px-10 py-3.5 font-sans text-xs tracking-[0.3em] text-white uppercase transition-colors duration-300 hover:border-white hover:bg-white hover:text-black"
+              className="mt-12 flex items-center rounded-full bg-bright px-10 py-3.5 font-sans text-xs tracking-[0.3em] text-inverse-ink uppercase transition-colors hover:bg-white"
             >
               <span className="block indent-[0.3em]">{t("downloadCv")}</span>
             </Link>
