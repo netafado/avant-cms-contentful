@@ -7,16 +7,8 @@ import Logo from "@/components/Logo";
 import SunHero from "../SunHero";
 import { BannerProps } from "./types";
 
-const AI_TOPICS = [
-  "LLM APIs (OpenAI, Claude)",
-  "RAG",
-  "Prompt Engineering",
-  "AI Agents (MCP/WebMCP)",
-  "CopilotKit",
-  "LLMO / AI-friendly SEO",
-  "Structured Data (JSON-LD)",
-  "AI Content Pipelines",
-];
+const ORBIT_TAGLINE =
+  "System design - AI engineer - LLMs integration - AI for humans";
 
 const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
   const t = useTranslations("Banner");
@@ -44,29 +36,49 @@ const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
               transformation
             </span>
           </div>
-          <ul
-            aria-label="AI topics worked with"
+          <div
+            aria-label={ORBIT_TAGLINE}
+            role="img"
             style={
               // The sun disc is 14vh in radius (shader SUN_RADIUS), so 22vh
-              // keeps the pills hugging its corona instead of the screen edge.
+              // keeps the ring hugging its corona instead of the screen edge.
               { "--orbit-radius": "min(22vh, 22vw)" } as CSSProperties
             }
-            className="mt-3 flex max-w-[92vw] flex-wrap justify-center gap-1.5 md:absolute md:top-1/2 md:left-1/2 md:mt-0 md:block md:size-[calc(var(--orbit-radius)*2)] md:max-w-none md:-translate-x-1/2 md:-translate-y-1/2"
+            className="mt-3 flex max-w-[92vw] justify-center md:absolute md:top-1/2 md:left-1/2 md:mt-0 md:block md:size-[calc(var(--orbit-radius)*2)] md:max-w-none md:-translate-x-1/2 md:-translate-y-1/2"
           >
-            {AI_TOPICS.map((topic, index) => (
-              <li
-                key={topic}
-                style={{ "--orbit-i": index } as CSSProperties}
-                className="md:absolute md:inset-0 md:[transform:rotate(calc(var(--orbit-i)*45deg))]"
+            <p className="hidden max-w-[44ch] [text-shadow:none] rounded-2xl border border-white/40 bg-black/40 px-4 py-2 text-center font-mono text-[11px] leading-relaxed tracking-[0.2em] text-white/90 max-md:block">
+              {ORBIT_TAGLINE}
+            </p>
+            {/* Continuous ring of text on a circular textPath. The whole svg
+                scales with the orbit box, so one viewBox tuning fits every
+                breakpoint; the trailing " - " closes the seam where the phrase
+                wraps back to its start. Tuned to Geist Mono's measured ~0.59em
+                advance: 65 chars x (0.59*30px + 2.6 tracking) ~= 1319, the
+                2*pi*210 circumference of the 440 viewBox. Keep the total at or
+                under the path length — textPath silently clips the tail. */}
+            <svg
+              aria-hidden
+              viewBox="0 0 440 440"
+              className="hidden overflow-visible md:block md:size-full md:animate-orbit-spin"
+            >
+              <defs>
+                <path
+                  id="orbit-ring"
+                  fill="none"
+                  d="M 430 220 A 210 210 0 1 1 10 220 A 210 210 0 1 1 430 220"
+                />
+              </defs>
+              <text
+                className="fill-white font-mono"
+                fontSize="30"
+                letterSpacing="2.6"
               >
-                <span className="md:absolute md:inset-0 md:flex md:items-start md:justify-center md:animate-orbit-spin">
-                  <span className="inline-block rounded-full border border-white/60 bg-black/30 px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.15em] text-white/90 md:px-3 md:text-[10px] md:animate-orbit-counter">
-                    {topic}
-                  </span>
-                </span>
-              </li>
-            ))}
-          </ul>
+                <textPath href="#orbit-ring">
+                  {`${ORBIT_TAGLINE} - `}
+                </textPath>
+              </text>
+            </svg>
+          </div>
         </div>
       </SunHero>
       <div>

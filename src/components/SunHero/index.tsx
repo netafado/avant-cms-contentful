@@ -256,7 +256,7 @@ const SunHero: FC<SunHeroProps> = ({ masthead, poster, children }) => {
         />
       )}
       {/* Masthead lives on its own top layer: above the z-10 content overlay
-          (so orbiting pills pass behind it) with no blend mode —
+          (so the orbiting ring passes behind it) with no blend mode —
           mix-blend-overlay dimmed the white frame into the scrim, making it
           look sunken behind the banner. On desktop it hangs from the very top
           edge, sharing the nav band; on mobile it stays below the icon-only
@@ -268,7 +268,7 @@ const SunHero: FC<SunHeroProps> = ({ masthead, poster, children }) => {
       )}
       {/* Banner content keeps the blend the masthead deliberately dropped:
           mix-blend-overlay is what melts the "AI transformation" headline and
-          the orbiting topic pills into the sun as they cross it. */}
+          the orbiting tagline ring into the sun as they cross it. */}
       <div className="mix-blend-overlay relative z-10 flex h-full w-full flex-col items-center justify-end px-6 pb-[11vh] text-center md:pb-[12vh]">
         {children}
       </div>
