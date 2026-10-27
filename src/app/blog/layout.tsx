@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, SITE_NAME, SITE_URL } from "@/lib/seo";
 import WebMcpBridge from "@/components/WebMcpBridge";
+import PageTransition from "@/components/PageTransition";
 import { ThemeProvider } from "@/providers/theme";
 import Navigation from "@/components/Navigation";
 import enMessages from "../../../messages/en.json";
@@ -73,13 +74,15 @@ export default function BlogLayout({
       <body
         className={`bg-white text-gray-900 antialiased dark:bg-ground dark:text-bright ${geistSans.variable} ${geistMono.variable}`}
       >
-        <NextIntlClientProvider locale="en" messages={enMessages}>
-          <ThemeProvider>
-            <Navigation showLanguageSwitch={false} />
-          </ThemeProvider>
-        </NextIntlClientProvider>
-        <WebMcpBridge />
-        {children}
+        <PageTransition>
+          <NextIntlClientProvider locale="en" messages={enMessages}>
+            <ThemeProvider>
+              <Navigation showLanguageSwitch={false} />
+            </ThemeProvider>
+          </NextIntlClientProvider>
+          <WebMcpBridge />
+          {children}
+        </PageTransition>
       </body>
     </html>
   );

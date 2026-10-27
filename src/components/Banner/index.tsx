@@ -4,6 +4,7 @@ import Link from "next/link";
 import { type CSSProperties, FC } from "react";
 import { useTranslations } from "next-intl";
 import Logo from "@/components/Logo";
+import CountUp from "@/components/motion/CountUp";
 import SunHero from "../SunHero";
 import { BannerProps } from "./types";
 
@@ -92,9 +93,10 @@ const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
                   key={`achievement-${index}`}
                   className="flex flex-col items-center gap-2 px-4"
                 >
-                  <span className="font-mono text-2xl leading-none tracking-tight text-bright tabular-nums md:text-3xl">
-                    {achievement.number}
-                  </span>
+                  <CountUp
+                    value={achievement.number}
+                    className="font-mono text-2xl leading-none tracking-tight text-bright tabular-nums md:text-3xl"
+                  />
                   <span className="font-mono text-[10px] tracking-[0.25em] text-meta uppercase md:text-[11px]">
                     {achievement.text}
                   </span>
@@ -109,7 +111,7 @@ const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
               href={cv.src}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-12 flex items-center rounded-full bg-bright px-10 py-3.5 font-sans text-xs tracking-[0.3em] text-inverse-ink uppercase transition-colors hover:bg-white"
+              className="mt-12 flex items-center rounded-full bg-bright px-10 py-3.5 font-sans text-xs tracking-[0.3em] text-inverse-ink uppercase transition-all hover:bg-white hover:ring-1 hover:ring-live"
             >
               <span className="block indent-[0.3em]">{t("downloadCv")}</span>
             </Link>

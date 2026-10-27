@@ -5,6 +5,7 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { SITE_NAME, SITE_URL } from "@/lib/seo";
 import WebMcpBridge from "@/components/WebMcpBridge";
+import PageTransition from "@/components/PageTransition";
 import "../globals.css";
 import { routing } from "@/i18n/routing";
 
@@ -95,7 +96,7 @@ export default async function LocaleLayout({
       >
         <WebMcpBridge />
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <PageTransition>{children}</PageTransition>
         </NextIntlClientProvider>
       </body>
     </html>

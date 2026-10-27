@@ -1,5 +1,15 @@
 import '@testing-library/jest-dom'
 
+// ViewTransition ships in the React canary Next vendors, not in the standalone
+// react 19.2 that jest runs on — pass children through under test.
+jest.mock('react', () => {
+    const actual = jest.requireActual('react')
+    return {
+        ...actual,
+        ViewTransition: ({ children }) => children,
+    }
+})
+
 // Mock Next.js Image component
 jest.mock('next/image', () => ({
     __esModule: true,

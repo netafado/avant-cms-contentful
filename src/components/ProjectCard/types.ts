@@ -1,4 +1,5 @@
 import type { ProjectSummary } from "@/lib/projects";
+import type { ProjectCardGridProps } from ".";
 
 export type ProjectCardLabels = {
   viewProject: string;
@@ -9,4 +10,4 @@ export type ProjectCardLabels = {
 export type ProjectCardProps = {
   project: ProjectSummary;
   labels: ProjectCardLabels;
-};
+} & ProjectCardGridProps;
