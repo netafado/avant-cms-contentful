@@ -81,6 +81,7 @@ const BottomNav = ({ links, socials, activePath }: BottomNavProps) => {
               href={link.href}
               aria-label={link.label}
               aria-current={active ? "page" : undefined}
+              transitionTypes={["page"]}
               className={className}
             >
               {children}
@@ -91,6 +92,7 @@ const BottomNav = ({ links, socials, activePath }: BottomNavProps) => {
               href={link.href}
               aria-label={link.label}
               aria-current={active ? "page" : undefined}
+              transitionTypes={["page"]}
               className={className}
             >
               {children}

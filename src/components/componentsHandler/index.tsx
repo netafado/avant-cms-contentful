@@ -12,7 +12,12 @@ import Card from "@/components/Card";
 import type { CardProps } from "@/components/Card/types";
 import transformToComponentProps from "@/utils/transformToComponentProps";
 import ComponentTags from "@/components/CardWithTagList";
-import ProjectCard from "@/components/ProjectCard";
+import ProjectCard, {
+  SPAN_CLASSES,
+  type ProjectCardVariant,
+} from "@/components/ProjectCard";
+import Spotlight from "@/components/motion/Spotlight";
+import slugify from "@/utils/slugify";
 import { toProjectSummary } from "@/lib/projects";
 
 import {
@@ -38,6 +43,19 @@ type Translations = {
   viewProject: string;
   categories: string;
   technologies: string;
+};
+
+// Bento emphasis by position in the CMS list: the opening card is the
+// featured cell, the next one is wide-short, and the personal-project card
+// gets the dashed self-reference treatment wherever it sits.
+const projectVariant = (
+  project: ReturnType<typeof toProjectSummary>,
+  index: number
+): ProjectCardVariant => {
+  if (/^personal project/i.test(project.client)) return "meta";
+  if (index === 0) return "featured";
+  if (index === 1) return "wide";
+  return "default";
 };
 
 const buildBanner = (
@@ -105,7 +123,14 @@ const ComponentsHandler = {
         color: "company",
       }
     );
-    return <Card {...props} />;
+    return (
+      <Spotlight className="stagger-item h-full">
+        <Card
+          {...props}
+          id={props.company ? slugify(props.company) : undefined}
+        />
+      </Spotlight>
+    );
   },
   ComponentTagList: (component: SectionComponentsItem) => {
     const isTagList = isComponentTagList(component);
@@ -128,8 +153,9 @@ const ComponentsHandler = {
     const hasCards = isComponentCards(component);
     return hasCards ? <div>ComponentsCards Placeholder</div> : null;
   },
-  // Returned as a bare Fragment so each card becomes a direct child of the
-  // section grid and the CMS `grid` field keeps control of the column count.
+  // Each card sits inside a Spotlight that is the section grid's direct
+  // child, so the CMS `grid` field keeps control of the column count and the
+  // bento span classes land on the wrapper.
   ComponentProjectList: (component: SectionComponentsItem, t: Translations) => {
     if (!isComponentProjectList(component)) {
       return null;
@@ -145,9 +171,22 @@ const ComponentsHandler = {
     };
     return (
       <>
-        {projects.map((project) => (
-          <ProjectCard key={project.slug} project={project} labels={labels} />
-        ))}
+        {projects.map((project, index) => {
+          const variant = projectVariant(project, index);
+          return (
+            <Spotlight
+              key={project.slug}
+              className={`stagger-item h-full ${SPAN_CLASSES[variant]}`}
+            >
+              <ProjectCard
+                project={project}
+                labels={labels}
+                variant={variant}
+                index={index + 1}
+              />
+            </Spotlight>
+          );
+        })}
       </>
     );
   },

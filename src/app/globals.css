@@ -131,7 +131,7 @@
   --color-solar-900: #4a1502;
   --color-solar-950: #2b0c01;
 
-  --orbit-duration: 60s;
+  --orbit-duration: 48s;
   --animate-scroll-cue: scroll-cue 2s ease-in-out infinite;
   --animate-orbit-spin: orbit-spin var(--orbit-duration) linear infinite;
 
@@ -143,6 +143,23 @@
   @keyframes orbit-spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
+  }
+
+  /* Scroll-reveal entrances: cards/sections rise 16px while fading in, and
+     the section divider hairlines draw from the left. Driven by .in-view /
+     .animate-in classes the Reveal + Stagger helpers toggle via
+     IntersectionObserver; --i staggers siblings by 80ms. */
+  --animate-reveal-up: reveal-up 600ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  --animate-draw-x: draw-x 500ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+
+  @keyframes reveal-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes draw-x {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
   }
 }
 
@@ -176,6 +193,88 @@ html:not(.dark) ::selection {
   color: #ffffff;
 }
 
+/* Staggered scroll-reveal: direct .stagger-item children of a .in-view group
+   (toggled by StaggerGroup's observer) rise 16px while fading in, offset by
+   80ms per sibling. Before .in-view lands they sit hidden/shifted. */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.in-view > .stagger-item {
+  animation: var(--animate-reveal-up);
+}
+
+.in-view > .stagger-item:nth-child(2) { animation-delay: 80ms; }
+.in-view > .stagger-item:nth-child(3) { animation-delay: 160ms; }
+.in-view > .stagger-item:nth-child(4) { animation-delay: 240ms; }
+.in-view > .stagger-item:nth-child(5) { animation-delay: 320ms; }
+.in-view > .stagger-item:nth-child(6) { animation-delay: 400ms; }
+.in-view > .stagger-item:nth-child(7) { animation-delay: 480ms; }
+.in-view > .stagger-item:nth-child(n + 8) { animation-delay: 560ms; }
+
+/* Section divider hairlines draw from the left once the header group is
+   in view. */
+.draw-x {
+  transform: scaleX(0);
+}
+
+.in-view .draw-x {
+  animation: var(--animate-draw-x);
+}
+
+/* Card hover language: a 2px lift plus the border brightening to hairline-2.
+   .spotlight adds a soft radial glow that follows the pointer via --mx/--my. */
+.card-lift {
+  transition:
+    transform var(--default-transition-duration)
+      var(--default-transition-timing-function),
+    border-color var(--default-transition-duration)
+      var(--default-transition-timing-function);
+}
+
+.card-lift:hover {
+  transform: translateY(-2px);
+  border-color: var(--dp-color-hairline-2);
+}
+
+.spotlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    320px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 255, 255, 0.06),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+  pointer-events: none;
+}
+
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+/* Cross-document page transitions: /blog lives in a different root layout, so
+   /en <-> /blog navigations are full document loads — this CSS-only rule is
+   what animates them (SPA navigations use the React <ViewTransition> instead).
+   Unsupported browsers skip both silently. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 220ms;
+  animation-timing-function: ease-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-scroll-cue {
     animation: none;
@@ -183,5 +282,29 @@ html:not(.dark) ::selection {
 
   .animate-orbit-spin {
     animation: none;
+  }
+
+  /* Everything motion primitives drive collapses to the final state. */
+  .stagger-item,
+  .draw-x {
+    opacity: 1;
+    transform: none;
+    animation: none !important;
+  }
+
+  .card-lift:hover {
+    transform: none;
+  }
+
+  .spotlight::after {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }

@@ -3,11 +3,47 @@ import Tag from "@/components/Tag";
 
 import type { ProjectCardProps } from "./types";
 
-// Cards sit three-up in the section grid; past this many chips the list
-// wraps into a wall of text, so the rest collapse into a "+N" count.
+// Cards sit in the projects bento grid; past this many chips the list wraps
+// into a wall of text, so the rest collapse into a "+N" count.
 export const MAX_TECHNOLOGIES = 6;
 
-const ProjectCard = ({ project, labels }: ProjectCardProps) => {
+/**
+ * Bento emphasis levels, decided by the renderer from the card's position in
+ * the CMS list. `featured` is the large opening card, `wide` the wide-short
+ * follow-up, `meta` the dashed self-reference card, `default` a regular cell.
+ */
+export type ProjectCardVariant = "featured" | "wide" | "meta" | "default";
+
+export type ProjectCardGridProps = {
+  variant?: ProjectCardVariant;
+  /** 1-based position in the grid; renders the mono index numeral. */
+  index?: number;
+};
+
+const VARIANT_CLASSES: Record<ProjectCardVariant, string> = {
+  featured: "border-hairline bg-panel p-8 md:p-10",
+  wide: "border-hairline bg-panel px-6 py-6",
+  meta: "border-dashed border-hairline-2 bg-transparent px-6 py-6",
+  default: "border-hairline bg-panel px-6 py-6",
+};
+
+/**
+ * Grid spans for the bento layout. The Spotlight wrapper is the direct grid
+ * child, so these classes are applied there by the renderer, not on the card.
+ */
+export const SPAN_CLASSES: Record<ProjectCardVariant, string> = {
+  featured: "md:col-span-2",
+  wide: "md:col-span-2",
+  meta: "",
+  default: "",
+};
+
+const ProjectCard = ({
+  project,
+  labels,
+  variant = "default",
+  index,
+}: ProjectCardProps) => {
   const {
     slug,
     title,
@@ -20,18 +56,32 @@ const ProjectCard = ({ project, labels }: ProjectCardProps) => {
   } = project;
   const visibleTechnologies = technologies.slice(0, MAX_TECHNOLOGIES);
   const hiddenCount = technologies.length - visibleTechnologies.length;
+  const featured = variant === "featured";
 
   return (
     <Link
       href={`/projects/${slug}`}
-      className="group flex h-full flex-col rounded-panel border border-black/15 px-6 py-6 transition-colors hover:border-black/40 dark:border-hairline dark:bg-panel dark:hover:border-hairline-2"
+      transitionTypes={["page"]}
+      className={`group card-lift relative flex h-full flex-col overflow-hidden rounded-panel border ${VARIANT_CLASSES[variant]}`}
     >
+      {index !== undefined && (
+        <span
+          aria-hidden
+          className="absolute right-5 top-5 font-mono text-[10px] tracking-[0.25em] text-dim"
+        >
+          {String(index).padStart(2, "0")}
+        </span>
+      )}
       {client && (
         <p className="font-mono text-[11px] tracking-[0.2em] text-gray-500 uppercase dark:text-meta">
           {client}
         </p>
       )}
-      <h3 className="mt-2 font-display text-xl font-normal tracking-tight text-gray-900 dark:text-bright">
+      <h3
+        className={`mt-2 font-display font-normal tracking-tight text-gray-900 dark:text-bright ${
+          featured ? "text-2xl md:text-3xl" : "text-xl"
+        }`}
+      >
         {title}
       </h3>
       {period && (
@@ -40,7 +90,11 @@ const ProjectCard = ({ project, labels }: ProjectCardProps) => {
         </p>
       )}
       {highlight && (
-        <p className="mt-3 text-sm font-medium text-gray-900 dark:text-bright">
+        <p
+          className={`mt-3 font-medium text-gray-900 dark:text-bright ${
+            featured ? "text-base md:text-lg" : "text-sm"
+          }`}
+        >
           {highlight}
         </p>
       )}

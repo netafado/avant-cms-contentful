@@ -4,8 +4,8 @@ import type { ComponentTagListProps } from "./types";
 
 const ComponentTags: FC<ComponentTagListProps> = ({ list, title, color }) => {
   return (
-    <div className="rounded-panel border border-black/15 px-4 py-4 dark:border-hairline dark:bg-panel">
-      <h3 className="pb-3 font-display text-xl font-normal tracking-tight text-gray-900 dark:text-bright">
+    <div className="stagger-item h-full rounded-panel border border-black/15 px-4 py-4 dark:border-hairline dark:bg-panel">
+      <h3 className="mb-4 font-mono text-[10px] tracking-widest text-gray-500 uppercase dark:text-meta">
         {title}
       </h3>
       {list.map((tool, index) => (

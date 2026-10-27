@@ -152,6 +152,7 @@ const Navigation = ({
                   href={link.href}
                   aria-label={link.label}
                   role="menuitem"
+                  transitionTypes={["page"]}
                   className={className}
                 >
                   {children}
@@ -162,6 +163,7 @@ const Navigation = ({
                   href={link.href}
                   aria-label={link.label}
                   role="menuitem"
+                  transitionTypes={["page"]}
                   className={className}
                 >
                   {children}

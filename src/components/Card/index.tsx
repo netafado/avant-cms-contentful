@@ -4,11 +4,12 @@ import type { CardProps } from "./types";
 import clsx from "clsx";
 
 const Card = (props: CardProps) => {
-  const { company, role, duration, tools, description, limitSize } = props;
+  const { company, role, duration, tools, description, limitSize, id } = props;
   return (
     <div
+      id={id}
       className={clsx(
-        "relative rounded-panel border border-black/15 px-6 py-6 dark:border-hairline dark:bg-panel",
+        "card-lift relative rounded-panel border border-black/15 px-6 py-6 scroll-mt-28 dark:border-hairline dark:bg-panel",
         {
           "max-h-80 overflow-hidden": !!limitSize,
         }

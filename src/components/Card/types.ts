@@ -7,4 +7,6 @@ export type CardProps = {
   tools: string[];
   color: string;
   limitSize?: boolean;
+  /** DOM id used as the Work Experience rail anchor (slugified company). */
+  id?: string;
 };
