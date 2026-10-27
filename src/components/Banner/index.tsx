@@ -42,25 +42,25 @@ const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
             role="img"
             style={
               // The sun disc is 14vh in radius (shader SUN_RADIUS), so 22vh
-              // keeps the ring hugging its corona instead of the screen edge.
-              { "--orbit-radius": "min(22vh, 22vw)" } as CSSProperties
+              // keeps the ring hugging its corona instead of the screen edge;
+              // the 44vw term caps the diameter at 88vw so it never clips on
+              // narrow phone viewports.
+              { "--orbit-radius": "min(22vh, 44vw)" } as CSSProperties
             }
-            className="mt-3 flex max-w-[92vw] justify-center md:absolute md:top-1/2 md:left-1/2 md:mt-0 md:block md:size-[calc(var(--orbit-radius)*2)] md:max-w-none md:-translate-x-1/2 md:-translate-y-1/2"
+            className="absolute top-1/2 left-1/2 size-[calc(var(--orbit-radius)*2)] max-w-none -translate-x-1/2 -translate-y-1/2"
           >
-            <p className="hidden max-w-[44ch] [text-shadow:none] rounded-2xl border border-white/40 bg-black/40 px-4 py-2 text-center font-mono text-[11px] leading-relaxed tracking-[0.2em] text-white/90 max-md:block">
-              {ORBIT_TAGLINE}
-            </p>
-            {/* Continuous ring of text on a circular textPath. The whole svg
-                scales with the orbit box, so one viewBox tuning fits every
-                breakpoint; the trailing " - " closes the seam where the phrase
-                wraps back to its start. Tuned to Geist Mono's measured ~0.59em
-                advance: 65 chars x (0.59*30px + 2.6 tracking) ~= 1319, the
-                2*pi*210 circumference of the 440 viewBox. Keep the total at or
-                under the path length — textPath silently clips the tail. */}
+            {/* Continuous ring of text on a circular textPath, orbiting the
+                sun identically at every breakpoint. The whole svg scales with
+                the orbit box, so one viewBox tuning fits every breakpoint; the
+                trailing " - " closes the seam where the phrase wraps back to
+                its start. Tuned to Geist Mono's measured ~0.59em advance:
+                65 chars x (0.59*30px + 2.6 tracking) ~= 1319, the 2*pi*210
+                circumference of the 440 viewBox. Keep the total at or under
+                the path length — textPath silently clips the tail. */}
             <svg
               aria-hidden
               viewBox="0 0 440 440"
-              className="hidden overflow-visible md:block md:size-full md:animate-orbit-spin"
+              className="block size-full animate-orbit-spin overflow-visible"
             >
               <defs>
                 <path
