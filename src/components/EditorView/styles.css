@@ -1,10 +1,27 @@
-.wmde-markdown-custom {
+/* @uiw/react-markdown-preview picks its GitHub palette from the OS
+   (prefers-color-scheme), not the site's html.dark toggle — so a dark-mode OS
+   + light site rendered pale headings and lists on white. These rules repeat
+   the palette keyed to the site theme; the doubled class (0,2,0) outranks the
+   package's single-class media-query rules regardless of CSS order. Only the
+   text/border/link vars are mapped: code-block canvases stay on the OS palette
+   so syntax colors always sit on a matching background. */
+.wmde-markdown.wmde-markdown-custom {
+  color-scheme: light;
   background-color: transparent !important;
   --color-fg-default: var(--color-gray-700);
+  --color-fg-muted: var(--color-gray-500);
+  --color-border-default: rgba(0, 0, 0, 0.15);
+  --color-border-muted: rgba(0, 0, 0, 0.1);
+  --color-accent-fg: #0969da;
   color: var(--color-gray-700);
 }
 
-.dark .wmde-markdown-custom {
+.dark .wmde-markdown.wmde-markdown-custom {
+  color-scheme: dark;
   --color-fg-default: var(--dp-color-read);
+  --color-fg-muted: var(--dp-color-meta);
+  --color-border-default: var(--dp-color-hairline-2);
+  --color-border-muted: var(--dp-color-hairline);
+  --color-accent-fg: #58a6ff;
   color: var(--dp-color-read);
 }

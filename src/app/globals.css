@@ -238,6 +238,12 @@ html:not(.dark) ::selection {
   border-color: var(--dp-color-hairline-2);
 }
 
+/* Light-theme cards use black-alpha borders; the dark hairline-2 hover would
+   flash a near-black frame around them. */
+html:not(.dark) .card-lift:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
 .spotlight {
   position: relative;
   overflow: hidden;

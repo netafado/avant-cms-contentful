@@ -38,7 +38,7 @@ describe("ProjectCard bento variants", () => {
     render(<ProjectCard project={project} labels={labels} />);
 
     const card = screen.getByRole("link");
-    expect(card).toHaveClass("bg-panel");
+    expect(card).toHaveClass("bg-white", "dark:bg-panel");
     expect(card).not.toHaveClass("border-dashed");
     expect(screen.queryByText("01")).not.toBeInTheDocument();
   });

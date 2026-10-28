@@ -21,10 +21,10 @@ export type ProjectCardGridProps = {
 };
 
 const VARIANT_CLASSES: Record<ProjectCardVariant, string> = {
-  featured: "border-hairline bg-panel p-8 md:p-10",
-  wide: "border-hairline bg-panel px-6 py-6",
-  meta: "border-dashed border-hairline-2 bg-transparent px-6 py-6",
-  default: "border-hairline bg-panel px-6 py-6",
+  featured: "border-black/15 bg-white dark:border-hairline dark:bg-panel p-8 md:p-10",
+  wide: "border-black/15 bg-white dark:border-hairline dark:bg-panel px-6 py-6",
+  meta: "border-dashed border-black/15 dark:border-hairline-2 bg-transparent px-6 py-6",
+  default: "border-black/15 bg-white dark:border-hairline dark:bg-panel px-6 py-6",
 };
 
 /**
@@ -67,7 +67,7 @@ const ProjectCard = ({
       {index !== undefined && (
         <span
           aria-hidden
-          className="absolute right-5 top-5 font-mono text-[10px] tracking-[0.25em] text-dim"
+          className="absolute right-5 top-5 font-mono text-[10px] tracking-[0.25em] text-gray-400 dark:text-dim"
         >
           {String(index).padStart(2, "0")}
         </span>
