@@ -6,7 +6,7 @@ export const EditorView = ({ markdown }: { markdown: string }) => {
   return (
     <div className="mt-2">
       <MDEditor.Markdown
-        className="bg-white rounded-sm wmde-markdown-custom"
+        className="rounded-sm wmde-markdown-custom"
         source={markdown}
       />
     </div>

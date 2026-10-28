@@ -87,7 +87,7 @@ const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
             flat ground, hairline rules. */}
         <div className="mx-auto mt-8 flex max-w-3xl flex-col items-center gap-4 text-center text-white">
           {achievements?.items?.length ? (
-            <div className="grid  w-full max-w-3xl  gap-y-8 border-y border-hairline py-4 lg:grid-cols-3 lg:divide-x lg:divide-hairline">
+            <div className="grid  w-full max-w-3xl  gap-y-8 border-y border-black/10 py-4 lg:grid-cols-3 lg:divide-x lg:divide-black/10 dark:border-hairline dark:divide-hairline">
               {achievements.items.map((achievement, index) => (
                 <div
                   key={`achievement-${index}`}
@@ -95,9 +95,9 @@ const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
                 >
                   <CountUp
                     value={achievement.number}
-                    className="font-mono text-2xl leading-none tracking-tight text-bright tabular-nums md:text-3xl"
+                    className="font-mono text-2xl leading-none tracking-tight text-gray-900 tabular-nums dark:text-bright md:text-3xl"
                   />
-                  <span className="font-mono text-[10px] tracking-[0.25em] text-meta uppercase md:text-[11px]">
+                  <span className="font-mono text-[10px] tracking-[0.25em] text-gray-500 uppercase dark:text-meta md:text-[11px]">
                     {achievement.text}
                   </span>
                 </div>
@@ -111,7 +111,7 @@ const Banner: FC<BannerProps> = ({ name, achievements, cv }) => {
               href={cv.src}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-12 flex items-center rounded-full bg-bright px-10 py-3.5 font-sans text-xs tracking-[0.3em] text-inverse-ink uppercase transition-all hover:bg-white hover:ring-1 hover:ring-live"
+              className="mt-12 flex items-center rounded-full bg-gray-900 px-10 py-3.5 font-sans text-xs tracking-[0.3em] text-white uppercase transition-all hover:bg-gray-800 hover:ring-1 hover:ring-live dark:bg-bright dark:text-inverse-ink dark:hover:bg-white"
             >
               <span className="block indent-[0.3em]">{t("downloadCv")}</span>
             </Link>

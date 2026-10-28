@@ -56,10 +56,10 @@ const ExperienceRail = ({ items }: ExperienceRailProps) => {
   return (
     <aside aria-label="Work experience" className="hidden lg:block lg:col-span-3">
       <div className="sticky top-24">
-        <div className="relative border-l border-hairline pl-6">
+        <div className="relative border-l border-black/15 pl-6 dark:border-hairline">
           <span
             aria-hidden
-            className="absolute left-[-1px] w-[2px] bg-bright transition-[top,height] duration-300 ease-out"
+            className="absolute left-[-1px] w-[2px] bg-gray-900 transition-[top,height] duration-300 ease-out dark:bg-bright"
             style={{ top: indicator.top, height: indicator.height }}
           />
           <ul ref={listRef} className="flex flex-col gap-4">
@@ -70,8 +70,10 @@ const ExperienceRail = ({ items }: ExperienceRailProps) => {
                   data-rail-id={item.id}
                   aria-current={activeId === item.id ? "true" : undefined}
                   className={clsx(
-                    "block font-mono text-[10px] uppercase tracking-widest transition-colors hover:text-bright",
-                    activeId === item.id ? "text-bright" : "text-dim",
+                    "block font-mono text-[10px] uppercase tracking-widest transition-colors hover:text-gray-900 dark:hover:text-bright",
+                    activeId === item.id
+                      ? "text-gray-900 dark:text-bright"
+                      : "text-gray-400 dark:text-dim",
                   )}
                 >
                   {item.label}
